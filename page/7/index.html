@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%80%A7%E8%A1%A8(%E6%95%B0%E7%BB%84%E6%88%96%E8%80%85%E9%93%BE%E8%A1%A8%E6%9D%A5%E5%AE%9E%E7%8E%B0)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B8%AD%20const,static,extern%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +200,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%80%A7%E8%A1%A8(%E6%95%B0%E7%BB%84%E6%88%96%E8%80%85%E9%93%BE%E8%A1%A8%E6%9D%A5%E5%AE%9E%E7%8E%B0)/" class="post-title-link" itemprop="url">线性表用顺序和链表来实现方式</a>
+            <a href="/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B8%AD%20const,static,extern%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">iOS开发中 const,static,extern用法总结</a>
         </h2>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -240,11 +240,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>线性表：</strong>是最基本、最简单、也是最常用的一种数据结构。线性表（linear list）是数据结构的一种，一个线性表是n个具有相同特性的数据元素的有限序列。</p>
-<h2 id="顺序存储实现"><a href="#顺序存储实现" class="headerlink" title="顺序存储实现"></a>顺序存储实现</h2><p>通常用到的比如：数组。   利用数组的连续存储空间顺序存放线性表的各元素。</p>
-<p>顺序表示指的是用一组地址连续的存储单元依次存储线性表的数据元素，称为线性表的顺序存储结构或顺序映像（sequential mapping）。它以“物理位置相邻”来表示线性表中数据元素间的逻辑关系，可随机存取表中任一元素。</p>
-<h2 id="链式存储实现"><a href="#链式存储实现" class="headerlink" title="链式存储实现"></a>链式存储实现</h2><p>不需要逻辑上相邻的两个元素物理上也相邻，通过“链”建立起数据元素之间的逻辑关系。</p>
-<p>插入、删除不需要移动数据元素，需要修改“链”。</p>
+          <blockquote>
+<p>iOS开发中怎么使用const,static,extern3个关键字.</p>
+</blockquote>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>const的作用: const 是一个左结合的类型修饰符，它与其左侧的类型修饰符一起为一个类型修饰符,表示该类型只读.</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">修饰基本变量</span><br><span class="line"><span class="comment">// 这两种写法是一样的，const只修饰右边的基本变量b</span></span><br><span class="line">   <span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">20</span>; <span class="comment">// b:只读变量</span></span><br><span class="line">   <span class="keyword">int</span> <span class="keyword">const</span> b = <span class="number">20</span>; <span class="comment">// b:只读变量</span></span><br><span class="line"></span><br><span class="line">修饰指针变量</span><br><span class="line"><span class="comment">// 两种方式一样</span></span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> *p1; <span class="comment">// *p1：只读 p1:只读</span></span><br><span class="line"> <span class="keyword">int</span> <span class="keyword">const</span> *p1; <span class="comment">// *p1：只读 p1:只读</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">// const修饰指针变量p1</span></span><br><span class="line"> <span class="keyword">int</span> * <span class="keyword">const</span> p1; <span class="comment">// *p1:变量 p1:常量</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 第一个const修饰*p1 第二个const修饰 p1</span></span><br><span class="line"> <span class="comment">// 两种方式一样</span></span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> p1; <span class="comment">// *p1：常量 p1：常量</span></span><br><span class="line"> <span class="keyword">int</span> <span class="keyword">const</span> * <span class="keyword">const</span> p1;  <span class="comment">// *p1：常量 p1：常量</span></span><br></pre></td></tr></table></figure>
+
+<p>简言之:沿着<em>号划一条线，如果const位于</em>的左侧，则const就是用来修饰指针所指向的变量，即指针指向为常量；如果const位于*的右侧，const就是修饰指针本身，即指针本身是常量。</p>
+<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>static的作用:</p>
+<p>修饰局部变量：<br>延长局部变量的生命周期。<br>局部变量只会生成一份内存,只会初始化一次。<br>修饰全局变量:<br>使其只能在本文件中访问。</p>
+<h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><p>extern的作用: 声明和捕捉外部全局变量。<br>联合使用<br>static与const:声明一个静态的全局只读变量,(仅当前文件可访问且只读).</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span>  <span class="built_in">NSString</span> * <span class="keyword">const</span> key = <span class="string">@&quot;name&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>extern与const组合:定义全局只读变量，多个文件共享。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.h文件</span><br><span class="line"><span class="keyword">extern</span>  <span class="built_in">NSString</span> * <span class="keyword">const</span> king;</span><br><span class="line">.m文件</span><br><span class="line"><span class="built_in">NSString</span>  * <span class="keyword">const</span> king = <span class="string">@&quot;king&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://jatstar.cn/2016/01/10/const-static-extern/">来源const-static-extern</a></p>
 
       
     </div>
@@ -264,7 +275,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B9%8B%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%8C%89%E4%BD%8D%E6%88%96%E6%8C%89%E4%BD%8D%E4%B8%8E%E8%BF%90%E7%AE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -278,7 +289,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">队列</a>
+            <a href="/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B9%8B%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%8C%89%E4%BD%8D%E6%88%96%E6%8C%89%E4%BD%8D%E4%B8%8E%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">iOS开发之位移枚举和按位或按位与运算</a>
         </h2>
 
         <div class="post-meta">
@@ -303,7 +314,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -318,9 +329,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。</p>
-<p><img src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=35768ebb0ff3d7ca18fb37249376d56c/cdbf6c81800a19d8116a4d8030fa828ba71e46ce.jpg"></p>
-<p>队列的数据元素又称为队列元素。在队列中插入一个队列元素称为入队，从队列中删除一个队列元素称为出队。因为队列只允许在一端插入，在另一端删除，所以只有最早进入队列的元素才能最先从队列中删除，故队列又称为先进先出（FIFO—first in first out）线性表。</p>
+          <blockquote>
+<p>位移枚举(可复选的枚举) 使用位移实现选项变量</p>
+</blockquote>
+<h3 id="Autoresizing-的系统枚举UIViewAutoresizing-讲述"><a href="#Autoresizing-的系统枚举UIViewAutoresizing-讲述" class="headerlink" title="Autoresizing 的系统枚举UIViewAutoresizing 讲述"></a>Autoresizing 的系统枚举UIViewAutoresizing 讲述</h3><p>以下位移已经计算提前计算出来了二进制与十进制值为了方便下文使用</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>,<span class="built_in">UIViewAutoresizing</span>)&#123;    二进制值    十进制</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingNone</span>                 =<span class="number">0</span>,         <span class="number">00000000</span>  <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>   =<span class="number">1</span>&lt;&lt;<span class="number">0</span>,    <span class="number">00000001</span>  <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleWidth</span>        =<span class="number">1</span>&lt;&lt;<span class="number">1</span>,    <span class="number">00000010</span>  <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>  =<span class="number">1</span>&lt;&lt;<span class="number">2</span>,    <span class="number">00000100</span>  <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>    =<span class="number">1</span>&lt;&lt;<span class="number">3</span>,    <span class="number">00001000</span>  <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleHeight</span>       =<span class="number">1</span>&lt;&lt;<span class="number">4</span>,    <span class="number">00010000</span>  <span class="number">16</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>=<span class="number">1</span>&lt;&lt;<span class="number">5</span>     <span class="number">00100000</span>  <span class="number">32</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>使用枚举定义选项,每个选项均可启用或禁用，使用上述方式来定义枚举值,每个枚举值所对应的二进制表示中，只有1个二进制位的值是1。用“按位或操作符”可组合多个选项</p>
+<p>用 | 来隔开</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aView.autoresizingMask=<span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>|</span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|  </span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>|  </span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>;  </span><br></pre></td></tr></table></figure>
+
+<p>而且每一个枚举对应的逻辑都会覆盖到</p>
+<p>实例</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)todo:(<span class="built_in">UIViewAutoresizing</span>)type&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type==<span class="number">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingNone&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//更严谨的写法</span></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span> ==   </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleLeftMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleWidth</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleWidth&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleRightMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleTopMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleHeight</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleHeight&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleBottomMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)viewDidLoad&#123;</span><br><span class="line"></span><br><span class="line">    [superviewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> todo:<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|  </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|  </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleHeight</span>];  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span>  </span><br></pre></td></tr></table></figure>
+
+<h3 id="二进制转十进制"><a href="#二进制转十进制" class="headerlink" title="二进制转十进制"></a>二进制转十进制</h3><p><code>1101（2）=1*2^0+0*2^1+1*2^2+1*2^3=1+0+4+8=13</code>转化成十进制要从右到左用二进制的每个数去乘以2的相应次方不过次方要从0开始</p>
+<h4 id="位移位运算"><a href="#位移位运算" class="headerlink" title="位移位运算"></a>位移位运算</h4><p>如 <code>UIViewAutoresizingFlexibleHeight  = 1 &lt;&lt; 4</code>,</p>
+<p>1.左移运算 1 &lt;&lt; 4<br>将一个运算对象的各二进制位全部左移若干位（左边的二进制位丢弃，右边补0）。</p>
+<p>1 转化为二进制为 :0000 0001</p>
+<p>左移四位就为     :0001 0000</p>
+<p>0001 0000 转化为十进制等于16</p>
+<p>2.右移运算 90&gt;&gt;4<br>将一个数的各二进制位全部右移若干位，正数左补0，负数左补1，右边丢弃。操作数每右移一位，相当于该数除以2。</p>
+<p>90转化为二进制为 :01011010</p>
+<p>右移4位就是          :00000101</p>
+<p>00000101  转化为十进制等于5</p>
+<h4 id="按位或运算符（-）"><a href="#按位或运算符（-）" class="headerlink" title="按位或运算符（|）"></a>按位或运算符（|）</h4><p>运算规则：0|0=0；   0|1=1；   1|0=1；    1|1=1；即 ：参加运算的两个二进制对应数位只要有一个为1，其值为1。</p>
+<p>例如</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span> todo:<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span>];</span><br></pre></td></tr></table></figure>
+
+<p>1.十进制1|4|16 转为二进制0000 0001 | 0000 0100 | 0001 0000  =  0001 0101,因此，1|4|16的十进制值得21</p>
+<h4 id="按位与运算符（-amp-）"><a href="#按位与运算符（-amp-）" class="headerlink" title="按位与运算符（&amp;）"></a>按位与运算符（&amp;）</h4><p>参加运算的两个数据，按二进制位进行“与”运算。运算规则：0&amp;0=0;   0&amp;1=0;    1&amp;0=0;     1&amp;1=1;即：两对应数位同时为“1”，结果才为“1”，否则为0</p>
+<p>1.十进制3&amp;5  转为二进制 0000 0011 &amp; 0000 0101 = 0000 0001   因此，3&amp;5的值得1</p>
+<p>2.iOS在方法中的应用</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)todo:(<span class="built_in">UIViewAutoresizing</span>)type&#123;<span class="keyword">if</span> (type &amp; </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span> )</span><br><span class="line"> &#123;<span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleLeftMargin&quot;</span>);&#125;&#125;</span><br><span class="line"></span><br><span class="line">入参数type 为 <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span></span><br></pre></td></tr></table></figure>
+
+<p>上文知道结果是 0001 0101,十进制值得21 <code>UIViewAutoresizingFlexibleRightMargin为4</code></p>
+<p>0001 0101 &amp;  <code>UIViewAutoresizingFlexibleRightMargin</code> =  0001 0101 &amp; 0000 0100  =21&amp;4 = 4 根据计算结果还是<code>UIViewAutoresizingFlexibleRightMargin</code>这个枚举</p>
+<h3 id="在iOS中的总结"><a href="#在iOS中的总结" class="headerlink" title="在iOS中的总结"></a>在iOS中的总结</h3><p>如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将其组合起来。</p>
+<p>用<code>NS_ENUM</code>与<code>NS_OPTIONS</code>宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。</p>
+<p>在处理枚举类型的<code>switch</code>语句中不要实现<code>default</code>分支。这样的话，加入新枚举之后，编译器就会提示开发者：<code>switch</code>语句并未处理所有枚举。</p>
 
       
     </div>
@@ -340,7 +390,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%20Workbench%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E6%89%93%E5%8C%85Framework%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%85%BC%E5%AE%B9%E5%90%88%E5%B9%B6%E7%89%88%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -354,7 +404,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%20Workbench%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">MySQL Workbench使用</a>
+            <a href="/2018/06/11/iOS/iOS%E6%89%93%E5%8C%85Framework%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%85%BC%E5%AE%B9%E5%90%88%E5%B9%B6%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">iOS打包Framework真机和模拟器兼容合并版本</a>
         </h2>
 
         <div class="post-meta">
@@ -379,7 +429,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/db/" itemprop="url" rel="index"><span itemprop="name">db</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -394,11 +444,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="MySQL-Workbench-安装使用"><a href="#MySQL-Workbench-安装使用" class="headerlink" title="MySQL Workbench 安装使用"></a>MySQL Workbench 安装使用</h4><p>  MySQL Workbench为数据库架构师，开发人员和DBA提供统一的可视化工具。MySQL Workbench为服务器配置，用户管理，备份等提供了数据建模，SQL开发以及全面的管理工具。  </p>
-<p><a target="_blank" rel="noopener" href="http://www.runoob.com/sql/sql-tutorial.html">SQL 教程</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiankeufo/article/details/79650576">MySQL Workbench</a></p>
-<h4 id="Mac下MySQL与MySQLWorkbench的安装-和-关联"><a href="#Mac下MySQL与MySQLWorkbench的安装-和-关联" class="headerlink" title="Mac下MySQL与MySQLWorkbench的安装 和 关联"></a>Mac下MySQL与MySQLWorkbench的安装 和 关联</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/libiyangblog/p/5186904.html">Mac下MySQL与MySQLWorkbench的安装</a></p>
-<h4 id="布局介绍"><a href="#布局介绍" class="headerlink" title="布局介绍"></a>布局介绍</h4><p><img src="https://img2018.cnblogs.com/blog/1291389/201810/1291389-20181025144539718-212029353.png"></p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hahayixiao/p/9849742.html">MySQL Workbench布局介绍</a></p>
+          <h3 id="查询framework支持哪些架构，命令为："><a href="#查询framework支持哪些架构，命令为：" class="headerlink" title="查询framework支持哪些架构，命令为："></a>查询framework支持哪些架构，命令为：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info XXXX.framework/XXXX</span><br></pre></td></tr></table></figure>
+<h3 id="合并包"><a href="#合并包" class="headerlink" title="合并包"></a>合并包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> lipo -create XXXX.framework/XXXX-armv7 XXXX.framework/XXXX-arm64 -output XXXX.framework/XXXX</span><br><span class="line"></span><br><span class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</span><br></pre></td></tr></table></figure>
+<h3 id="一键打包shell脚本"><a href="#一键打包shell脚本" class="headerlink" title="一键打包shell脚本"></a>一键打包shell脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 使用方法 ###</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># bash get_framework.sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">###</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 填写要生成的包的名字</span></span><br><span class="line">FrameWorkName=<span class="string">&quot;JDViewKit&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置输出包的文件路径</span></span><br><span class="line">OutputDir=<span class="variable">$&#123;SRCROOT&#125;</span>/VKOutput</span><br><span class="line"><span class="comment"># Working dir will be deleted after the framework creation.</span></span><br><span class="line">buildDir=build</span><br><span class="line">DEVICE_DIR=<span class="variable">$&#123;buildDir&#125;</span>/Release-iphoneos</span><br><span class="line">SIMULATOR_DIR=<span class="variable">$&#123;buildDir&#125;</span>/Release-iphonesimulator/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译真机和模拟器的两种架构</span></span><br><span class="line"><span class="comment"># -configuration $&#123;CONFIGURATION&#125;</span></span><br><span class="line"><span class="comment"># Clean and Building both architectures.</span></span><br><span class="line"></span><br><span class="line">xcodebuild -configuration <span class="string">&quot;Release&quot;</span> -target <span class="string">&quot;<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -sdk iphoneos clean build</span><br><span class="line">xcodebuild -configuration <span class="string">&quot;Release&quot;</span> -target <span class="string">&quot;<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -sdk iphonesimulator clean build</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把旧的输出文件包删除掉</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">sudo rm -rf <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建输出包</span></span><br><span class="line">sudo mkdir -p <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br><span class="line">sudo cp -R <span class="string">&quot;<span class="variable">$&#123;DEVICE_DIR&#125;</span>/&quot;</span> <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 lipo工具合并通用包（(i386 + armv6/armv7)）</span></span><br><span class="line">sudo lipo -create <span class="string">&quot;<span class="variable">$&#123;DEVICE_DIR&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;SIMULATOR_DIR&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -output <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除build包  打开输出包文件夹</span></span><br><span class="line">sudo rm -r <span class="string">&quot;<span class="variable">$&#123;buildDir&#125;</span>&quot;</span></span><br><span class="line">open <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/ios-ARC%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/ios-ARC%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">iOS-ARC和垃圾回收机制的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在<code>java</code>中有个垃圾回收器，什么是垃圾回收器，就是在程序运行的期间，垃圾回收器会不断的去扫描堆中的对象是否无人使用。如果无人使用就会回收了。</p>
+<p><code>ARC</code>在编译的时候就会在合适的地方插入<code>retain,release,autorelease</code>,在运行的时候没有东西去进行实时检查，它插入的代码可以在对象没有人用的时候，引用计数器就会变为0.一旦变为0就会被销毁了。</p>
+<p>如果在java中有一段代码是<code>Person * p=[Person new]; p=nil</code>，这个对象什么时候被回收？不一定，因为这要看垃圾回收器有没有扫描到这里。</p>
 
       
     </div>
@@ -418,7 +541,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E4%B8%AD%E5%9B%BD%E8%8A%82%E6%B0%94/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/runtime%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -432,7 +555,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E4%B8%AD%E5%9B%BD%E8%8A%82%E6%B0%94/" class="post-title-link" itemprop="url">二十四节气</a>
+            <a href="/2018/06/11/iOS/runtime%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">iOS runtime</a>
         </h2>
 
         <div class="post-meta">
@@ -457,7 +580,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -472,104 +595,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="二十四节气"><a href="#二十四节气" class="headerlink" title="二十四节气"></a>二十四节气</h2><p><img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5157a451be096b63951456026d5aec21/b03533fa828ba61ef3c2ab514134970a304e599b.jpg" alt="二十四节气"></p>
-<p>二十四节气是根据地球在黄道（即地球绕太阳公转的轨道）上的位置来划分的。视太阳从春分点（黄经零度，此刻太阳垂直照射赤道）出发，每前进15度为一个节气；运行一周又回到春分点，为一回归年，合360度，因此分为24个节气。</p>
-<h2 id="节与气"><a href="#节与气" class="headerlink" title="节与气"></a>节与气</h2><p>一年有二十四个节气，计十二个节和十二个气。即一个月之内有一节一气，每两节气相距，平均约三十天又十分之四，而阴历每月之日数．则为二十九天半，故约每三十四个月，必遇有两月仅有节而无气、及有气而无节者。有节无气之月，即农历之闰月，有气无节之月不为闰月，兹将节气与农历月份关系表列于后：</p>
-<h3 id="季月节气表"><a href="#季月节气表" class="headerlink" title="季月节气表"></a>季月节气表</h3><table log-set-param="table_view" data-sort="sortDisabled"><tbody><tr><th height="37">季</th><th height="37" colspan="3"><div class="para" label-module="para">春</div>
-</th><th height="37" colspan="3">夏</th><th height="37" colspan="3">秋</th><th height="37" colspan="3"><div class="para" label-module="para">冬</div>
-</th></tr><tr><td valign="top">月</td><td valign="top">正月</td><td valign="top">二月</td><td valign="top">三月</td><td valign="top">四月</td><td valign="top">五月</td><td valign="top">六月</td><td valign="top">七月</td><td valign="top">八月</td><td valign="top">九月</td><td valign="top">十月</td><td valign="top">冬月</td><td valign="top">腊月</td></tr><tr><td valign="top">节</td><td valign="top">立春</td><td valign="top">惊蛰</td><td valign="top">清明</td><td valign="top">立夏</td><td valign="top">芒种</td><td valign="top">小暑</td><td valign="top">立秋</td><td valign="top">白露</td><td valign="top">寒露</td><td valign="top">立冬</td><td valign="top">大雪</td><td valign="top">小寒</td></tr><tr><td valign="top">气</td><td valign="top">雨水</td><td valign="top">春分</td><td valign="top">谷雨</td><td valign="top">小满</td><td valign="top">夏至</td><td valign="top">大暑</td><td valign="top">处暑</td><td valign="top">秋分</td><td valign="top">霜降</td><td valign="top">小雪</td><td valign="top">冬至</td><td valign="top">大寒</td></tr></tbody></table>
+          <h3 id="class-结构（方法步骤）"><a href="#class-结构（方法步骤）" class="headerlink" title="class 结构（方法步骤）"></a>class 结构（方法步骤）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    //类本身</span><br><span class="line">    Class _Nonnull isa ;</span><br><span class="line">    //父类</span><br><span class="line">    Class _Nullable super_class</span><br><span class="line">    //类名                             </span><br><span class="line">    const char * _Nonnull name                              </span><br><span class="line">    long version                                            </span><br><span class="line">    long info</span><br><span class="line">    //类大小                                               </span><br><span class="line">    long instance_size      </span><br><span class="line">    //类中的变量                                </span><br><span class="line">    struct objc_ivar_list * _Nullable ivars                 </span><br><span class="line">    //类中的变量 </span><br><span class="line">    struct objc_method_list * _Nullable * _Nullable methodLists</span><br><span class="line">    //缓存，便于下次查找                   </span><br><span class="line">    struct objc_cache * _Nonnull cache</span><br><span class="line">    //类中的协议                       </span><br><span class="line">    struct objc_protocol_list * _Nullable protocols         </span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
 
-<h2 id="二十四节气歌"><a href="#二十四节气歌" class="headerlink" title="二十四节气歌"></a>二十四节气歌</h2><p>春雨惊春清谷天，夏满芒夏暑相连。<br>秋处露秋寒霜降，冬雪雪冬小大寒。<br>上半年逢六廿一，下半年逢八廿三。<br>每月两节不变更，最多相差一两天。</p>
-<h2 id="九九歌"><a href="#九九歌" class="headerlink" title="九九歌"></a>九九歌</h2><p>一九二九不出手；<br>三九四九冰上走； 五九六九沿河看柳；<br>七九河开八九燕来； 九九加一九，耕牛遍地走；  </p>
-<p>我国阴历有“九九”的说法，用来计算时令。计算的方法是从冬天的冬至日算起，第一个九天叫“一九”。第二个九天叫“二九”，依此类推，一直到“九九”。即第九个九天，这时冬天已过完，春天来到了。</p>
-<h2 id="三伏"><a href="#三伏" class="headerlink" title="三伏"></a>三伏</h2><p>伏日宜吃面，北方有句俚语，叫做“头伏饺子二伏面，三伏烙饼摊鸡蛋”。<br><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%B4%E4%BC%8F%E9%A5%BA%E5%AD%90%E4%BA%8C%E4%BC%8F%E9%9D%A2/1113695?fr=aladdin">头伏饺子二伏面百科</a>  </p>
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E5%8D%81%E5%9B%9B%E8%8A%82%E6%B0%94/191597">二十四节气百科</a></p>
+<h3 id="NSObject-alloc-init-初始化步骤"><a href="#NSObject-alloc-init-初始化步骤" class="headerlink" title="[[NSObject alloc] init]初始化步骤"></a>[[NSObject alloc] init]初始化步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">   https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100</span><br><span class="line">     </span><br><span class="line">     struct objc_class &#123;</span><br><span class="line">     Class isa // 类本身 --&gt; &#123;isa; methodLists(alloc)(类方法)&#125;</span><br><span class="line">     </span><br><span class="line">     Class super_class                                        ;</span><br><span class="line">     const char *name                                         ;</span><br><span class="line">     long version                                             ;</span><br><span class="line">     long info                                                ;</span><br><span class="line">     long instance_size                                       ;</span><br><span class="line">     struct objc_ivar_list *ivars                             ;</span><br><span class="line">     struct objc_method_list **methodLists  // 实例方法                  ;</span><br><span class="line">     struct objc_cache *cache                                 ;</span><br><span class="line">     struct objc_protocol_list *protocols                     ;</span><br><span class="line">     &#125;</span><br><span class="line">     最终指向自己，形成了一个闭环， NSObject的isa 不是指向一个nil</span><br><span class="line">     1 [EOCObject alloc] 先执行，因为EOCObject检测，没有alloc方法， 就去父类里面去查找。</span><br><span class="line">     2 检测父类是否响应 alloc， 如果有，那么执行， 开始分配内存空间大小（成员变量）。// 方法（类有关系）</span><br><span class="line">     3 init 方法，检测是否响应，如果没有去父类查找。</span><br><span class="line">     4 方法执行完，会存缓存（所以一般第二次操作，会更快）</span><br><span class="line">     */</span><br><span class="line">    MyObject * objc  = [[MyObject alloc] init];</span><br></pre></td></tr></table></figure>
 
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E5%85%AD%E5%8D%81%E7%94%B2%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E5%85%AD%E5%8D%81%E7%94%B2%E5%AD%90/" class="post-title-link" itemprop="url">六十甲子</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="六十甲子"><a href="#六十甲子" class="headerlink" title="六十甲子"></a>六十甲子</h2><p><img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=d4374fbf8d1001e94a3c130d880f7b06/9d82d158ccbf6c81f7f12abebc3eb13532fa40a5.jpg" alt="六十甲子"></p>
-<p>天干地支与六十甲子<br>在中国古代的历法中，甲、乙、丙、丁、戊、己、庚、辛、壬、癸被称为“十天干”，子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥叫作“十二地支”。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">天干：甲jiǎ、乙yǐ、丙bǐng、丁dīng、戊wù、己jǐ、庚gēng、辛xīn、壬rén、癸guǐ</span><br><span class="line">地支：子zǐ、丑chǒu、寅yín、卯mǎo、辰chén、巳sì、午wǔ、未wèi、申shēn、酉yǒu、戌xū、亥hài</span><br></pre></td></tr></table></figure>
-
-<h2 id="释义"><a href="#释义" class="headerlink" title="释义"></a>释义</h2><ul>
-<li>天干地支<br>以天干和地支按顺序相配﹐即甲、乙、丙、丁、戊、己、庚、辛、壬、癸与子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥相组合，从”甲子”起﹐到”癸亥”止﹐满六十为一周﹐称为”六十甲子”。亦称”六十花甲子”。 又因起头是“甲”字的有六组，所以也叫“六甲”。</li>
-<li>年龄<br>指人满六十岁。</li>
-<li>道家星宿神<br>六十甲子神<br>六十甲子神<br>道家信奉的六十个星宿神﹐即六十甲子日值日的六十位神。用天干和地支循环相配作为称呼这些神的名字。</li>
+<h3 id="main-之前的过程有哪些？"><a href="#main-之前的过程有哪些？" class="headerlink" title="main()之前的过程有哪些？"></a>main()之前的过程有哪些？</h3><p>1<code>main</code>之前的加载过程<br>1）<code>dyld</code> 开始将程序二进制文件初始化<br>2）交由<code>ImageLoader</code> 读取 <code>image</code>，其中包含了我们的类，方法等各种符号<code>（Class、Protocol 、Selector、 IMP）</code><br>3）由于<code>runtime</code> 向<code>dyld</code> 绑定了回调，当<code>image</code>加载到内存后，<code>dyld</code>会通知<code>runtime</code>进行处理<br>4）<code>runtime</code> 接手后调用<code>map_images</code>做解析和处理<br>5）接下来<code>load_images</code> 中调用<code>call_load_methods</code>方法，遍历所有加载进来的<code>Class</code>，按继承层次依次调用Class的<code>+load</code>和其他Category的<code>+load</code>方法<br>6）至此 所有的信息都被加载到内存中<br>7）最后<code>dyld</code>调用真正的<code>main</code>函数  </p>
+<ul>
+<li>对象的<code>isa</code>指针指向所属的类  </li>
+<li>类的<code>isa</code>指针指向了所属的元类  </li>
+<li>元类的<code>isa</code>指向了根元类，根元类指向了自己。</li>
+<li>类的<code>superClass</code> 指向父类最终到根类</li>
+<li>根类的<code>superclass</code>指向<code>nil</code></li>
+<li>元类的<code>superclass</code> 指向父元类，最终到根元类</li>
+<li>根元类的<code>superclass</code> 指向根类</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">01 甲子	11甲戌	21甲申	31 甲午	41甲辰	51甲寅</span><br><span class="line">02 乙丑	12 乙亥	22乙酉	32 乙未	42乙巳	52 乙卯</span><br><span class="line">03 丙寅	13丙子	23 丙戌	33丙申	43丙午	53丙辰</span><br><span class="line">04丁卯	14丁丑	24丁亥	34丁酉	44丁未	54丁巳</span><br><span class="line">05戊辰	15戊寅	25戊子	35戊戌	45戊申	55 戊午</span><br><span class="line">06己巳	16己卯	26己丑	36 己亥	46 己酉	56 己未</span><br><span class="line">07庚午	17 庚辰	27庚寅	37 庚子	47 庚戌	57 庚申</span><br><span class="line">08辛未	18 辛巳	28 辛卯	38 辛丑	48 辛亥	58 辛酉</span><br><span class="line">09壬申	19壬午	29 壬辰	39 壬寅	49 壬子	59 壬戌</span><br><span class="line">10癸酉	20癸未	30 癸巳	40 癸卯	50 癸丑	60 癸亥</span><br></pre></td></tr></table></figure>
-
-
-<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BA%8C%E5%8D%81%E5%9B%9B%E8%8A%82%E6%B0%94/191597">二十四节气百科</a></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1682758-675c67c6868038d1?imageMogr2/auto-orient/"></p>
+<p>class_isMetaClass用于判断Class对象是否为元类，object_getClass用于获取对象的isa指针指向的对象。</p>
+<h3 id="仓库地址"><a href="#仓库地址" class="headerlink" title="仓库地址"></a>仓库地址</h3><p><a target="_blank" rel="noopener" href="https://coding.net/u/dream001/p/iOS_runtime/git/tree/master">dream001 demo仓库地址</a><br><a target="_blank" rel="noopener" href="https://opensource.apple.com/source/objc4/">苹果官网开源代码</a><br><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/objectivec/objective_c_runtime#//apple_ref/doc/uid/TP40001418-CH1g-126286">官方api</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5ac0a6116fb9a028de44d717">掘金runtime实战总结</a><br><a target="_blank" rel="noopener" href="https://maxwellqi.github.io/ios-primary-main/">IOS程序在main函数前所做的事情</a>  <a target="_blank" rel="noopener" href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/">main</a><br><a target="_blank" rel="noopener" href="http://blog.devtang.com/2014/09/09/ios-weekly-24/">devtang</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.csdn.net/article/2015-07-06/2825133-objective-c-runtime/1">深入理解Objective-C的Runtime机制</a></p>
 
       
     </div>
@@ -589,7 +633,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E5%95%86%E4%B8%98%E5%8E%86%E5%8F%B2%E5%8F%98%E8%BF%81/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E3%80%8AEffective-Objective-C%202.0%E3%80%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -603,7 +647,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E6%88%91%E7%9A%84%E6%97%A5%E5%B8%B8%E5%85%B4%E8%B6%A3/%E5%95%86%E4%B8%98%E5%8E%86%E5%8F%B2%E5%8F%98%E8%BF%81/" class="post-title-link" itemprop="url">商丘历史变迁</a>
+            <a href="/2018/06/11/iOS/%E3%80%8AEffective-Objective-C%202.0%E3%80%8B/" class="post-title-link" itemprop="url">《Effective-Objective-C 2.0》</a>
         </h2>
 
         <div class="post-meta">
@@ -628,7 +672,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -643,8 +687,233 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="三皇五帝时期"><a href="#三皇五帝时期" class="headerlink" title="三皇五帝时期"></a>三皇五帝时期</h2><p><img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=ed322f188194a4c21e2eef796f9d70b0/4e4a20a4462309f7abe86305740e0cf3d7cad626.jpg" alt="燧皇陵中的天皇燧人氏青铜像"></p>
-<p>旧石器时代，三皇之首的燧人氏出生于商丘并在这一带建立燧明国<br>8500年前，栗陆氏建都于栗（今商丘夏邑县）<br>6000年前，炎帝朱襄氏建都于朱（今商丘柘城县）。<br>葛天氏建都于葛（今商丘宁陵县）。<br>4500年前，颛顼由穷桑迁都于商丘（今商丘睢阳区）。<br>帝喾高辛氏出生并封于高辛（今商丘高辛镇），成为天下共主后，定都亳（今商丘谷熟镇）。<br>帝喾死后，长子帝挚受禅接帝位，在位九年，因未能妥善管理国家，挚禅位于唐尧，帝尧封挚于高辛。<br>帝尧时代，商丘为后羿的封地。<br>帝舜时代，帝喾之<br>（睢阳区）帝喾陵<br>（睢阳区）帝喾陵<br>子契（阏伯）辅佐禹治水有功，被虞舜封于商（今睢阳区）做火正，为商族人的始祖，<br>深受人民的爱戴，故人们尊他为“火神”<br>阏伯死后葬于封地，由于阏伯的封号为“商”，他的墓冢被称为“商丘”</p>
+          <p>图片原地址：<a target="_blank" rel="noopener" href="https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png">https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png</a><br><img src="https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png" alt="图片"><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/862b064e82e0">对应简书总结</a><br><a target="_blank" rel="noopener" href="https://github.com/aozhimin/awesome-iOS-resource/blob/master/Books/Effective%20Objective-C%202.0%20%20%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FiOS%E4%B8%8EOS%20X%E4%BB%A3%E7%A0%81%E7%9A%8452%E4%B8%AA%E6%9C%89%E6%95%88%E6%96%B9%E6%B3%95.pdf">Effective-Objective-C 2.0.pdf</a><br><a target="_blank" rel="noopener" href="https://github.com/aozhimin/awesome-iOS-resource/tree/master/Books">iOS相关书籍汇总</a></p>
+<hr>
+<p><em>分界线</em></p>
+<hr>
+<blockquote>
+<p>说明：以下内容 均来自与jatstar的汇总 只做引用学习 没有商业用途 <a target="_blank" rel="noopener" href="https://jatstar.cn/2016/07/10/Effective-Objective-C-2-0/">Effective-Objective-C 2.0</a></p>
+</blockquote>
+<h3 id="熟悉Objective-C"><a href="#熟悉Objective-C" class="headerlink" title="熟悉Objective-C"></a>熟悉Objective-C</h3><ul>
+<li>起源<ol>
+<li>由消息型语言鼻祖Smalltalk演化而来。是C语言的超集。</li>
+<li>与函数式语言关键区别：消息结构的语言，运行时所执行的代码由运行环境决定(动态绑定)；函数调用的语言，由编译器决定。</li>
+<li>NSString *someString 中 someString为指向NSString 的指针。Type * 声明的对象总是被分配的堆区(heap space) 中，而绝不可能分配的栈区(stack)。</li>
+<li>如果只需保存int float double char 等非对象类型（nonoobject type） ，使用C结构体(如CGRect)比使用OC对象性能更优，因为创建OC对象需要分配及释放堆区内存等额外开销。 </li>
+</ol>
+</li>
+<li>在类的头文件中尽量少引入其他头文件<ol>
+<li>头文件在类的头文件中，少引入头文件，使用@Class 向前声明即可。 然后在实现文件中再引入那些类的头文件。这样可以降低类之间的耦合。</li>
+<li>无法使用向前声明的情况，如果 引入当前类遵守的某一项协议，此时把协议单独放下一个头文件中，再将其引入。</li>
+</ol>
+</li>
+<li>多用字面量语法，少用与之等价的方法。</li>
+</ul>
+<ol>
+<li>举个🌰:</li>
+</ol>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *intNumber = @<span class="number">1</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *floatNumber = @<span class="number">2.5</span>f;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSArray</span> *namesArray = @[<span class="string">@&quot;Jat&quot;</span>,<span class="string">@&quot;Jay&quot;</span>,<span class="string">@&quot;Vae&quot;</span>];</span><br><span class="line"><span class="built_in">NSString</span> *myName = namesArray[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSDictionary</span> *personData = @&#123;<span class="string">@&quot;ChineseName&quot;</span>:<span class="string">@&quot;张建宇&quot;</span>,</span><br><span class="line"><span class="string">@&quot;EnglishName&quot;</span>:<span class="string">@&quot;Jat&quot;</span>,</span><br><span class="line"><span class="string">@&quot;age&quot;</span>:<span class="string">@&quot;23&quot;</span>&#125;</span><br><span class="line">Number *myAge = personData[<span class="string">@&quot;age&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过字面量创建的数组或者字典 ，如果值中有nil，会抛出异常。</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>多用类型常量，少用＃define 预处理指令。  </p>
+<ol>
+<li>＃define定义的出来的常量，不包含类型信息，编译器需要再编译前执行查找替换，会增加编译时间。  </li>
+<li>只在当前类使用的常量，可以使用 static const 在.m中定义。  </li>
+<li>在头文件中使用extern来声明全局变量,并在相关实现文件中定义其值。命名时，通常使用于是相关的类名最为前缀。如  UITextFieldTextDidBeginEditingNotification 。  </li>
+<li>《iOS开发中 const,static,extern用法总结》  </li>
+</ol>
+</li>
+<li><p>使用枚举来表示状态，选项，状态码  </p>
+<ol>
+<li>易懂的枚举名可以提高代码的可读性。  </li>
+<li>选项为多选时，使用二进制表示枚举值，以便通过按位或将其组合起来。🌰：  UIInterfaceOrientationMask。  </li>
+<li>switch语句中，不要实现default分支。这样加入新的枚举之后，编译器会提示：switch语句没有处理所有枚举值。  <h3 id="消息／对象／运行时"><a href="#消息／对象／运行时" class="headerlink" title="消息／对象／运行时"></a>消息／对象／运行时</h3></li>
+</ol>
+</li>
+<li><p>理解“属性” 这一概念 Objective-C语法@property详解</p>
+</li>
+<li><p>在对象内部尽量直接访问实例变量。</p>
+<ol>
+<li>直接访问实例变量不经过方法派发，比点语法快。</li>
+<li>⚠️直接访问copy修饰的属性，不会掉用setter方法，所以不会拷贝该属性。</li>
+<li>⚠️不会触发KVO通知。是否会产生问题，视情况而定。</li>
+<li>初始化方法和dealloc方法中，总是应该直接访问。</li>
+<li>⚠️注意考虑懒加载的情况下，要使用点语法。</li>
+</ol>
+</li>
+<li><p>理解“对象等同性”这一概念。</p>
+<ol>
+<li>==比较的是指针地址是否一样。</li>
+<li>特有的等同性判断方法，如isEqualToString比isEqual快一些。</li>
+<li>相同的对象必须具有相同的哈希码，但是哈希码相同的对象未必相同。</li>
+<li>不必逐条比较每个属性的哈希码，依情况，使用速度快，碰撞率低的算法。</li>
+</ol>
+</li>
+<li><p>以“类族模式”隐藏实现细节</p>
+<ol>
+<li>例如UIButton 中的 + (instancetype)buttonWithType:(UIButtonType)buttonType.</li>
+<li>可以把实现细节隐藏在一个公共的接口后面。</li>
+</ol>
+</li>
+<li><p>在既有类中使用关联对象存放自定义数据</p>
+</li>
+<li><p>理解objc_msgSend 的作用</p>
+<ol>
+<li>Objective-c “动态绑定(dynamic binding)” 的特性使得所要调用的函数直到运行时才能确定。通过动态消息派发系统(dynamic message dicpatch system)来查出对应的方法并执行。</li>
+<li>消息由接收者(receiver)，选择子(selecter)，以及参数构成。调用方法实际上相当于在给对象发送消息。</li>
+</ol>
+</li>
+<li><p>理解消息转发机制 //TODO： 待续</p>
+</li>
+<li><p>用方法调配技术调试黑盒方法 </p>
+</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Category</span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;NSString+Test.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;objc runtime.h=&quot;&quot;&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span> (<span class="title">Test</span>)</span></span><br><span class="line">- (<span class="built_in">NSString</span>*)eoc_myLowercaseString &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lowercase = [<span class="keyword">self</span> eoc_myLowercaseString];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@ =&gt; %@&quot;</span>, <span class="keyword">self</span>, lowercase);</span><br><span class="line">    <span class="keyword">return</span> lowercase;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 不会死循环，因为eoc_myLowercaseString与lowercaseString方法互换了，运行时期间eoc_myLowercaseString选择子实际上对应的原有的lowercaseString方法实现。</span></span><br><span class="line">+ (<span class="keyword">void</span>)load&#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod([<span class="built_in">NSString</span> <span class="keyword">class</span>],<span class="keyword">@selector</span>(lowercaseString));</span><br><span class="line">    Method swappedMethod = class_getInstanceMethod([<span class="built_in">NSString</span> <span class="keyword">class</span>],<span class="keyword">@selector</span>(eoc_myLowercaseString));</span><br><span class="line">    method_exchangeImplementations(originalMethod, swappedMethod);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">测试一下：</span></span><br><span class="line"><span class="comment">NSString *string = @&quot;Hello World&quot;;</span></span><br><span class="line"><span class="comment">NSString *textString = [string lowercaseString];</span></span><br><span class="line"><span class="comment">Output:</span></span><br><span class="line"><span class="comment">Hello World =&gt; hello world</span></span><br><span class="line"><span class="comment">*/</span>&lt;/objc&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>理解类对象的用意 //TODO: 待续</p>
+<h3 id="接口与API设计"><a href="#接口与API设计" class="headerlink" title="接口与API设计"></a>接口与API设计</h3></li>
+<li><p>使用前缀避免命名空间冲突。</p>
+</li>
+<li><p>提供全能初始化方法</p>
+<ol>
+<li>提供一个全能初始化方法，并与文档中指明，其他初始化方法均调用此方法。</li>
+<li>全能初始化方法与超类不同时，应该重写，冲突时，应该加上抛异常机制提示。</li>
+</ol>
+</li>
+<li><p>实现description方法</p>
+<ol>
+<li>自定义类，覆写description方法，返回的字符串，NSLog时的显示该字符串；</li>
+<li>重写debugDescription，改变调试控制台输出信息，默认为description方法的返回值。</li>
+</ol>
+</li>
+<li><p>尽量使用不可变对象。</p>
+</li>
+<li><p>使用清晰而且协调的命名方式</p>
+</li>
+<li><p>为私有方法名加前缀</p>
+<ol>
+<li>给私有方法名加上前缀(虽然我感觉没必要～也没见过知名开源项目有加；但是爱老婆说按规范要加)</li>
+<li>不要使用下划线做私有方法的前缀，因为这种做法是预留给苹果的。</li>
+</ol>
+</li>
+<li><p>理解Objective-C错误模型</p>
+<ol>
+<li>只有发生使整个应用崩溃的严重错误时，才之用异常。</li>
+<li>不那么严重的错误，可以指派委托方法来处理错误，也可以把错误信息放在NSError里，由NSLog输出。 </li>
+</ol>
+</li>
+<li><p>理解NSCoding协议。</p>
+<ol>
+<li>想令对象具有拷贝功能，需实现NSCoying协议；如果对象有可变版本，还需要实现NSMutableCopying协议。</li>
+<li>浅拷贝之后的内容与原始内容指针地址相同，深拷贝之后的内容指向原始内容相关对象的一份拷贝。(深拷贝会逐个元素发送Copy消息，用拷贝得到元素创建Set);</li>
+</ol>
+</li>
+<li><p>通过委托与数据源协议进行对象间的通信。</p>
+<ol>
+<li>@property(nonatomic,weak)id<classnamedelegate> delegate</classnamedelegate> 用weak修饰，，防止循环引用(retain cycle);</li>
+</ol>
+</li>
+<li><p>将类的实现代码分散到便于管理的数个分类之中。//易于管理</p>
+</li>
+<li><p>总是为第三方类的分类名称增加前缀。</p>
+</li>
+<li><p>勿在分类中声明属性。</p>
+<ol>
+<li>封装数据所用的全部属性都定义在主接口里。</li>
+<li>关联对象可以解决分类不能合成实例变量的问题。//本书作者认为此方法内存管理上容易出错，不是很推荐。</li>
+</ol>
+</li>
+<li><p>使用“class-continuation”分类 隐藏实现细节 //就是Extension吧，匿名的分类。</p>
+</li>
+<li><p>通过协议提供匿名对象。 //隐藏返回值类型</p>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3></li>
+<li><p>理解引用计数</p>
+</li>
+<li><p>以ARC简化引用计数</p>
+</li>
+<li><p>在dealloc方法中只释放引用并移除监听(KVO和Notifications)</p>
+</li>
+<li><p>编写 “异常安全代码”时留意内存管理问题(即：使用@try...@catch语法时)</p>
+</li>
+<li><p>以弱引用避免保留环(retain cycle :循环引用)</p>
+</li>
+<li><p>以“自动释放池块”降低内存峰值。</p>
+</li>
+<li><p>用“僵尸对象”调试内存管理问题。</p>
+<ol>
+<li>系统在回收对象时，可以不将其真正回收，而是把它转化为僵尸对象。</li>
+<li>系统会修改对象的isa指针，令其指向特殊的僵尸类。僵尸类能够响应所有的选择子，打印一条包含消息内容以及接收者的消息，然后终止程序。</li>
+</ol>
+</li>
+<li><p>不要使用retainCount。(ARC模式下，此方法废弃了)。</p>
+<h3 id="block与GCD"><a href="#block与GCD" class="headerlink" title="block与GCD"></a>block与GCD</h3></li>
+</ul>
+<p>//翻译成 块与大中枢派发也是醉了。。。</p>
+<ul>
+<li>理解block这一概念。<ol>
+<li>语法结构： return_type (^block_name)(parameters)</li>
+<li>默认情况下block外的变量需要在block中修改的，需要在声明时加__block修饰，但block修改其所在的类的成员变量时不需要加。</li>
+<li>定义block时，它是分配在栈区的，所以。只在其作用域范围有效。调用copy拷贝到堆区之后可以和OC对象一样具备引用计数。由ARC去管理。</li>
+</ol>
+</li>
+<li>为常见的block类型创建typedef</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>(^SomeBlock)(<span class="built_in">BOOL</span> flag,<span class="keyword">int</span> value);</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用：</span></span><br><span class="line">SomeBlock block = ^ (<span class="built_in">BOOL</span> flag,<span class="keyword">int</span> value)&#123;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        <span class="keyword">return</span> value * <span class="number">5</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value *<span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用handler block降低代码的分散程度。//如AFN中的网络请求回调</li>
+<li>用block引用其所属对象时不要出现循环引用。</li>
+<li>多用派发队列，少用同步锁。<ol>
+<li>派发队列可以用来表述同步语义(synchornization semantic),比使用@synchronized块和NSLock对象更简单。</li>
+<li>使用同步和异步派发结合起来，可以实现与普通加锁一样的同步行为，而且不会阻塞执行异步派发的线程。</li>
+<li>使用同步队列和栅栏块，可以让同步锁更加高效。</li>
+</ol>
+</li>
+<li>多用GCD,少用｀performSelector｀系列方法。</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SEL selector;</span><br><span class="line"><span class="keyword">if</span>(<span class="comment">/* some condition */</span>)&#123;</span><br><span class="line">    selector = <span class="keyword">@selector</span>(foo);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="comment">/* some other condition */</span>)&#123;</span><br><span class="line">    selector = <span class="keyword">@selector</span>(bar);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    selector = @selecter(baz)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>/*<br>运行时才能确定调用列哪个方法，<br>编译器没有办法在编译时按ARC的内存管理原则判定返回值是不是该释放，<br>编译器没有添加释放操作。<br>这将又可能导致内存泄漏<br>*/</p>
+<ul>
+<li>掌握GCD和NSOperationQueue的使用时机。<ol>
+<li>运行任务之前，可以用在NSOperation对象上调用cancel取消该任务。</li>
+<li>可以指定任务间的依赖关系。</li>
+<li>可以通过KVO监听NSOperation的属性。例如isFinished,isCancelled。</li>
+<li>指定操作的优先级。</li>
+<li>重用NSOperation对象。</li>
+</ol>
+</li>
+<li>通过Dispathtch Group机制，根据系统资源状况来执行任务。</li>
+<li>使用dispatch_once来执行只需运行一次的线程安全代码。</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+(<span class="keyword">id</span>)sharedInstance&#123;</span><br><span class="line">    <span class="keyword">static</span> SomeClass *sharedInstance = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(@onceToken,^&#123;</span><br><span class="line">        sharedInstance = [[<span class="keyword">self</span> alloc]init];</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>不要使用dispatch_get_current_queue(void);//调试还是可以用下的</p>
+<h3 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h3></li>
+<li><p>熟悉系统框架。</p>
+<ol>
+<li>CFNetWork:提供C语言级别的网络通信能力，将BSDsocket抽象成易于使用的接口。</li>
+<li>CoreAudio:提供的C语言API可用来操作设备上的音频硬件。</li>
+<li>AVFoundation:处理音频视频的录制，回放。</li>
+<li>CoreData:用于实现数据持久化。</li>
+<li>CoreText:提供C语言接口，用于执行文字排版以及渲染操作。</li>
+</ol>
+</li>
+<li><p>多用block枚举，少用for循环。//block枚举本身通过GCD并发执行遍历，更高效。</p>
+</li>
+<li><p>对自定义其内存管理语义的cellection使用无缝桥接。</p>
+</li>
+<li><p>构建缓存时选用NSCache而非NSDictionary.// low memory时 NSCache会自动删减缓存</p>
+</li>
+<li><p>精简initalize和load的实现代码。</p>
+<ol>
+<li>iOS平台上，当类或者分类载入系统时，会先调用+(void) load;同时实现时，先调类里面的，再调用分类里面的。</li>
+<li>无法判断各个类载入的顺序，所以在load方法使用第三方类比较危险。</li>
+<li>load方法会阻塞线程，所以要尽量精简里面的代码。</li>
+<li>首次使用某个类是，会调用该类的+(void) initalize方法，可以覆写该方法做一些与类相关的初始化操作。但是同load一样，也应该尽量精简。</li>
+</ol>
+</li>
+<li><p>别忘了NSTimer会保留目标对象。//weakSelf大法打破循环就好了。</p>
+</li>
+</ul>
 
       
     </div>
@@ -664,7 +933,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/dart%20&%20flutter/dart/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -678,7 +947,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/dart%20&%20flutter/dart/" class="post-title-link" itemprop="url">dart</a>
+            <a href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/" class="post-title-link" itemprop="url">iOS总结的点</a>
         </h2>
 
         <div class="post-meta">
@@ -703,7 +972,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/dart/" itemprop="url" rel="index"><span itemprop="name">dart</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -718,10 +987,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av52490605?from=search&seid=17339603939810978479">Dart Flutter教程</a></p>
-<h2 id="dart"><a href="#dart" class="headerlink" title="dart"></a>dart</h2><p><strong>安装</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap dart-lang/dart</span><br><span class="line">brew install dart</span><br></pre></td></tr></table></figure>
-<p><strong>开发工具：</strong><br><code>vscode</code> 安装插件 <code>dart</code> 和 <code>code runner</code></p>
+          <h3 id="UIImage中-imageNamed-和-imageWithContentsOfFile的区别"><a href="#UIImage中-imageNamed-和-imageWithContentsOfFile的区别" class="headerlink" title="UIImage中 imageNamed 和 imageWithContentsOfFile的区别"></a>UIImage中 imageNamed 和 imageWithContentsOfFile的区别</h3><p><code>[UIImage imageNamed:]</code>只适合与UI界面中小的贴图的读取，而一些比较大的资源文件应该尽量避免使用这个接口。<br>直接读取文件路径<code>[UIImage imageWithContentsOfFile]</code>来解决图片的读取问题<br>这两种方式的主要区别在于：<br><code>imageName</code>的方式会在使用的时候系统会cache，程序员是无法处理cache的，这是由系统自动处理的，对于重复加载的图像，速度会提升很多，这样反而用户体验好。所以如果某张图片需要在应用中使用多次，或者重复引用，使用<code>imageName</code>的方式会更好<br><code>imageWithContentsOfFile</code>的方式，在使用完成之后系统会释放，不会缓存下来，所以也就没有这样的问题。一般也不会把所有的图片都会缓存。有些图片在应用中只使用一两次的，就可以用这样的方式，比如新手引导界面的图片等等，就适合这样的方式。没有明显的界限。</p>
+<h3 id="CALayer-和-UIView的区别"><a href="#CALayer-和-UIView的区别" class="headerlink" title="CALayer 和 UIView的区别"></a>CALayer 和 UIView的区别</h3><p><code>CALayer</code>属于<code>Core Animation</code>部分的内容，比较重要而不太好理解。以下是园子中看到的一篇文章的摘录：</p>
+<ol>
+<li><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自它。它本身完全是由   <code>CoreAnimation</code>来实现的。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame，bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</li>
+<li><code>UIView</code>有个重要属性<code>layer</code>，可以返回它的主<code>CALayer</code>实例。</li>
+</ol>
+<h3 id="如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"><a href="#如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）" class="headerlink" title="如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"></a>如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）</h3><p>  在<code>iOS</code>中通常使用<code>hit-testing</code>去找到那个被触摸的视图。这个视图叫<code>hit-test view</code>，当<code>iOS</code>找到<code>hit-test view</code>后就把<code>touch event</code>交个那个视图来处理。</p>
+<h3 id="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"><a href="#用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性" class="headerlink" title="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"></a>用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性</h3><h3 id="NSRunloop的使用"><a href="#NSRunloop的使用" class="headerlink" title="NSRunloop的使用"></a>NSRunloop的使用</h3><p> 那么具体什么是<code>NSRunLoop</code>呢？其实<code>NSRunLoop</code>的本质是一个消息机制的处理模式。<br> <code>NSRunLoop</code>是一种更加高明的消息处理模式<br> <a target="_blank" rel="noopener" href="http://blog.csdn.net/cwq9944/article/details/8555104">http://blog.csdn.net/cwq9944/article/details/8555104</a></p>
+<h3 id="CoreAnimation-与-UIViewAnimation分别何时会使用"><a href="#CoreAnimation-与-UIViewAnimation分别何时会使用" class="headerlink" title="CoreAnimation 与 UIViewAnimation分别何时会使用"></a>CoreAnimation 与 UIViewAnimation分别何时会使用</h3><h3 id="arc-和-gc-理解"><a href="#arc-和-gc-理解" class="headerlink" title="arc 和 gc 理解"></a>arc 和 gc 理解</h3><p> ARC是iOS 5推出的新功能，全称叫 ARC(Automatic Reference Counting)。简单地说，就是代码中自动加入了retain/release，原先需要手动添加的用来处理内存管理的引用计数的代码可以自动地由编译器完成了。<br> ARC基本规则</p>
+<p>retain, release, autorelease, dealloc由编译器自动插入，不能在代码中调用<br>dealloc虽然可以被重载，但是不能调用[super dealloc]</p>
+<h3 id="如何在ARC代码中混编非ARC代码"><a href="#如何在ARC代码中混编非ARC代码" class="headerlink" title="如何在ARC代码中混编非ARC代码"></a>如何在ARC代码中混编非ARC代码</h3><p> “ios中如果arc和非arc文件混编，可以在build parses中指定compile flags，如果arc文件设为”-fobjc-arc”,非arc文件设为”-fno-objc-arc””  </p>
+<p> 使用了ARC之后如果你想复用以前写过的使用MRC的类， 就会出报错。这时候怎么办？方法比较简单， 只需要做下面的一个步骤就可以解决：<br> 在targets的build phases选项下Compile Sources下选择要不使用arc编译的文件，双击它，输入 -fno-objc-arc 即可</p>
+<p> MRC工程中也可以使用ARC的类。方法如下：<br> 在targets的build phases选项下Compile Sources下选择要使用arc编译的文件，双击它，输入 -fobjc-arc 即可</p>
+<h3 id="NSAutoreleasepool理解"><a href="#NSAutoreleasepool理解" class="headerlink" title="NSAutoreleasepool理解"></a>NSAutoreleasepool理解</h3><p>  iOS的运行时是由一个一个runloop组成的</p>
+<p> 每个runloop中都创建一个Autorelease Pool，并在runloop的末尾进行释放，<br> 所以，一般情况下，每个接受autorelease消息的对象，都会在下个runloop开始前被释放。也就是说，在一段同步的代码中执行过程中，生成的对象接受autorelease消息后，一般是不会在代码段执行完成前释放的。</p>
+<p> 当然也有让autorelease提前生效的办法：自己创建Pool并进行释放</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSAutoreleasePool</span> * pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="built_in">NSArray</span> * array = [[[<span class="built_in">NSArray</span> alloc] init] autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
+
+<h3 id="weak-block"><a href="#weak-block" class="headerlink" title="__weak,__block"></a>__weak,__block</h3><p>   __weak不增加引用，__block增加引用<br>   举例哦，某对象self，self的strong成员变量有blockA，blockA内部引用了self，如果self不经过__weak处理，就会变成：</p>
+<p> self强引用blockA，blockA强引用self。这不就循环引用了嘛</p>
+<h3 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h3><p>由于runtime是更底层的语言，我们编写的OC代码在运行时，编译器内部会先转为C和C++的代码，然后再执行，因而运用runtime机制，程 序的性能也会更好。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *age;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> no;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<p>复制代码<br>  然后，我们在其它文件中使用这个类，注意在使用之前，要包含 #import &lt;objc/message.h&gt;</p>
+<p> 下面通过一小段代码来获取到上面这个类中所有的成员变量</p>
+<p>复制代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> outCount = <span class="number">0</span>;</span><br><span class="line">    Ivar *vars = class_copyIvarList([Lender <span class="keyword">class</span>], &amp;outCount); </span><br><span class="line">    <span class="comment">// 获取到所有的成员变量列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历所有的成员变量</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; outCount; i++) &#123;</span><br><span class="line">        Ivar ivar = vars[i]; <span class="comment">// 取出第i个位置的成员变量</span></span><br><span class="line">       </span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyName = ivar_getName(ivar); <span class="comment">// 获取变量名</span></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyType = ivar_getTypeEncoding(ivar); <span class="comment">// 获取变量编码类型</span></span><br><span class="line">        printf(<span class="string">&quot;---%s--%s\n&quot;</span>, propertyName, propertyType);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="什么是GCD？"><a href="#什么是GCD？" class="headerlink" title="什么是GCD？"></a>什么是GCD？</h3><p> Grand Central Dispatch或者GCD，是一套低层API，提供了一种新的方法来进行并发程序编写。从基本功能上讲，<br> GCD有点像NSOperationQueue，他们都允许程序将任务切分为多个单一任务然后提交至工作队列来并发地或者串行地执行。GCD比之NSOpertionQueue更底层更高效，并且它不是Cocoa框架的一部分。<br> GCD的基本概念就是dispatch queue。dispatch queue是一个对象，它可以接受任务，并将任务以先到先执行的顺序来执行。dispatch queue可以是并发的或串行的。并发任务会像NSOperationQueue那样基于系统负载来合适地并发进行，串行队列同一时间只执行单一任务。<br> GCD中有三种队列类型：<br> The main queue: 与主线程功能相同。实际上，提交至main queue的任务会在主线程中执行。main queue可以调用dispatch_get_main_queue()来获得。因为main queue是与主线程相关的，所以这是一个串行队列。<br> Global queues: 全局队列是并发队列，并由整个进程共享。进程中存在三个全局队列：高、中（默认）、低三个优先级队列。可以调用dispatch_get_global_queue函数传入优先级来访问队列。<br> 用户队列: 用户队列 (GCD并不这样称呼这种队列, 但是没有一个特定的名字来形容这种队列，所以我们称其为用户队列) 是用函数 dispatch_queue_create 创建的队列. 这些队列是串行的。正因为如此，它们可以用来完成同步机制, 有点像传统线程中的mutex。  </p>
+<p> 首先，我们要明确NSOperationQueue与GCD之间的关系</p>
+<p> NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。</p>
+<p> 其次，我们要区别两者的不同</p>
+<p> GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整</p>
+<p>   <a target="_blank" rel="noopener" href="http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html">http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html</a></p>
+<h3 id="xcode：关于Other-Linker-Flags"><a href="#xcode：关于Other-Linker-Flags" class="headerlink" title="xcode：关于Other Linker Flags"></a>xcode：关于Other Linker Flags</h3><p> 关于Other Linker Flags</p>
+<p> xcode中，在“Targets”选项下有Other Linker Flags选项，在这里可以填写xcode链接器的参数，如：-ObjC、-all_load、-force_load等。<br> 主要参数</p>
+<p> 这里要说的主要参数是ld工具的参数，也是在Other Linker Flags里常用到的参数。</p>
+<p> 1.-ObjC</p>
+<p> 当使用ObjC写的静态类别库（Objective-C static library that contains categories），在程序编译链接时，如果不在Other Linker Flags中填写-ObjC，往往会报错，出现”selector not recognized”。博主无力，原因看不太懂。具体原因请查阅xcode帮助文档。</p>
+<p> -ObjC的作用是加载用ObjC实现的类、类别等所有成员。</p>
+<p> 2.-all_load</p>
+<p> 强制链接器加载所有包含非ObjC的目标文档。</p>
+<ol start="3">
+<li>-force_load</li>
+</ol>
+<p> 加载指定的目标文档。-force_load后面需要文档路径</p>
+<h3 id="strong：会retain（强引用）"><a href="#strong：会retain（强引用）" class="headerlink" title="__strong：会retain（强引用）"></a>__strong：会retain（强引用）</h3><p>__weak NSObject *obj;和assign类似，多一个功能：对象销毁后置为nil</p>
+<p>__autoreleasing：使对象延迟释放</p>
+<p>__bridge:忽略所有的内存管理细节</p>
+<p>Core Foundation需要使用桥接，    </p>
+<h3 id="Objective-C运行时定义了几种重要的类型。"><a href="#Objective-C运行时定义了几种重要的类型。" class="headerlink" title="Objective-C运行时定义了几种重要的类型。"></a>Objective-C运行时定义了几种重要的类型。</h3><p> Class：定义Objective-C类<br> Ivar：定义对象的实例变量，包括类型和名字。<br> Protocol：定义正式协议。<br> objc_property_t：定义属性。叫这个名字可能是为了防止和Objective-C 1.0中的用户类型冲突，那时候还没有属性。<br> Method：定义对象方法或类方法。这个类型提供了方法的名字（就是<strong>选择器</strong>）、参数数量和类型，以及返回值（这些信息合起来称为方法的<strong>签名</strong>），还有一个指向代码的函数指针（也就是方法的<strong>实现</strong>）。<br> SEL：定义选择器。选择器是方法名的唯一标识符。<br> IMP：定义方法实现。这只是一个指向某个函数的指针，该函数接受一个对象、一个选择器和一个可变长参数列表（varargs），返回一个对象  </p>
+<h3 id="Objective-C-Method-Swizzling-IOS-中方法重组"><a href="#Objective-C-Method-Swizzling-IOS-中方法重组" class="headerlink" title="Objective-C Method Swizzling IOS 中方法重组"></a>Objective-C Method Swizzling IOS 中方法重组</h3><p>相关常用方法，都在包内：</p>
+<p>//向类中添加Method<br><code>BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
+<p>//修改类的Method IMP<br><code>class_replaceMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
+<p>//交换2个方法中的IMP<br><code>void method_exchangeImplementations(Method m1, Method m2)</code></p>
+<p>//获取类的某个实例方法<br><code>Method class_getInstanceMethod(Class aClass, SEL aSelector);</code><br>底层原理</p>
+<p>在运行时，<code>oc</code> 的方法被称为一种叫 <code>Method</code> 的结构体，这种 <code>objc_method</code> 类型的结构体定义为：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_method &#123;</span><br><span class="line">   SEL method_name         OBJC2_UNAVAILABLE;</span><br><span class="line">   <span class="keyword">char</span> *method_types      OBJC2_UNAVAILABLE;</span><br><span class="line">   IMP method_imp          OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -741,7 +1064,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -755,7 +1078,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/" class="post-title-link" itemprop="url">Android Studio平台下无线调试</a>
+            <a href="/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/" class="post-title-link" itemprop="url">UIBezierPath画边角弧度</a>
         </h2>
 
         <div class="post-meta">
@@ -780,7 +1103,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -795,7 +1118,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JJ583500596/article/details/75081462">Android Studio平台下无线调试</a></p>
+          <h3 id="UIBezierPath"><a href="#UIBezierPath" class="headerlink" title="UIBezierPath"></a>UIBezierPath</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIBezierPath</span> *maskPath = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:m_newsIV.bounds</span><br><span class="line">                                                     byRoundingCorners:<span class="built_in">UIRectCornerTopLeft</span> | <span class="built_in">UIRectCornerTopRight</span></span><br><span class="line">                                                           cornerRadii:<span class="built_in">CGSizeMake</span>(<span class="number">10.0</span>, <span class="number">10.0</span>)];</span><br><span class="line">      <span class="comment">// Create the shape layer and set its path</span></span><br><span class="line">      <span class="built_in">CAShapeLayer</span> *maskLayer = [<span class="built_in">CAShapeLayer</span> layer];</span><br><span class="line">      maskLayer.frame = m_newsIV.bounds;</span><br><span class="line">      maskLayer.path = maskPath.CGPath;</span><br><span class="line">      <span class="comment">// Set the newly created shape layer as the mask for the image view&#x27;s layer</span></span><br><span class="line">      m_newsIV.layer.mask = maskLayer;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -815,7 +1139,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android-code-style/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -829,7 +1153,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android-code-style/" class="post-title-link" itemprop="url">Android编码规范</a>
+            <a href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/" class="post-title-link" itemprop="url">正则</a>
         </h2>
 
         <div class="post-meta">
@@ -854,7 +1178,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -869,9 +1193,377 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/android-code-style">Android编码规范</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/AndroidFine">Android快速开发框架</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/android-modularization">Android组件化设计思路</a></p>
+          <table log-set-param="table_view" data-sort="sortDisabled" valign="top"><tbody><tr><td align="left" width="75">
+<div class="para"><strong>元字符</strong></div>
+</td>
+<td align="left" valign="top" width="658">
+<div class="para"><strong>描述</strong></div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&ldquo;\\n&rdquo;匹配\n。&ldquo;\n&rdquo;匹配换行符。序列&ldquo;\\&rdquo;匹配&ldquo;\&rdquo;而&ldquo;\(&rdquo;则匹配&ldquo;(&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">^</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之后的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">$</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之前的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">*</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或多次(大于等于0次)。例如，zo*能匹配&ldquo;z&rdquo;，&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;。*等价于{0,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">+</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式一次或多次(大于等于1次）。例如，&ldquo;zo+&rdquo;能匹配&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;，但不能匹配&ldquo;z&rdquo;。+等价于{1,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或一次。例如，&ldquo;do(es)?&rdquo;可以匹配&ldquo;do&rdquo;或&ldquo;does&rdquo;中的&ldquo;do&rdquo;。?等价于{0,1}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。匹配确定的n次。例如，&ldquo;o{2}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但是能匹配&ldquo;food&rdquo;中的两个o。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。至少匹配n次。例如，&ldquo;o{2,}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但能匹配&ldquo;foooood&rdquo;中的所有o。&ldquo;o{1,}&rdquo;等价于&ldquo;o+&rdquo;。&ldquo;o{0,}&rdquo;则等价于&ldquo;o*&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,m}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，&ldquo;o{1,3}&rdquo;将匹配&ldquo;fooooood&rdquo;中的前三个o。&ldquo;o{0,1}&rdquo;等价于&ldquo;o?&rdquo;。请注意在逗号和两个数之间不能有空格。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串&ldquo;oooo&rdquo;，&ldquo;o+?&rdquo;将匹配单个&ldquo;o&rdquo;，而&ldquo;o+&rdquo;将匹配所有&ldquo;o&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">.点</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配除&ldquo;\r\n&rdquo;之外的任何单个字符。要匹配包括&ldquo;\r\n&rdquo;在内的任何字符，请使用像&ldquo;[\s\S]&rdquo;的模式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0&hellip;$9属性。要匹配圆括号字符，请使用&ldquo;\(&rdquo;或&ldquo;\)&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?:pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符&ldquo;(|)&rdquo;来组合一个模式的各个部分是很有用。例如&ldquo;industr(?:y|ies)&rdquo;就是一个比&ldquo;industry|industries&rdquo;更简略的表达式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，&ldquo;Windows(?=95|98|NT|2000)&rdquo;能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如&ldquo;Windows(?!95|98|NT|2000)&rdquo;能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向肯定预查，与正向肯定预查类似，只是方向相反。例如，&ldquo;(?&lt;=95|98|NT|2000)Windows&rdquo;能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向否定预查，与正向否定预查类似，只是方向相反。例如&ldquo;(?&lt;!95|98|NT|2000)Windows&rdquo;能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">x|y</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配x或y。例如，&ldquo;z|food&rdquo;能匹配&ldquo;z&rdquo;或&ldquo;food&rdquo;。&ldquo;(z|f)ood&rdquo;则匹配&ldquo;zood&rdquo;或&ldquo;food&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符集合。匹配所包含的任意一个字符。例如，&ldquo;[abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;a&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符集合。匹配未包含的任意字符。例如，&ldquo;[^abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;plin&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符范围。匹配指定范围内的任意字符。例如，&ldquo;[a-z]&rdquo;可以匹配&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意小写字母字符。</div>
+<div class="para">注意:只有连字符在字符组内部时,并且出现在两个字符之间时,才能表示字符的范围; 如果出字符组的开头,则只能表示连字符本身.</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符范围。匹配任何不在指定范围内的任意字符。例如，&ldquo;[^a-z]&rdquo;可以匹配任何不在&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\b</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个单词边界，也就是指单词和空格间的位置。例如，&ldquo;er\b&rdquo;可以匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\B</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配非单词边界。&ldquo;er\B&rdquo;能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\cx</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的&ldquo;c&rdquo;字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\d</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个数字字符。等价于[0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\D</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个非数字字符。等价于[^0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\f</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换页符。等价于\x0c和\cL。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换行符。等价于\x0a和\cJ。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\r</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个回车符。等价于\x0d和\cM。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\s</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\S</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\t</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个制表符。等价于\x09和\cI。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\v</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个垂直制表符。等价于\x0b和\cK。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\w</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配包括下划线的任何单词字符。等价于&ldquo;[A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\W</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非单词字符。等价于&ldquo;[^A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\xn</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，&ldquo;\x41&rdquo;匹配&ldquo;A&rdquo;。&ldquo;\x041&rdquo;则等价于&ldquo;\x04&amp;1&rdquo;。正则表达式中可以使用ASCII编码。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\num</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配num，其中num是一个正整数。对所获取的匹配的引用。例如，&ldquo;(.)\1&rdquo;匹配两个连续的相同字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nm</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nml</div>
+</td>
+<td align="left" valign="center">
+<div class="para">如果n为八进制数字（0-7），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\un</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&amp;copy;）。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">\&lt; \&gt;</td>
+<td align="left" valign="center">匹配词（word）的开始（\&lt;）和结束（\&gt;）。例如正则表达式\&lt;the\&gt;能够匹配字符串"for the wise"中的"the"，但是不能匹配字符串"otherwise"中的"the"。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">\( \)</td>
+<td align="left" valign="center">将 \( 和 \) 之间的表达式定义为&ldquo;组&rdquo;（group），并且将匹配这个表达式的字符保存到一个临时区域（一个正则表达式中最多可以保存9个），它们可以用 \1 到\9 的符号来引用。</td>
+</tr>
+<tr>
+<td align="left" valign="center">|</td>
+<td align="left" valign="center">将两个匹配条件进行逻辑&ldquo;或&rdquo;（Or）运算。例如正则表达式(him|her) 匹配"it belongs to him"和"it belongs to her"，但是不能匹配"it belongs to them."。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">+</td>
+<td align="left" valign="center">匹配1或多个正好在它之前的那个字符。例如正则表达式9+匹配9、99、999等。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">?</td>
+<td align="left" valign="center">匹配0或1个正好在它之前的那个字符。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">{i} {i,j}</td>
+<td align="left" valign="center">匹配指定数目的字符，这些字符是在它之前的表达式定义的。例如正则表达式A[0-9]{3} 能够匹配字符"A"后面跟着正好3个数字字符的串，例如A123、A348等，但是不匹配A1234。而正则表达式[0-9]{4,6} 匹配连续的任意4个、5个或者6个数字</td>
+</tr>
+</tbody>
+</table>
+
 
       
     </div>
@@ -891,7 +1583,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -905,7 +1597,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">泛型</a>
+            <a href="/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">深入理解iOS App的启动过程</a>
         </h2>
 
         <div class="post-meta">
@@ -930,7 +1622,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -945,13 +1637,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="什么是泛型？"><a href="#什么是泛型？" class="headerlink" title="什么是泛型？"></a>什么是泛型？</h3><p>泛型，大概的意思是指没有指定具体的类型的类或方法，以泛型的形式传入一个类中或方法中，在Java编程(Android编程)里面使用一对尖括号和一个大写字母表示，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//泛型类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//泛型方法，类型参数位于返回类型之前或void之前</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(E [] arr, E x)</span></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(E val:arr)&#123;</span><br><span class="line">      <span class="keyword">if</span>(x.equal(val))&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="泛型-（-extends-T和-super-T）"><a href="#泛型-（-extends-T和-super-T）" class="headerlink" title="泛型 （? extends T和? super T）"></a>泛型 （? extends T和? super T）</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/android_bar/article/details/81486161">泛型 （? extends T和? super T）</a></p>
-<? extends T>和<? super T>是泛型中的“通配符（Wildcards）”和“边界（Bounds）”的概念。
-
-* <? extends T>：上界通配符（Upper Bounds Wildcards）
-* <? super T>：    下界通配符（Lower Bounds Wildcards）
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Hello_Hwc/article/details/78317863?locationNum=9&fps=1">深入理解iOS App的启动过程</a></p>
+<h2 id="准备知识-知道概念"><a href="#准备知识-知道概念" class="headerlink" title="准备知识 知道概念"></a>准备知识 知道概念</h2><h3 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h3><p>哪些名词指的是Mach-o ?</p>
+<ul>
+<li>Executable 可执行文件</li>
+<li>Dylib 动态库</li>
+<li>Bundle 无法被连接的动态库，只能通过dlopen()加载</li>
+<li>Image 指的是Executable，Dylib或者Bundle的一种，文中会多次使用Image这个名词。</li>
+<li>Framework 动态库和对应的头文件和资源文件的集合</li>
+</ul>
+<p>Apple出品的操作系统的可执行文件格式几乎都是mach-o，iOS当然也不例外。<br>mach-o可以大致的分为三部分：</p>
+<ul>
+<li>Header 头部，包含可以执行的CPU架构，比如x86,arm64</li>
+<li>Load commands 加载命令，包含文件的组织架构和在虚拟内存中的布局方式</li>
+<li>Data，数据，包含load commands中需要的各个段(segment)的数据，每一个Segment都得大小是Page的整数倍。</li>
+</ul>
+<p>那么Data部分又包含哪些segment呢？绝大多数mach-o包括以下三个段（支持用户自定义Segment，但是很少使用）</p>
+<ul>
+<li><code>__TEXT</code> 代码段，只读，包括函数，和只读的字符串，上图中类似<code>__TEXT</code>,__text的都是代码段</li>
+<li><code>__DATA </code>数据段，读写，包括可读写的全局变量等，上图类似中的<code>__DATA</code>,<code>__data</code>都是数据段</li>
+<li><code>__LINKEDIT</code> <code> __LINKEDIT</code>包含了方法和变量的元数据（位置，偏移量），以及代码签名等信息。</li>
+</ul>
+<h3 id="dyld"><a href="#dyld" class="headerlink" title="dyld"></a>dyld</h3><blockquote>
+<p>dyld的全称是dynamic loader，它的作用是加载一个进程所需要的image，dyld是开源的。</p>
+</blockquote>
+<h3 id="Virtual-Memory"><a href="#Virtual-Memory" class="headerlink" title="Virtual Memory"></a>Virtual Memory</h3><blockquote>
+<p>虚拟内存是在物理内存上建立的一个逻辑地址空间，它向上（应用）提供了一个连续的逻辑地址空间，向下隐藏了物理内存的细节。<br>虚拟内存使得逻辑地址可以没有实际的物理地址，也可以让多个逻辑地址对应到一个物理地址。<br>虚拟内存被划分为一个个大小相同的Page（64位系统上是16KB），提高管理和读写的效率。 Page又分为只读和读写的Page。</p>
+</blockquote>
+<p>虚拟内存是建立在物理内存和进程之间的中间层。在iOS上，当内存不足的时候，会尝试释放那些只读的Page，因为只读的Page在下次被访问的时候，可以再从磁盘读取。如果没有可用内存，会通知在后台的App（也就是在这个时候收到了memory warning），如果在这之后仍然没有可用内存，则会杀死在后台的App。</p>
+<h3 id="Page-fault"><a href="#Page-fault" class="headerlink" title="Page fault"></a>Page fault</h3><blockquote>
+<p>在应用执行的时候，它被分配的逻辑地址空间都是可以访问的，当应用访问一个逻辑Page，而在对应的物理内存中并不存在的时候，这时候就发生了一次Page fault。当Page fault发生的时候，会中断当前的程序，在物理内存中寻找一个可用的Page，然后从磁盘中读取数据到物理内存，接着继续执行当前程序。</p>
+</blockquote>
+<h3 id="Dirty-Page-amp-Clean-Page"><a href="#Dirty-Page-amp-Clean-Page" class="headerlink" title="Dirty Page &amp; Clean Page"></a>Dirty Page &amp; Clean Page</h3><p>1、如果一个Page可以从磁盘上重新生成，那么这个Page称为Clean Page<br>2、如果一个Page包含了进程相关信息，那么这个Page称为Dirty Page<br>像代码段这种只读的Page就是Clean Page。而像数据段(_DATA)这种读写的Page，当写数据发生的时候，会触发COW(Copy on write)，也就是写时复制，Page会被标记成Dirty，同时会被复制。</p>
+<h2 id="启动过程"><a href="#启动过程" class="headerlink" title="启动过程"></a>启动过程</h2><p><img src="/images/app_start.jpg"></p>
+<h3 id="加载动态库"><a href="#加载动态库" class="headerlink" title="加载动态库"></a>加载动态库</h3><blockquote>
+<p>dyld会首先读取mach-o文件的Header和load commands。<br>接着就知道了这个可执行文件依赖的动态库。例如加载动态库A到内存，接着检查A所依赖的动态库，就这样的递归加载，直到所有的动态库加载完毕。通常一个App所依赖的动态库在100-400个左右，其中大多数都是系统的动态库，它们会被缓存到dyld shared cache，这样读取的效率会很高。</p>
+</blockquote>
+<h3 id="Rebase-amp-amp-Bind"><a href="#Rebase-amp-amp-Bind" class="headerlink" title="Rebase &amp;&amp; Bind"></a>Rebase &amp;&amp; Bind</h3><p>为什么要Rebase？</p>
+<p>有两种主要的技术来保证应用的安全：ASLR和Code Sign。</p>
+<p>ASLR的全称是Address space layout randomization，翻译过来就是“地址空间布局随机化”。App被启动的时候，程序会被影射到逻辑的地址空间，这个逻辑的地址空间有一个起始地址，而ASLR技术使得这个起始地址是随机的。如果是固定的，那么黑客很容易就可以由起始地址+偏移量找到函数的地址。</p>
+<ul>
+<li>Rebase 修正内部(指向当前mach-o文件)的指针指向</li>
+<li>Bind 修正外部指针指向</li>
+</ul>
+<h3 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective C"></a>Objective C</h3><p>Objective C是动态语言，所以在执行main函数之前，需要把类的信息注册到一个全局的Table中。同时，Objective C支持Category，在初始化的时候，也会把Category中的方法注册到对应的类中，同时会唯一Selector，这也是为什么当你的Cagegory实现了类中同名的方法后，类中的方法会被覆盖。</p>
+<p>另外，由于iOS开发时基于Cocoa Touch的，所以绝大多数的类起始都是系统类，所以大多数的Runtime初始化起始在Rebase和Bind中已经完成。</p>
+<h3 id="Initializers"><a href="#Initializers" class="headerlink" title="Initializers"></a>Initializers</h3><p>接下来就是必要的初始化部分了，主要包括几部分：</p>
+<p>+load方法。<br>C／C++静态初始化对象和标记为__attribute__(constructor)的方法<br>这里要提一点的就是，+load方法已经被弃用了，如果你用Swift开发，你会发现根本无法去写这样一个方法，官方的建议是实用initialize。区别就是，load是在类装载的时候执行，而initialize是在类第一次收到message前调用。</p>
+<h3 id="Main函数之后"><a href="#Main函数之后" class="headerlink" title="Main函数之后"></a>Main函数之后</h3><p>从main函数开始执行，到你的第一个界面显示，这期间一般会做哪些事情。</p>
+<ul>
+<li>执行AppDelegate的代理方法，主要是didFinishLaunchingWithOptions</li>
+<li>初始化Window，初始化基础的ViewController结构(一般是UINavigationController+UITabViewController)</li>
+<li>获取数据(Local DB／Network)，展示给用户。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不同的App在启动的时候做的事情往往不同，但是优化起来的核心思想无非就两个：</p>
+<p>能延迟执行的就延迟执行。比如SDK的初始化，界面的创建。<br>不能延迟执行的，尽量放到后台执行。比如数据读取，原始JSON数据转对象，日志发送。<br>Main函数之前</p>
+<p>Main函数之前是iOS系统的工作，所以这部分的优化往往更具有通用性。</p>
+<h3 id="dylibs"><a href="#dylibs" class="headerlink" title="dylibs"></a>dylibs</h3><p>启动的第一步是加载动态库，加载系统的动态库使很快的，因为可以缓存，而加载内嵌的动态库速度较慢。所以，提高这一步的效率的关键是：减少动态库的数量。</p>
+<p>合并动态库，比如公司内部由私有Pod建立了如下动态库：XXTableView, XXHUD, XXLabel，强烈建议合并成一个XXUIKit来提高加载速度。</p>
+<h3 id="Rebase-amp-Bind-amp-Objective-C-Runtime"><a href="#Rebase-amp-Bind-amp-Objective-C-Runtime" class="headerlink" title="Rebase &amp; Bind &amp; Objective C Runtime"></a>Rebase &amp; Bind &amp; Objective C Runtime</h3><p>Rebase和Bind都是为了解决指针引用的问题。对于Objective C开发来说，主要的时间消耗在Class/Method的符号加载上，所以常见的优化方案是：</p>
+<p>减少__DATA段中的指针数量。<br>合并Category和功能类似的类。比如：UIView+Frame,UIView+AutoLayout…合并为一个<br>删除无用的方法和类。<br>多用Swift Structs，因为Swfit Structs是静态分发的。感兴趣的同学可以看看我之前这篇文章：《Swift进阶之内存模型和方法调度》</p>
+<h3 id="Initializers-1"><a href="#Initializers-1" class="headerlink" title="Initializers"></a>Initializers</h3><p>通常，我们会在+load方法中进行method-swizzling，这也是Nshipster推荐的方式。</p>
+<p>用initialize替代load。不少同学喜欢用method-swizzling来实现AOP去做日志统计等内容，强烈建议改为在initialize进行初始化。<br>减少__atribute__((constructor))的使用，而是在第一次访问的时候才用dispatch_once等方式初始化。<br>不要创建线程<br>使用Swfit重写代码。</p>
 
       
     </div>

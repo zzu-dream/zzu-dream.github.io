@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android-code-style/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +200,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/" class="post-title-link" itemprop="url">如何判断代码运行在DEBUG还是RELEASE模式下？</a>
+            <a href="/2018/06/11/android/android-code-style/" class="post-title-link" itemprop="url">Android编码规范</a>
         </h2>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -240,318 +240,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-</blockquote>
-<p>首先确定下项目的 Build Settings 是否已经设置过宏定义 DEBUG，如何看呢？<br>点击 Build Settings ，然后在搜索框里输入‘macros’</p>
-<p><img src="/images/debug.png"></p>
-<blockquote>
-<p>如果已经设置过，在 Preprocessor Macros 的 Debug 后面会有 DEBUG=1，如果没有，就手动设置下。<br>接下来就可以这样做了</p>
-</blockquote>
- <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/a/9063682">http://stackoverflow.com/a/9063682</a></p>
-<p>一般Apple已经为我们设置好了 DEBUG 的宏定义，所以，我们只要让 NSLog 在 DEBUG 模式下失效就好了，这样能让我们的程序运行起来更加稳定，同时我们也可以继续使用正规的 NSLog。</p>
-</blockquote>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//put this in prefix.pch</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> DEBUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> NSLog</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLog(args, ...)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E3%80%8AEffective-Objective-C%202.0%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E3%80%8AEffective-Objective-C%202.0%E3%80%8B/" class="post-title-link" itemprop="url">《Effective-Objective-C 2.0》</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>图片原地址：<a target="_blank" rel="noopener" href="https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png">https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png</a><br><img src="https://upload-images.jianshu.io/upload_images/1457495-debf9e0c37687e51.png" alt="图片"><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/862b064e82e0">对应简书总结</a><br><a target="_blank" rel="noopener" href="https://github.com/aozhimin/awesome-iOS-resource/blob/master/Books/Effective%20Objective-C%202.0%20%20%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FiOS%E4%B8%8EOS%20X%E4%BB%A3%E7%A0%81%E7%9A%8452%E4%B8%AA%E6%9C%89%E6%95%88%E6%96%B9%E6%B3%95.pdf">Effective-Objective-C 2.0.pdf</a><br><a target="_blank" rel="noopener" href="https://github.com/aozhimin/awesome-iOS-resource/tree/master/Books">iOS相关书籍汇总</a></p>
-<hr>
-<p><em>分界线</em></p>
-<hr>
-<blockquote>
-<p>说明：以下内容 均来自与jatstar的汇总 只做引用学习 没有商业用途 <a target="_blank" rel="noopener" href="https://jatstar.cn/2016/07/10/Effective-Objective-C-2-0/">Effective-Objective-C 2.0</a></p>
-</blockquote>
-<h3 id="熟悉Objective-C"><a href="#熟悉Objective-C" class="headerlink" title="熟悉Objective-C"></a>熟悉Objective-C</h3><ul>
-<li>起源<ol>
-<li>由消息型语言鼻祖Smalltalk演化而来。是C语言的超集。</li>
-<li>与函数式语言关键区别：消息结构的语言，运行时所执行的代码由运行环境决定(动态绑定)；函数调用的语言，由编译器决定。</li>
-<li>NSString *someString 中 someString为指向NSString 的指针。Type * 声明的对象总是被分配的堆区(heap space) 中，而绝不可能分配的栈区(stack)。</li>
-<li>如果只需保存int float double char 等非对象类型（nonoobject type） ，使用C结构体(如CGRect)比使用OC对象性能更优，因为创建OC对象需要分配及释放堆区内存等额外开销。 </li>
-</ol>
-</li>
-<li>在类的头文件中尽量少引入其他头文件<ol>
-<li>头文件在类的头文件中，少引入头文件，使用@Class 向前声明即可。 然后在实现文件中再引入那些类的头文件。这样可以降低类之间的耦合。</li>
-<li>无法使用向前声明的情况，如果 引入当前类遵守的某一项协议，此时把协议单独放下一个头文件中，再将其引入。</li>
-</ol>
-</li>
-<li>多用字面量语法，少用与之等价的方法。</li>
-</ul>
-<ol>
-<li>举个🌰:</li>
-</ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSNumber</span> *intNumber = @<span class="number">1</span>;</span><br><span class="line"><span class="built_in">NSNumber</span> *floatNumber = @<span class="number">2.5</span>f;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSArray</span> *namesArray = @[<span class="string">@&quot;Jat&quot;</span>,<span class="string">@&quot;Jay&quot;</span>,<span class="string">@&quot;Vae&quot;</span>];</span><br><span class="line"><span class="built_in">NSString</span> *myName = namesArray[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSDictionary</span> *personData = @&#123;<span class="string">@&quot;ChineseName&quot;</span>:<span class="string">@&quot;张建宇&quot;</span>,</span><br><span class="line"><span class="string">@&quot;EnglishName&quot;</span>:<span class="string">@&quot;Jat&quot;</span>,</span><br><span class="line"><span class="string">@&quot;age&quot;</span>:<span class="string">@&quot;23&quot;</span>&#125;</span><br><span class="line">Number *myAge = personData[<span class="string">@&quot;age&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//通过字面量创建的数组或者字典 ，如果值中有nil，会抛出异常。</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>多用类型常量，少用＃define 预处理指令。  </p>
-<ol>
-<li>＃define定义的出来的常量，不包含类型信息，编译器需要再编译前执行查找替换，会增加编译时间。  </li>
-<li>只在当前类使用的常量，可以使用 static const 在.m中定义。  </li>
-<li>在头文件中使用extern来声明全局变量,并在相关实现文件中定义其值。命名时，通常使用于是相关的类名最为前缀。如  UITextFieldTextDidBeginEditingNotification 。  </li>
-<li>《iOS开发中 const,static,extern用法总结》  </li>
-</ol>
-</li>
-<li><p>使用枚举来表示状态，选项，状态码  </p>
-<ol>
-<li>易懂的枚举名可以提高代码的可读性。  </li>
-<li>选项为多选时，使用二进制表示枚举值，以便通过按位或将其组合起来。🌰：  UIInterfaceOrientationMask。  </li>
-<li>switch语句中，不要实现default分支。这样加入新的枚举之后，编译器会提示：switch语句没有处理所有枚举值。  <h3 id="消息／对象／运行时"><a href="#消息／对象／运行时" class="headerlink" title="消息／对象／运行时"></a>消息／对象／运行时</h3></li>
-</ol>
-</li>
-<li><p>理解“属性” 这一概念 Objective-C语法@property详解</p>
-</li>
-<li><p>在对象内部尽量直接访问实例变量。</p>
-<ol>
-<li>直接访问实例变量不经过方法派发，比点语法快。</li>
-<li>⚠️直接访问copy修饰的属性，不会掉用setter方法，所以不会拷贝该属性。</li>
-<li>⚠️不会触发KVO通知。是否会产生问题，视情况而定。</li>
-<li>初始化方法和dealloc方法中，总是应该直接访问。</li>
-<li>⚠️注意考虑懒加载的情况下，要使用点语法。</li>
-</ol>
-</li>
-<li><p>理解“对象等同性”这一概念。</p>
-<ol>
-<li>==比较的是指针地址是否一样。</li>
-<li>特有的等同性判断方法，如isEqualToString比isEqual快一些。</li>
-<li>相同的对象必须具有相同的哈希码，但是哈希码相同的对象未必相同。</li>
-<li>不必逐条比较每个属性的哈希码，依情况，使用速度快，碰撞率低的算法。</li>
-</ol>
-</li>
-<li><p>以“类族模式”隐藏实现细节</p>
-<ol>
-<li>例如UIButton 中的 + (instancetype)buttonWithType:(UIButtonType)buttonType.</li>
-<li>可以把实现细节隐藏在一个公共的接口后面。</li>
-</ol>
-</li>
-<li><p>在既有类中使用关联对象存放自定义数据</p>
-</li>
-<li><p>理解objc_msgSend 的作用</p>
-<ol>
-<li>Objective-c “动态绑定(dynamic binding)” 的特性使得所要调用的函数直到运行时才能确定。通过动态消息派发系统(dynamic message dicpatch system)来查出对应的方法并执行。</li>
-<li>消息由接收者(receiver)，选择子(selecter)，以及参数构成。调用方法实际上相当于在给对象发送消息。</li>
-</ol>
-</li>
-<li><p>理解消息转发机制 //TODO： 待续</p>
-</li>
-<li><p>用方法调配技术调试黑盒方法 </p>
-</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Category</span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;NSString+Test.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;objc runtime.h=&quot;&quot;&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSString</span> (<span class="title">Test</span>)</span></span><br><span class="line">- (<span class="built_in">NSString</span>*)eoc_myLowercaseString &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *lowercase = [<span class="keyword">self</span> eoc_myLowercaseString];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%@ =&gt; %@&quot;</span>, <span class="keyword">self</span>, lowercase);</span><br><span class="line">    <span class="keyword">return</span> lowercase;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 不会死循环，因为eoc_myLowercaseString与lowercaseString方法互换了，运行时期间eoc_myLowercaseString选择子实际上对应的原有的lowercaseString方法实现。</span></span><br><span class="line">+ (<span class="keyword">void</span>)load&#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod([<span class="built_in">NSString</span> <span class="keyword">class</span>],<span class="keyword">@selector</span>(lowercaseString));</span><br><span class="line">    Method swappedMethod = class_getInstanceMethod([<span class="built_in">NSString</span> <span class="keyword">class</span>],<span class="keyword">@selector</span>(eoc_myLowercaseString));</span><br><span class="line">    method_exchangeImplementations(originalMethod, swappedMethod);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span> </span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">测试一下：</span></span><br><span class="line"><span class="comment">NSString *string = @&quot;Hello World&quot;;</span></span><br><span class="line"><span class="comment">NSString *textString = [string lowercaseString];</span></span><br><span class="line"><span class="comment">Output:</span></span><br><span class="line"><span class="comment">Hello World =&gt; hello world</span></span><br><span class="line"><span class="comment">*/</span>&lt;/objc&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>理解类对象的用意 //TODO: 待续</p>
-<h3 id="接口与API设计"><a href="#接口与API设计" class="headerlink" title="接口与API设计"></a>接口与API设计</h3></li>
-<li><p>使用前缀避免命名空间冲突。</p>
-</li>
-<li><p>提供全能初始化方法</p>
-<ol>
-<li>提供一个全能初始化方法，并与文档中指明，其他初始化方法均调用此方法。</li>
-<li>全能初始化方法与超类不同时，应该重写，冲突时，应该加上抛异常机制提示。</li>
-</ol>
-</li>
-<li><p>实现description方法</p>
-<ol>
-<li>自定义类，覆写description方法，返回的字符串，NSLog时的显示该字符串；</li>
-<li>重写debugDescription，改变调试控制台输出信息，默认为description方法的返回值。</li>
-</ol>
-</li>
-<li><p>尽量使用不可变对象。</p>
-</li>
-<li><p>使用清晰而且协调的命名方式</p>
-</li>
-<li><p>为私有方法名加前缀</p>
-<ol>
-<li>给私有方法名加上前缀(虽然我感觉没必要～也没见过知名开源项目有加；但是爱老婆说按规范要加)</li>
-<li>不要使用下划线做私有方法的前缀，因为这种做法是预留给苹果的。</li>
-</ol>
-</li>
-<li><p>理解Objective-C错误模型</p>
-<ol>
-<li>只有发生使整个应用崩溃的严重错误时，才之用异常。</li>
-<li>不那么严重的错误，可以指派委托方法来处理错误，也可以把错误信息放在NSError里，由NSLog输出。 </li>
-</ol>
-</li>
-<li><p>理解NSCoding协议。</p>
-<ol>
-<li>想令对象具有拷贝功能，需实现NSCoying协议；如果对象有可变版本，还需要实现NSMutableCopying协议。</li>
-<li>浅拷贝之后的内容与原始内容指针地址相同，深拷贝之后的内容指向原始内容相关对象的一份拷贝。(深拷贝会逐个元素发送Copy消息，用拷贝得到元素创建Set);</li>
-</ol>
-</li>
-<li><p>通过委托与数据源协议进行对象间的通信。</p>
-<ol>
-<li>@property(nonatomic,weak)id<classnamedelegate> delegate</classnamedelegate> 用weak修饰，，防止循环引用(retain cycle);</li>
-</ol>
-</li>
-<li><p>将类的实现代码分散到便于管理的数个分类之中。//易于管理</p>
-</li>
-<li><p>总是为第三方类的分类名称增加前缀。</p>
-</li>
-<li><p>勿在分类中声明属性。</p>
-<ol>
-<li>封装数据所用的全部属性都定义在主接口里。</li>
-<li>关联对象可以解决分类不能合成实例变量的问题。//本书作者认为此方法内存管理上容易出错，不是很推荐。</li>
-</ol>
-</li>
-<li><p>使用“class-continuation”分类 隐藏实现细节 //就是Extension吧，匿名的分类。</p>
-</li>
-<li><p>通过协议提供匿名对象。 //隐藏返回值类型</p>
-<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3></li>
-<li><p>理解引用计数</p>
-</li>
-<li><p>以ARC简化引用计数</p>
-</li>
-<li><p>在dealloc方法中只释放引用并移除监听(KVO和Notifications)</p>
-</li>
-<li><p>编写 “异常安全代码”时留意内存管理问题(即：使用@try...@catch语法时)</p>
-</li>
-<li><p>以弱引用避免保留环(retain cycle :循环引用)</p>
-</li>
-<li><p>以“自动释放池块”降低内存峰值。</p>
-</li>
-<li><p>用“僵尸对象”调试内存管理问题。</p>
-<ol>
-<li>系统在回收对象时，可以不将其真正回收，而是把它转化为僵尸对象。</li>
-<li>系统会修改对象的isa指针，令其指向特殊的僵尸类。僵尸类能够响应所有的选择子，打印一条包含消息内容以及接收者的消息，然后终止程序。</li>
-</ol>
-</li>
-<li><p>不要使用retainCount。(ARC模式下，此方法废弃了)。</p>
-<h3 id="block与GCD"><a href="#block与GCD" class="headerlink" title="block与GCD"></a>block与GCD</h3></li>
-</ul>
-<p>//翻译成 块与大中枢派发也是醉了。。。</p>
-<ul>
-<li>理解block这一概念。<ol>
-<li>语法结构： return_type (^block_name)(parameters)</li>
-<li>默认情况下block外的变量需要在block中修改的，需要在声明时加__block修饰，但block修改其所在的类的成员变量时不需要加。</li>
-<li>定义block时，它是分配在栈区的，所以。只在其作用域范围有效。调用copy拷贝到堆区之后可以和OC对象一样具备引用计数。由ARC去管理。</li>
-</ol>
-</li>
-<li>为常见的block类型创建typedef</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span>(^SomeBlock)(<span class="built_in">BOOL</span> flag,<span class="keyword">int</span> value);</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用：</span></span><br><span class="line">SomeBlock block = ^ (<span class="built_in">BOOL</span> flag,<span class="keyword">int</span> value)&#123;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        <span class="keyword">return</span> value * <span class="number">5</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value *<span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用handler block降低代码的分散程度。//如AFN中的网络请求回调</li>
-<li>用block引用其所属对象时不要出现循环引用。</li>
-<li>多用派发队列，少用同步锁。<ol>
-<li>派发队列可以用来表述同步语义(synchornization semantic),比使用@synchronized块和NSLock对象更简单。</li>
-<li>使用同步和异步派发结合起来，可以实现与普通加锁一样的同步行为，而且不会阻塞执行异步派发的线程。</li>
-<li>使用同步队列和栅栏块，可以让同步锁更加高效。</li>
-</ol>
-</li>
-<li>多用GCD,少用｀performSelector｀系列方法。</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SEL selector;</span><br><span class="line"><span class="keyword">if</span>(<span class="comment">/* some condition */</span>)&#123;</span><br><span class="line">    selector = <span class="keyword">@selector</span>(foo);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="comment">/* some other condition */</span>)&#123;</span><br><span class="line">    selector = <span class="keyword">@selector</span>(bar);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    selector = @selecter(baz)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>/*<br>运行时才能确定调用列哪个方法，<br>编译器没有办法在编译时按ARC的内存管理原则判定返回值是不是该释放，<br>编译器没有添加释放操作。<br>这将又可能导致内存泄漏<br>*/</p>
-<ul>
-<li>掌握GCD和NSOperationQueue的使用时机。<ol>
-<li>运行任务之前，可以用在NSOperation对象上调用cancel取消该任务。</li>
-<li>可以指定任务间的依赖关系。</li>
-<li>可以通过KVO监听NSOperation的属性。例如isFinished,isCancelled。</li>
-<li>指定操作的优先级。</li>
-<li>重用NSOperation对象。</li>
-</ol>
-</li>
-<li>通过Dispathtch Group机制，根据系统资源状况来执行任务。</li>
-<li>使用dispatch_once来执行只需运行一次的线程安全代码。</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+(<span class="keyword">id</span>)sharedInstance&#123;</span><br><span class="line">    <span class="keyword">static</span> SomeClass *sharedInstance = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(@onceToken,^&#123;</span><br><span class="line">        sharedInstance = [[<span class="keyword">self</span> alloc]init];</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> sharedInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>不要使用dispatch_get_current_queue(void);//调试还是可以用下的</p>
-<h3 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h3></li>
-<li><p>熟悉系统框架。</p>
-<ol>
-<li>CFNetWork:提供C语言级别的网络通信能力，将BSDsocket抽象成易于使用的接口。</li>
-<li>CoreAudio:提供的C语言API可用来操作设备上的音频硬件。</li>
-<li>AVFoundation:处理音频视频的录制，回放。</li>
-<li>CoreData:用于实现数据持久化。</li>
-<li>CoreText:提供C语言接口，用于执行文字排版以及渲染操作。</li>
-</ol>
-</li>
-<li><p>多用block枚举，少用for循环。//block枚举本身通过GCD并发执行遍历，更高效。</p>
-</li>
-<li><p>对自定义其内存管理语义的cellection使用无缝桥接。</p>
-</li>
-<li><p>构建缓存时选用NSCache而非NSDictionary.// low memory时 NSCache会自动删减缓存</p>
-</li>
-<li><p>精简initalize和load的实现代码。</p>
-<ol>
-<li>iOS平台上，当类或者分类载入系统时，会先调用+(void) load;同时实现时，先调类里面的，再调用分类里面的。</li>
-<li>无法判断各个类载入的顺序，所以在load方法使用第三方类比较危险。</li>
-<li>load方法会阻塞线程，所以要尽量精简里面的代码。</li>
-<li>首次使用某个类是，会调用该类的+(void) initalize方法，可以覆写该方法做一些与类相关的初始化操作。但是同load一样，也应该尽量精简。</li>
-</ol>
-</li>
-<li><p>别忘了NSTimer会保留目标对象。//weakSelf大法打破循环就好了。</p>
-</li>
-</ul>
+          <p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/android-code-style">Android编码规范</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/AndroidFine">Android快速开发框架</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/android-modularization">Android组件化设计思路</a></p>
 
       
     </div>
@@ -571,7 +262,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -585,7 +276,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" class="post-title-link" itemprop="url">Category中的方法为什么会覆盖原来类中的方法？</a>
+            <a href="/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/" class="post-title-link" itemprop="url">Android Studio平台下无线调试</a>
         </h2>
 
         <div class="post-meta">
@@ -610,7 +301,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -625,15 +316,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="深入了解Category"><a href="#深入了解Category" class="headerlink" title="深入了解Category"></a>深入了解<code>Category</code></h3><p>我们都知道<code>OC</code>代码执行时会先转成<code>C\C++</code>代码，<code>OC</code>对象转成对应的结构体；<br><code>Category</code>对应的结构体我们可以通过将分类的<code>.m文件转成c++</code>文件查看：<br><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc xxxxx.m</code><br>即可生成对应的<code>.cpp</code>文件；<br>在<code>.cpp</code>文件中搜索<code>Category_t</code>可以看到<code>Category</code>对应的结构体：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct _category_t &#123;</span><br><span class="line">const char *name;</span><br><span class="line">struct _class_t *cls;</span><br><span class="line">const struct _method_list_t *instance_methods;</span><br><span class="line">const struct _method_list_t *class_methods;</span><br><span class="line">const struct _protocol_list_t *protocols;</span><br><span class="line">const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>通过观察结构体我们可以发现分类对应的结构体中有存储实例方法的列表、存储类方法的列表、存储协议的和属性的列表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过源码分析可知：系统是在运行时将分类中对应的实例方法、类方法等插入到了原来类或元类的方法列表中，且是在列表的前 </span><br><span class="line">边！所以，方法调用时通过isa去对应的类或元类的列表中查找对应的方法时先查到的是分类中的方法！查到后就直接调用不在继</span><br><span class="line">续查找。这即是’覆盖’的本质！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="存在多个分类，调用谁？"><a href="#存在多个分类，调用谁？" class="headerlink" title="存在多个分类，调用谁？"></a>存在多个分类，调用谁？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当有多个分类时，会调用哪个分类中的方法呢？</span><br><span class="line"></span><br><span class="line">这个是与编译顺序有关，最后编译的分类中对应的信息会在整合在类或元类对应列表的最前边。所以是调用最后编译的分类中的</span><br><span class="line">方法！可以查看Build Phases -&gt;Complie Source 中的编译顺序！</span><br></pre></td></tr></table></figure>
-
-
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dd57c39a5e4c">Category中的方法为什么会覆盖原来类中的方法？</a></p>
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JJ583500596/article/details/75081462">Android Studio平台下无线调试</a></p>
 
       
     </div>
@@ -653,7 +336,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -667,7 +350,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">NSRunloop工作原理和相关应用</a>
+            <a href="/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/" class="post-title-link" itemprop="url">泛型</a>
         </h2>
 
         <div class="post-meta">
@@ -692,7 +375,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -707,15 +390,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="NSRunloop与程序运行"><a href="#NSRunloop与程序运行" class="headerlink" title="NSRunloop与程序运行"></a>NSRunloop与程序运行</h3><p>　　　那么具体什么是NSRunLoop呢?其实NSRunLoop的本质是一个消息机制的处理模式。让我们首先来看一下程序的入口——main.m文件，一个ios程序启动后，只有短短的十行代码居然能保持整个应用程序一直运行而没有退出，是不是有点意思？程序之所以没有直接退出是因为UIApplicationMain这个函数内部默认启动了一个跟主线程相关的NSRunloop对象，而UIApplicationMain这个函数一直执行没有返回就保存程序一直运行的状态。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">#import &quot;AppDelegate.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>　　文章之初我们暂且将NSRunloop理解为实现这样功能的一段代码 , 这可以帮助我们更好的理解NSRunloop处理事件的过程(实际上远比这复杂的多：）)。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">  BOOL runnning =YES;</span><br><span class="line">   do&#123;</span><br><span class="line">        ...</span><br><span class="line">       //处理各种操作 各种事件</span><br><span class="line">       ...</span><br><span class="line">      &#125;while(running);</span><br><span class="line">  </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h3 id="什么是泛型？"><a href="#什么是泛型？" class="headerlink" title="什么是泛型？"></a>什么是泛型？</h3><p>泛型，大概的意思是指没有指定具体的类型的类或方法，以泛型的形式传入一个类中或方法中，在Java编程(Android编程)里面使用一对尖括号和一个大写字母表示，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//泛型类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//泛型方法，类型参数位于返回类型之前或void之前</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(E [] arr, E x)</span></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(E val:arr)&#123;</span><br><span class="line">      <span class="keyword">if</span>(x.equal(val))&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="泛型-（-extends-T和-super-T）"><a href="#泛型-（-extends-T和-super-T）" class="headerlink" title="泛型 （? extends T和? super T）"></a>泛型 （? extends T和? super T）</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/android_bar/article/details/81486161">泛型 （? extends T和? super T）</a></p>
+<? extends T>和<? super T>是泛型中的“通配符（Wildcards）”和“边界（Bounds）”的概念。
 
-<p>下面用官方提供的一幅非常经典的图片，来认识NSRunloop循环处理时间的流程。</p>
-<p><img src="http://www.cocoachina.com/cms/uploads/allimg/120703/4064_120703135151_1.png"><br>通过所有的“消息”都被添加到了<code>NSRunLoop</code>中去，而在这里这些消息并分为<code>input source</code>和<code>Timer source</code> 并在循环中检查是不是有事件需要发生，如果需要那么就调用相应的函数处理。由此形成了运行-&gt;检测-&gt;休眠 -&gt;运行 的循环状态。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ruihaha/p/5813819.html">NSRunloop工作原理和相关应用</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/05/18/runloop/">深入理解RunLoop</a></p>
+* <? extends T>：上界通配符（Upper Bounds Wildcards）
+* <? super T>：    下界通配符（Lower Bounds Wildcards）
 
       
     </div>
@@ -735,7 +416,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/UIView%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB%E5%AF%B9%E6%AF%94/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -749,7 +430,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/UIView%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB%E5%AF%B9%E6%AF%94/" class="post-title-link" itemprop="url">UIView与核心动画对比</a>
+            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/" class="post-title-link" itemprop="url">android学习(2014、11、14)</a>
         </h2>
 
         <div class="post-meta">
@@ -774,7 +455,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -789,9 +470,76 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p><a target="_blank" rel="noopener" href="https://lianshumin.gitbooks.io/ocnotesii/content/03-UI%E8%BF%9B%E9%98%B6/11-%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB.html">核心动画</a></p>
-<p><a target="_blank" rel="noopener" href="https://lianshumin.gitbooks.io/ocnotesii/content/03-UI%E8%BF%9B%E9%98%B6/iOS%E5%8A%A8%E7%94%BB%E7%AF%87-1-UIView%E6%B8%90%E5%8F%98%E5%8A%A8%E7%94%BB.html">UIView渐变动画</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/ios/97760">iOS核心动画高级技巧</a></p>
+          <!--2014、11、14-->
+
+<h3 id="java中的匿名内部类总结"><a href="#java中的匿名内部类总结" class="headerlink" title="java中的匿名内部类总结"></a>java中的匿名内部类总结</h3><p>匿名内部类也就是没有名字的内部类<br>正因为没有名字，所以匿名内部类只能使用一次，它通常用来简化代码编写<br>但使用匿名内部类还有个前提条件：必须继承一个父类或实现一个接口(只要一个类是抽象的或是一个接口，那么其子类中的方法都可以使用匿名内部类来实现最常用的情况就是在多线程的实现上，因为要实现多线程必须继承Thread类或是继承Runnable接口)</p>
+<pre><code class="java">
+ sample1：Thread t = new Thread() &#123;
+            public void run() &#123;
+                for (int i = 1; i &lt;= 5; i++) &#123;
+                    System.out.print(i + &quot; &quot;);
+                &#125;
+            &#125;
+        &#125;;
+        t.start();
+sample2：Runnable r = new Runnable() &#123;
+            public void run() &#123;
+                for (int i = 1; i &lt;= 5; i++) &#123;
+                    System.out.print(i + &quot; &quot;);
+                &#125;
+            &#125;
+        &#125;;
+        Thread t = new Thread(r);
+        t.start();
+        
+</code></pre>
+<h3 id="Android中常常使用shape来定义控件的一些显示属性-比如：button，cell的backround"><a href="#Android中常常使用shape来定义控件的一些显示属性-比如：button，cell的backround" class="headerlink" title="Android中常常使用shape来定义控件的一些显示属性(比如：button，cell的backround)"></a>Android中常常使用shape来定义控件的一些显示属性(比如：button，cell的backround)</h3><pre><code class="java">
+http://kofi1122.blog.51cto.com/2815761/521605
+   &lt;shape&gt;
+            &lt;!-- 实心 --&gt;
+            &lt;solid android:color=&quot;#ff9d77&quot;/&gt;
+            &lt;!-- 渐变 --&gt;
+            &lt;gradient
+                android:startColor=&quot;#ff8c00&quot;
+                android:endColor=&quot;#FFFFFF&quot;
+                android:angle=&quot;270&quot; /&gt;
+            &lt;!-- 描边 --&gt;
+            &lt;stroke
+                android:width=&quot;2dp&quot;
+                android:color=&quot;#dcdcdc&quot; /&gt;
+            &lt;!-- 圆角 --&gt;
+            &lt;corners
+                android:radius=&quot;2dp&quot; /&gt;
+            &lt;padding
+                android:left=&quot;10dp&quot;
+                android:top=&quot;10dp&quot;
+                android:right=&quot;10dp&quot;
+                android:bottom=&quot;10dp&quot; /&gt;
+        &lt;/shape&gt;
+        
+</code></pre>
+<p>solid：实心，就是填充的意思<br>android:color指定填充的颜色<br>gradient：渐变<br>android:startColor和android:endColor分别为起始和结束颜色，ndroid:angle是渐变角度，必须为45的整数倍。<br>另外渐变默认的模式为android:type=”linear”，即线性渐变，可以指定渐变为径向渐变，android:type=”radial”，径向渐变需要指定半径  android:gradientRadius=”50”。<br>stroke：描边<br>android:width=”2dp” 描边的宽度，android:color 描边的颜色。<br>我们还可以把描边弄成虚线的形式，设置方式为：<br>android:dashWidth=”5dp”<br>android:dashGap=”3dp”<br>其中android:dashWidth表示’-‘这样一个横线的宽度，android:dashGap表示之间隔开的距离。 </p>
+<h3 id="SharedPreferences的使用"><a href="#SharedPreferences的使用" class="headerlink" title="SharedPreferences的使用"></a>SharedPreferences的使用</h3><p>存：SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>        settings.edit().putString(“name”, editView.getText().toString()).commit();<br>取：  //获取一个 SharedPreferences 对象<br>        SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>          //取出保存的NAME，取出改字段名的值，不存在则创建默认为空<br>            String name = settings.getString(“name”, “”); </p>
+<h3 id="corners：圆角"><a href="#corners：圆角" class="headerlink" title="corners：圆角"></a>corners：圆角</h3><p>android:radius为角的弧度，值越大角越圆。<br>我们还可以把四个角设定成不同的角度，方法为：</p>
+<pre><code class="java">
+&lt;corners 
+        android:topRightRadius=&quot;20dp&quot;    右上角
+        android:bottomLeftRadius=&quot;20dp&quot;    右下角
+        android:topLeftRadius=&quot;1dp&quot;    左上角
+        android:bottomRightRadius=&quot;0dp&quot;    左下角
+ /&gt;
+ 
+</code></pre>
+<p>这里有个地方需要注意，bottomLeftRadius是右下角，而不是左下角，这个有点郁闷，不过不影响使用，记得别搞错了就行。<br>还有网上看到有人说设置成0dp无效，不过我在测试中发现是可以的，我用的是2.2，可能修复了这个问题吧，如果无效的话那就只能设成1dp了。<br>padding：间隔<br>这个就不用多说了，XML布局文件中经常用到。<br>大体的就是这样，以下是一个使用的具体示例：用在Selector中作为Button的背景，分别定义了按钮的一般状态、获得焦点状态和按下时的状态，具体代码如下：<br>使用地方：</p>
+<pre><code class="java">
+&lt;Button
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:text=&quot;TestShapeButton&quot;
+    android:background=&quot;@drawable/button_selector&quot;
+    /&gt;
+    
+</code></pre>
 
       
     </div>
@@ -811,7 +559,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Xcode%E4%B8%AD%E5%92%8Csymbols%E6%9C%89%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E8%AE%BE%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -825,7 +573,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%92%8Csymbols%E6%9C%89%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">Xcode中和symbols有关的几个设置</a>
+            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/" class="post-title-link" itemprop="url">android学习(2014、11、17)</a>
         </h2>
 
         <div class="post-meta">
@@ -850,7 +598,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -865,10 +613,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在iOS开发中 特别是有framework打包的时候  经常遇到包比较大的问题。下面就来开下Xcode中和symbols有关的几个设置。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/11710e7ab661">简书地址</a></p>
-<p>Generate Debug Symbols 修改为NO后 能减少包的大小 但是debug功能就不能使用了</p>
-<p>-<br><img src="https://img-blog.csdn.net/20150202124656301"><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jasontec/p/9601631.html">iOS可执行文件瘦身方法</a></p>
+          <!--2014、11、17-->
+
+<p>1、<a target="_blank" rel="noopener" href="http://www.blogjava.net/action/articles/17339.html">http://www.blogjava.net/action/articles/17339.html</a> 快捷键大全<br>2、dp、sp和px的区别<br>看到有很多网友不太理解dp、sp和px的区别：现在这里介绍一下dp和sp。dp也就是dip。这个和sp基本类似。如果设置表示长度、高度等属性时可 以使用dp 或sp。但如果设置字体，需要使用sp。dp是与密度无关，sp除了与密度无关外，还与scale无关。如果屏幕密度为160，这时dp和sp和px是一 样的。1dp=1sp=1px，但如果使用px作单位，如果屏幕大小不变（假设还是3.2寸），而屏幕密度变成了320。那么原来TextView的宽度 设成160px，在密度为320的3.2寸屏幕里看要比在密度为160的3.2寸屏幕上看短了一半。但如果设置成160dp或160sp的话。系统会自动 将width属性值设置成320px的。也就是160 * 320 / 160。其中320 / 160可称为密度比例因子。也就是说，如果使用dp和sp，系统会根据屏幕密度的变化自动进行转换。</p>
+<h3 id="checkBox的使用"><a href="#checkBox的使用" class="headerlink" title="checkBox的使用"></a>checkBox的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CheckBox checkBox1 = (CheckBox)findViewById(R.id.checkBox1);</span><br><span class="line">checkBox1.setOnCheckedChangeListener(<span class="keyword">new</span> CompoundButton.OnCheckedChangeListener() &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        <span class="keyword">if</span>(isChecked)&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你选择了-&quot;</span> + buttonView.getText());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你取消选择了-&quot;</span>+ buttonView.getText());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="RadioGroup的使用"><a href="#RadioGroup的使用" class="headerlink" title="RadioGroup的使用"></a>RadioGroup的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);</span><br><span class="line">radioGroup.setOnCheckedChangeListener(<span class="keyword">new</span> OnCheckedChangeListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(RadioGroup group, <span class="keyword">int</span> checkedId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> radioButtonId = group.getCheckedRadioButtonId();</span><br><span class="line">        Log.v(<span class="string">&quot;RadioGroup&quot;</span>, <span class="string">&quot;onCheckedChanged==id=&quot;</span> + checkedId</span><br><span class="line">                + radioButtonId);</span><br><span class="line">        <span class="comment">// 根据ID获取RadioButton的实例</span></span><br><span class="line">        RadioButton rb = (RadioButton) SecondActivity.<span class="keyword">this</span></span><br><span class="line">                .findViewById(radioButtonId);</span><br><span class="line">        <span class="comment">// 更新文本内容，以符合选中项</span></span><br><span class="line">        textView1.setText(<span class="string">&quot;您的性别是：&quot;</span> + rb.getText());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bundle的使用"><a href="#Bundle的使用" class="headerlink" title="Bundle的使用"></a>Bundle的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        bundle.putString(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;上海&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;狗子&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;12&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;男&quot;</span>);</span><br><span class="line">        String name = bundle.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        Log.v(<span class="string">&quot;Bundle&quot;</span>,<span class="string">&quot;bundle.string=&quot;</span>+ bundle.toString()+<span class="string">&quot;名字：&quot;</span>+name);</span><br><span class="line"><span class="comment">//bundle.string=Bundle[&#123;gender=男, age=12, city=上海, name=狗子&#125;]名字：狗子</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Android-RelativeLayout-属性"><a href="#Android-RelativeLayout-属性" class="headerlink" title="Android RelativeLayout 属性"></a>Android RelativeLayout 属性</h3><p>// 相对于给定ID控件<br>android:layout_above 将该控件的底部置于给定ID的控件之上;<br>android:layout_below 将该控件的底部置于给定ID的控件之下;<br>android:layout_toLeftOf    将该控件的右边缘与给定ID的控件左边缘对齐;<br>android:layout_toRightOf  将该控件的左边缘与给定ID的控件右边缘对齐;</p>
+<p>android:layout_alignBaseline  将该控件的baseline与给定ID的baseline对齐;<br>android:layout_alignTop        将该控件的顶部边缘与给定ID的顶部边缘对齐;<br>android:layout_alignBottom   将该控件的底部边缘与给定ID的底部边缘对齐;<br>android:layout_alignLeft        将该控件的左边缘与给定ID的左边缘对齐;<br>android:layout_alignRight      将该控件的右边缘与给定ID的右边缘对齐;<br>// 相对于父组件<br>android:layout_alignParentTop      如果为true,将该控件的顶部与其父控件的顶部对齐;<br>android:layout_alignParentBottom 如果为true,将该控件的底部与其父控件的底部对齐;<br>android:layout_alignParentLeft      如果为true,将该控件的左部与其父控件的左部对齐;<br>android:layout_alignParentRight    如果为true,将该控件的右部与其父控件的右部对齐;<br>// 居中<br>android:layout_centerHorizontal 如果为true,将该控件的置于水平居中;<br>android:layout_centerVertical     如果为true,将该控件的置于垂直居中;<br>android:layout_centerInParent   如果为true,将该控件的置于父控件的中央;<br>// 指定移动像素<br>android:layout_marginTop      上偏移的值;<br>android:layout_marginBottom 下偏移的值;<br>android:layout_marginLeft 　　左偏移的值;<br>android:layout_marginRight 　 右偏移的值;</p>
+<!--2014、11、18-->  
+
+<h3 id="下拉列表框-Spinner的使用"><a href="#下拉列表框-Spinner的使用" class="headerlink" title="下拉列表框 Spinner的使用"></a>下拉列表框 Spinner的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">myTextView = (TextView) findViewById(R.id.TextView_city);</span><br><span class="line">        mySpinner = (Spinner) findViewById(R.id.Spinner_city);</span><br><span class="line">        adapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,</span><br><span class="line">                android.R.layout.simple_spinner_item, citys);</span><br><span class="line">        <span class="comment">// 为适配器设置下拉列表下拉时的菜单样式。</span></span><br><span class="line">        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</span><br><span class="line">        <span class="comment">// 将适配器添加到下拉列表上</span></span><br><span class="line">        mySpinner.setAdapter(adapter);</span><br><span class="line">        mySpinner.setOnItemSelectedListener(<span class="keyword">new</span> OnItemSelectedListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                myTextView.setText(<span class="string">&quot;您的选择是：&quot;</span> + adapter.getItem(position));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="comment">// myTextView.setText(&quot;NONE&quot;);</span></span><br><span class="line">                <span class="comment">// parent.setVisibility(View.VISIBLE);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 类名.<span class="keyword">this</span> 的使用</span><br><span class="line"></span><br><span class="line">我们会用到一些内部类和匿名类。当在匿名类中用<span class="keyword">this</span>时，这个<span class="keyword">this</span>则指的是匿名类或内部类本身。这时如果我们要使用外部类的方法和变量的话，则应该加上外部类的类名。</span><br><span class="line"></span><br><span class="line">### GridView 使用方式</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">GridView gridView = (GridView) findViewById(R.id.gridview);</span><br><span class="line">        gridView.setAdapter(<span class="keyword">new</span> ImageAdapter(<span class="keyword">this</span>));</span><br><span class="line">        gridView.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                Toast.makeText(GridViewActivity.<span class="keyword">this</span>, mThumbIds[position], Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 代码法设置背景颜色</span><br><span class="line"></span><br><span class="line">ImageView设置背景颜色</span><br><span class="line">ImageView.setBackgroundColor(android.graphics.Color.parseColor(<span class="string">&quot;#ffffff&quot;</span>));</span><br><span class="line">ImageView.setBackgroundColor(Color.RED);</span><br><span class="line">ImageView.setBackgroundColor(Color.rgb(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">### Android广播机制</span><br><span class="line"></span><br><span class="line">BroadcastReceiver用于接收程序（包括用户开发的程序和系统内建的程序）所发出的Broadcast Intent，与应用程序启动Activity、Service相同的是，程序启动BroadcastReceiver也只需要两步。</span><br><span class="line"><span class="number">1</span>）创建需要启动的BroadcastReceiver的Intent。</span><br><span class="line"><span class="number">2</span>）调用Context的sendBroadcast()或sendOrderedBroadcast()方法来启动指定BroadcastReceiver。</span><br><span class="line">内部类的方式</span><br><span class="line"></span><br><span class="line">#### 注册</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">&#123;</span><br><span class="line">    myBroadCast = <span class="keyword">new</span> MyBroadCast();</span><br><span class="line">        IntentFilter filter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        filter.addAction(ACTION_INTENT_TEST);</span><br><span class="line">        registerReceiver(myBroadCast, filter);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="内部类实现"><a href="#内部类实现" class="headerlink" title="内部类实现"></a>内部类实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBroadCast</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyBroadCast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;myBroadCast&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO 处理接收到得广播</span></span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;onReceive===1111111&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(ThirdActivity.ACTION_INTENT_TEST);</span><br><span class="line">                   sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+
+<h4 id="取消注册"><a href="#取消注册" class="headerlink" title="取消注册"></a>取消注册</h4><p> java<br>    @Override<br>    protected void onDestroy() {<br>        super.onDestroy();<br>        unregisterReceiver(myBroadCast);<br>    }</p>
 
       
     </div>
@@ -888,7 +648,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Xcode%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8E%89%E9%BB%98%E8%AE%A4%E7%9A%84Main.storyboard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -902,7 +662,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8E%89%E9%BB%98%E8%AE%A4%E7%9A%84Main.storyboard/" class="post-title-link" itemprop="url">Xcode中如何去掉默认的Main.storyboard</a>
+            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">android学习</a>
         </h2>
 
         <div class="post-meta">
@@ -927,7 +687,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -942,102 +702,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>xcode 6取消了 Empty Application 模板来创建一个工程，创建出来的有工程多了Main.storyboard，默认加载Main.storyboard，但是有很多人还想用代码来实现UI的布局，去除Main.storyboard的有三步：</p>
-<p><strong>修改</strong>  </p>
-<ul>
-<li><p>首先如图打开工程下面Supporting Files下面的Info.plist</p>
-<p>  <code>Main storyboard file base name</code>删除这一行</p>
-</li>
-</ul>
-<ul>
-<li>其次找到工程的TAGETS/General/Deployment Info 删除Main。</li>
-</ul>
-<ul>
-<li>经过上面两步算是删除了工程对Main.storyboard的依赖，但是运行工程后会发现是黑屏</li>
-</ul>
-<p>在AppDelegate中的- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 中添加以下代码即可解决</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line"> self.window.backgroundColor = [UIColor whiteColor];</span><br><span class="line">[self.window makeKeyAndVisible];</span><br></pre></td></tr></table></figure>
+          <!--2014、11、12-->
 
-<p><strong>报错</strong>  </p>
-<p>程序运行会提示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Application windows are expected to have a root view controller at the end of application launch</span><br></pre></td></tr></table></figure>
-<p><strong>解决方案</strong> </p>
-<p>意思是应用程序期望拥有一个根控制器（RootViewController）<br>修改上面的代码，随便添加了一个控制器，程序就不抱错了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line">    self.window.backgroundColor = [UIColor whiteColor];</span><br><span class="line"></span><br><span class="line">    UITabBarController *tbc = [[UITabBarController alloc] init];</span><br><span class="line"></span><br><span class="line">    self.window.rootViewController = tbc;</span><br><span class="line"></span><br><span class="line">    [self.window makeKeyAndVisible];</span><br><span class="line"></span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
+<h3 id="Android-之-fill-parent-、wrap-content-、match-parent属性"><a href="#Android-之-fill-parent-、wrap-content-、match-parent属性" class="headerlink" title="Android 之 fill_parent 、wrap_content 、match_parent属性"></a>Android 之 fill_parent 、wrap_content 、match_parent属性</h3><p><code>fill_parent</code> 设置一个顶部布局或控件为<br><code>fill_parent</code>将强制性让它布满整个屏幕。<br><code>wrap_content</code> 设置一个视图的尺寸为<br><code>wrap_content</code>将强制性地使视图扩展以显示全部内容</p>
+<h3 id="在程序中输出日志-使用-android-util-Log-类"><a href="#在程序中输出日志-使用-android-util-Log-类" class="headerlink" title="在程序中输出日志, 使用 android.util.Log 类."></a>在程序中输出日志, 使用 android.util.Log 类.</h3><p>该类提供了若干静态方法<br>Log.v(String tag, String msg);<br>Log.d(String tag, String msg);<br>Log.i(String tag, String msg);<br>Log.w(String tag, String msg);<br>Log.e(String tag, String msg);<br>分别对应 Verbose, Debug, Info, Warning,Error.<br>tag是一个标识,可以是任意字符串,通常可以使用类名+方法名, 主要是用来在查看日志时提供一个筛选条件.<br>程序运行后 并不会在 ide的控制台内输出任何信息.<br>如果要后查看日志 请使用<br>adb logcat  </p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>command + shift + f 格式化代码 ，option + / 提示，option + 上下键 移动某行代码，option + command + 上下键，option + command + s  弹出菜单功能页，Ctrl+1 快速修复(最经典的快捷键,就不用多说了)</p>
+<h3 id="layout文件夹里新建xml命名"><a href="#layout文件夹里新建xml命名" class="headerlink" title="layout文件夹里新建xml命名"></a>layout文件夹里新建xml命名</h3><p>必须都是小写</p>
+<h3 id="完成A跳转到B操作：要在AndroidMainifest-xml的文件里面"><a href="#完成A跳转到B操作：要在AndroidMainifest-xml的文件里面" class="headerlink" title="完成A跳转到B操作：要在AndroidMainifest.xml的文件里面"></a>完成A跳转到B操作：要在AndroidMainifest.xml的文件里面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"> &lt;activity</span><br><span class="line">            android:name=<span class="string">&quot;com.example.sample1.新加入的类名字”</span></span><br><span class="line"><span class="string">            android:label=“页面的标题” &gt;</span></span><br><span class="line"><span class="string"> &lt;/activity&gt;</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">```     </span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">AndroidManifest.xml是Android应用程序中最重要的文件之一。它是Android程序的全局配置文件，是每个 android程序中必须的文件。它位于我们开发的应用程序的根目录下，描述了package中的全局数据，包括package中暴露的组件 （activities, services, 等等），以及他们各自的实现类，各种能被处理的数据和启动位置等重要信息。</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;!--2014、11、13--&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 布局Layout管理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[布局](http://www.cnblogs.com/mengdd/archive/2012/12/19/2825382.html)  </span></span><br><span class="line"><span class="string"> 　</span></span><br><span class="line"><span class="string"> 　　布局即是指Activity中组件的呈现方式，即组件大小、间距和对齐方式等。  </span></span><br><span class="line"><span class="string">　　Android提供了两种创建布局的方式：  </span></span><br><span class="line"><span class="string">　　　　1.在XML配置文件中声明（推荐）。  </span></span><br><span class="line"><span class="string">　　　　2.在程序中通过代码直接实例化布局及其组件。  </span></span><br><span class="line"><span class="string">在Android中常见的布局方式：  </span></span><br><span class="line"><span class="string">线性布局（LinearLayout）：按照垂直或者水平方向布局组件。  </span></span><br><span class="line"><span class="string">　　帧布局（FrameLayout）：组件从屏幕的左上角坐标布局组件。  </span></span><br><span class="line"><span class="string">　　表格布局（TableLayout）：按照行列方式布局组件。  </span></span><br><span class="line"><span class="string">　　相对布局（RelativeLayout）：相对其他组件的布局方式。  </span></span><br><span class="line"><span class="string">　　绝对布局（AbsoluteLayout）：按照绝对坐标来布局组件。（已废）。  </span></span><br><span class="line"><span class="string">2、一个ListView通常有两个职责。  </span></span><br><span class="line"><span class="string">（1）将数据填充到布局。  </span></span><br><span class="line"><span class="string">（2）处理用户的选择点击等操作。  </span></span><br><span class="line"><span class="string">第一点很好理解，ListView就是实现这个功能的。第二点也不难做到，在后面的学习中读者会发现，这非常简单。  </span></span><br><span class="line"><span class="string">一个ListView的创建需要3个元素。  </span></span><br><span class="line"><span class="string">（1）ListView中的每一列的View。  </span></span><br><span class="line"><span class="string">（2）填入View的数据或者图片等。  </span></span><br><span class="line"><span class="string">（3）连接数据与ListView的适配器。  </span></span><br><span class="line"><span class="string">3、关于List&lt;E&gt;的用法  </span></span><br><span class="line"><span class="string">List l=new List();  </span></span><br><span class="line"><span class="string"> 现在这样，如果你想放得是User类，就这样new:  </span></span><br><span class="line"><span class="string"> List &lt;User&gt; l=new List &lt;User&gt;();  </span></span><br><span class="line"><span class="string"> 这样编译器就可以帮你监督，如果你往里面放其他类对象，就会报错咯。  </span></span><br><span class="line"><span class="string"> 当然好处就是你拿出来就是User类对象，不用再强制转换了。比如过去：  </span></span><br><span class="line"><span class="string"> User u=(User)l.get(1);  </span></span><br><span class="line"><span class="string"> 现在就可以：  </span></span><br><span class="line"><span class="string"> User u=l.get(1);  </span></span><br><span class="line"><span class="string">4、ArrayList &amp;&amp; HashMap 的使用 </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">``` java</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> 	ArrayList&lt;HashMap&lt;String,String&gt;&gt; list=new ArrayList&lt;HashMap&lt;String,String&gt;&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map1= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map2= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map3= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>user<span class="string">&quot;, &quot;</span>zhang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>user<span class="string">&quot;, &quot;</span>wang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        list.add(map1);  </span></span><br><span class="line"><span class="string">        list.add(map2);  </span></span><br><span class="line"><span class="string">        list.add(map3); </span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Log.v(&quot;</span>ArrayList==HashMap===:<span class="string">&quot;, list.toString());</span></span><br><span class="line"><span class="string">        </span></span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20Block/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20Block/" class="post-title-link" itemprop="url">iOS之block</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1-block的定义：void-a"><a href="#1-block的定义：void-a" class="headerlink" title="1.block的定义：void(^a)()=^(){};"></a>1.block的定义：void(^a)()=^(){};</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">=前面：</span><br><span class="line">    <span class="keyword">void</span>:返回值类型；</span><br><span class="line">    ()():语法结构，第一个括号里面是block名字,第二个括号里面是参数列表，和c或java中参数列表写法一样；例如：<span class="keyword">int</span> i,<span class="keyword">char</span> c...</span><br><span class="line">    ^:脱字符，block标识</span><br><span class="line">    a:block名称，就像函数名，对象实例化名称，说白了就是一个名字；</span><br><span class="line">=号后面：</span><br><span class="line">    ^是block标识；</span><br><span class="line">    ()参数列表，当没有参数时，可以省略，但是“=”前面的()参数列表不能省略；</span><br><span class="line">    &#123;&#125;要执行的代码放在这里面，最后加“;”</span><br></pre></td></tr></table></figure>
-
+<h3 id="AlertDialog-的使用"><a href="#AlertDialog-的使用" class="headerlink" title="AlertDialog 的使用"></a>AlertDialog 的使用</h3><pre><code class="java">         
+         Builder alertDialog = new AlertDialog.Builder(this);
+         alertDialog.setTitle(&quot;标题&quot;);// 设置标题
+         alertDialog.setMessage(&quot;一个消息框&quot;);// 设置消息
+         alertDialog.setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() &#123;
+             
+             @Override
+             public void onClick(DialogInterface dialog, int which) &#123;
+                 // toast 的用法
+                 Toast.makeText(getApplicationContext(), &quot;你选择了确定&quot;,
+                         Toast.LENGTH_SHORT).show();
+             &#125;
+         &#125;);
+         alertDialog.show();
+         
+</code></pre>
+<h3 id="Button-的使用-通过具体的id-找到某个控件"><a href="#Button-的使用-通过具体的id-找到某个控件" class="headerlink" title="Button 的使用: 通过具体的id 找到某个控件"></a>Button 的使用: 通过具体的id 找到某个控件</h3><pre><code class="java">        // 给按钮加上点击事件
+        clickMeButton.setOnClickListener(new OnClickListener() &#123;
+            @Override
+            public void onClick(View v) &#123;
+                Log.v(&quot;click&quot;, &quot;=======clickButton=======&quot;);
+                // 跳转到SecondActivity页面
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+            &#125;
+        &#125;);
+        
+</code></pre>
+<h3 id="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如"><a href="#dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如" class="headerlink" title="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:"></a>dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:</h3><p>在320x480分辨率，像素密度为160,1dp=1px<br>在480x800分辨率，像素密度为240,1dp=1.5px<br>计算公式:1dp*像素密度/160 = 实际像素数<br>px（像素）：屏幕上的点。<br>dp（与密度无关的像素）：一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，1dp = 1px。<br>尽量使用dp作为空间大小单位，sp作为和文字相关大小单位 </p>
 
       
     </div>
@@ -1057,7 +759,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20GCD/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1071,7 +773,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%20GCD/" class="post-title-link" itemprop="url">iOS之GCD</a>
+            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/" class="post-title-link" itemprop="url">android学习(2014、11、19)</a>
         </h2>
 
         <div class="post-meta">
@@ -1096,7 +798,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
                 </span>
             </span>
 
@@ -1111,30 +813,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://www.aliyun.com/jiaocheng/topic_13551.html">阿里云GCD</a></p>
-<p><em>===============关于GCD的一些好用的函数===============</em></p>
-<h4 id="一次性代码-多用于单例"><a href="#一次性代码-多用于单例" class="headerlink" title="一次性代码(多用于单例)"></a>一次性代码(多用于单例)</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;  </span><br><span class="line"><span class="built_in">dispatch_once</span>(&amp;;onceToken, ^&#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@&quot;once&quot;</span>); </span><br><span class="line">&#125;); </span><br></pre></td></tr></table></figure>
+          <!--2014、11、19-->
+<p>1、fragment的使用<br>Fragment必须是依存与Activity而存在的<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/lmj623565791/article/details/37970961">http://blog.csdn.net/lmj623565791/article/details/37970961</a><br>找fragment的方法：<br>LeftFragment fragment = (LeftFragment) getFragmentManager().findFragmentById(R.id.left_fragment);<br>2、Java关键字final、static使用总结</p>
+<p>一、final<br>　根据程序上下文环境，Java关键字final有“这是无法改变的”或者“终态的”含义，它可以修饰非抽象类、非抽象类成员方法和变量。你可能出于两种理解而需要阻止改变：设计或效率。<br>final类不能被继承，没有子类，final类中的方法默认是final的。<br>final方法不能被子类的方法覆盖，但可以被继承。<br>final成员变量表示常量，只能被赋值一次，赋值后值不再改变。<br>final不能用于修饰构造方法。<br>注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。<br>1、final类<br>　final类不能被继承，因此final类的成员方法没有机会被覆盖，默认都是final的。在设计类时候，如果这个类不需要有子类，类的实现细节不允许改变，并且确信这个类不会载被扩展，那么就设计为final类。<br>2、final方法<br>如果一个类不允许其子类覆盖某个方法，则可以把这个方法声明为final方法。<br>使用final方法的原因有二：<br>第一、把方法锁定，防止任何继承类修改它的意义和实现。<br>第二、高效。编译器在遇到调用final方法时候会转入内嵌机制，大大提高执行效率。<br>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// TODO 自动生成方法存根 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f1&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//无法被子类覆盖的方法 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f2&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f3</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f3&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">f4</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f4&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> <span class="keyword">extends</span> <span class="title">Test1</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;Test1父类方法f1被覆盖!&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">Test2 t=<span class="keyword">new</span> Test2(); </span><br><span class="line">t.f1(); </span><br><span class="line">t.f2(); <span class="comment">//调用从父类继承过来的final方法 </span></span><br><span class="line">t.f3(); <span class="comment">//调用从父类继承过来的方法 </span></span><br><span class="line"><span class="comment">//t.f4(); //调用失败，无法从父类继承获得 </span></span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>3、final变量（常量）<br>　用final修饰的成员变量表示常量，值一旦给定就无法改变！<br>　final修饰的变量有三种：静态变量、实例变量和局部变量，分别表示三种类型的常量。<br>　从下面的例子中可以看出，一旦给final变量初值后，值就不能再改变了。<br>　另外，final变量定义的时候，可以先声明，而不给初值，这中变量也称为final空白，无论什么情况，编译器都确保空白final在使用之前必须被初始化。但是，final空白在final关键字final的使用上提供了更大的灵活性，为此，一个类中的final数据成员就可以实现依对象而有所不同，却有保持其恒定不变的特征。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.leizhimin; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String S=<span class="string">&quot;final实例变量S&quot;</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> A=<span class="number">100</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> B=<span class="number">90</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> C=<span class="number">80</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> D=<span class="number">70</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> E; <span class="comment">//final空白,必须在初始化对象的时候赋初值 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Test3</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123; </span><br><span class="line">E=x; </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args </span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">Test3 t=<span class="keyword">new</span> Test3(<span class="number">2</span>); </span><br><span class="line"><span class="comment">//t.A=101; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.B=91; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.C=81; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.D=71; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line">System.out.println(t.A); </span><br><span class="line">System.out.println(t.B); </span><br><span class="line">System.out.println(t.C); <span class="comment">//不推荐用对象方式访问静态字段 </span></span><br><span class="line">System.out.println(t.D); <span class="comment">//不推荐用对象方式访问静态字段 </span></span><br><span class="line">System.out.println(Test3.C); </span><br><span class="line">System.out.println(Test3.D); </span><br><span class="line"><span class="comment">//System.out.println(Test3.E); //出错,因为E为final空白,依据不同对象值有所不同. </span></span><br><span class="line">System.out.println(t.E); </span><br><span class="line">Test3 t1=<span class="keyword">new</span> Test3(<span class="number">3</span>); </span><br><span class="line">System.out.println(t1.E); <span class="comment">//final空白变量E依据对象的不同而不同 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="keyword">new</span> Test3(<span class="number">1</span>).A); </span><br><span class="line">System.out.println(Test3.C); </span><br><span class="line">System.out.println(Test3.D); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123; </span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> a; <span class="comment">//final空白,在需要的时候才赋值 </span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> b=<span class="number">4</span>; <span class="comment">//局部常量--final用于局部变量的情形 </span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> c; <span class="comment">//final空白,一直没有给赋值. </span></span><br><span class="line">a=<span class="number">3</span>; </span><br><span class="line"><span class="comment">//a=4; 出错,已经给赋过值了. </span></span><br><span class="line"><span class="comment">//b=2; 出错,已经给赋过值了. </span></span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>4、final参数<br>当函数参数为final类型时，你可以读取使用该参数，但是无法改变该参数的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test4</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="keyword">new</span> Test4().f1(<span class="number">2</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> i)</span></span>&#123; </span><br><span class="line"><span class="comment">//i++; //i是final类型的,值不允许改变的. </span></span><br><span class="line">System.out.print(i); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<h4 id="延迟执行"><a href="#延迟执行" class="headerlink" title="延迟执行"></a>延迟执行</h4><ul>
-<li>perform</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以在运行时调用方法</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector</span><br><span class="line"><span class="comment">//可带一个参数</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)object</span><br><span class="line"><span class="comment">//可带两个参数</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)object withObject:(<span class="keyword">id</span>)object</span><br><span class="line"><span class="comment">//可延时执行方法</span></span><br><span class="line">- (<span class="keyword">void</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)argument afterDelay:(<span class="built_in">NSTimeInterval</span>)delay</span><br><span class="line"><span class="comment">//可放到另一个线程中执行</span></span><br><span class="line">- (<span class="keyword">void</span>)performSelector:(SEL)selector onThread:(<span class="built_in">NSThread</span> *)thread withObject:(<span class="keyword">id</span>)argument waitUntilDone:(<span class="built_in">BOOL</span>)wait</span><br><span class="line">- (<span class="keyword">void</span>)performSelectorOnMainThread:(SEL)selector withObject:(<span class="keyword">id</span>)argument waitUntilDone:(<span class="built_in">BOOL</span>)wait</span><br><span class="line"> </span><br><span class="line"><span class="comment">//延后执行方法的两种实现方式：</span></span><br><span class="line">[<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(doSomething) withObject:<span class="literal">nil</span> afterDelay:<span class="number">5.0</span>];</span><br></pre></td></tr></table></figure>
-<ul>
-<li>GCD方式</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));</span><br><span class="line">dispatch_after(time, dispatch_get_main_queue(), ^(void)&#123;</span><br><span class="line">    [self doSomething];</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//把任务放在主线程执行的两种方式</span><br><span class="line">[self performSlectorOnMainThread:@selector(doSomething) withObject:nil waitUntilDone:NO];</span><br><span class="line"> </span><br><span class="line">dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    [self doSomething];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>二、static<br>　static表示“全局”或者“静态”的意思，用来修饰成员变量和成员方法，也可以形成静态static代码块，但是Java语言中没有全局变量的概念。<br>　被static修饰的成员变量和成员方法独立于该类的任何对象。也就是说，它不依赖类特定的实例，被类的所有实例共享。只要这个类被加载，Java虚拟机就能根据类名在运行时数据区的方法区内定找到他们。因此，static对象可以在它的任何对象创建之前访问，无需引用任何对象。<br>　用public修饰的static成员变量和成员方法本质是全局变量和全局方法，当声明它类的对象市，不生成static变量的副本，而是类的所有实例共享同一个static变量。<br>　static变量前可以有private修饰，表示这个变量可以在类的静态代码块中，或者类的其他静态成员方法中使用（当然也可以在非静态成员方法中使用–废话），但是不能在其他类中通过类名来直接引用，这一点很重要。实际上你需要搞明白，private是访问权限限定，static表示不要实例化就可以使用，这样就容易理解多了。static前面加上其它访问权限关键字的效果也以此类推。<br>　static修饰的成员变量和成员方法习惯上称为静态变量和静态方法，可以直接通过类名来访问，访问语法为：<br>类名.静态方法名(参数列表…)<br>类名.静态变量名<br>　用static修饰的代码块表示静态代码块，当Java虚拟机（JVM）加载类时，就会执行该代码块（用处非常大，呵呵）。<br>1、static变量<br>　按照是否静态的对类成员变量进行分类可分两种：一种是被static修饰的变量，叫静态变量或类变量；另一种是没有被static修饰的变量，叫实例变量。两者的区别是：<br>　对于静态变量在内存中只有一个拷贝（节省内存），JVM只为静态分配一次内存，在加载类的过程中完成静态变量的内存分配，可用类名直接访问（方便），当然也可以通过对象来访问（但是这是不推荐的）。<br>　对于实例变量，没创建一个实例，就会为实例变量分配一次内存，实例变量可以在内存中有多个拷贝，互不影响（灵活）。<br>2、静态方法<br>　静态方法可以直接通过类名调用，任何的实例也都可以调用，因此静态方法中不能用this和super关键字，不能直接访问所属类的实例变量和实例方法(就是不带static的成员变量和成员成员方法)，只能访问所属类的静态成员变量和成员方法。因为实例成员与特定的对象关联！这个需要去理解，想明白其中的道理，不是记忆！！！<br>　因为static方法独立于任何实例，因此static方法必须被实现，而不能是抽象的abstract。<br>3、static代码块<br>　static代码块也叫静态代码块，是在类中独立于类成员的static语句块，可以有多个，位置可以随便放，它不在任何的方法体内，JVM加载类时会执行这些静态的代码块，如果static代码块有多个，JVM将按照它们在类中出现的先后顺序依次执行它们，每个代码块只会被执行一次。例如：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test5</span> </span>&#123; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> b; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">3</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">Test5 t=<span class="keyword">new</span> Test5(); </span><br><span class="line">t.f(); </span><br><span class="line">t.b=<span class="number">1000</span>; </span><br><span class="line">System.out.println(t.b); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">4</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// TODO 自动生成方法存根 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">5</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;hhahhahah&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
-<p><strong>1、</strong>performSelector系列方法在内存管理方面容易有疏失。它无法确定将要执行的选择子具体是什么，因而ARC编译器也就无法插入适当的内存管理方法。<br><strong>2、</strong>performSelector系列方法所能处理的选择子太过局限了，选择子的返回值类型及发送给方法的参数个数都受到限制。<br><strong>3、</strong>如果想把任务放在另一个线程上执行，那么最好不要用performSelector系列方法，而是应该把任务封装到块里，然后调用GCD的相关方法来实现。</p>
-<h4 id="栅栏函数"><a href="#栅栏函数" class="headerlink" title="栅栏函数"></a>栅栏函数</h4><p>关键函数<code>dispatch_barrier_async </code> </p>
-<ul>
-<li>作用:只有当栅栏函数执行完毕后才能执行后面的函数</li>
-<li>需求:使用栅栏函数规定线程执行顺序</li>
-<li>注意:栅栏函数不能使用全局并发队列(否则没有意义)</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">&quot;download&quot;</span>, DISPATCH_QUEUE_CONCURRENT); </span><br><span class="line">   <span class="built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;<span class="built_in">NSLog</span>(<span class="string">@&quot;task1 -- %zd -- %@&quot;</span>, i, [<span class="built_in">NSThread</span> currentThread]);&#125;</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">   dispatch_barrier_async(queue, ^&#123;</span><br><span class="line"></span><br><span class="line">       <span class="built_in">NSLog</span>(<span class="string">@&quot;+++++++ barrier ++++++++&quot;</span>);</span><br><span class="line"></span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">   <span class="built_in">dispatch_async</span>(queue, ^&#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">           <span class="built_in">NSLog</span>(<span class="string">@&quot;task2 -- %zd -- %@&quot;</span>, i, [<span class="built_in">NSThread</span> currentThread]);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运行结果：<br>3<br>hhahhahah<br>1000<br>4<br>5<br>　利用静态代码块可以对一些static变量进行赋值，最后再看一眼这些例子，都一个static的main方法，这样JVM在运行main方法的时候可以直接调用而不用创建实例。<br>4、static和final一块用表示什么<br>static final用来修饰成员变量和成员方法，可简单理解为“全局常量”！<br>对于变量，表示一旦给值就不可修改，并且通过类名可以访问。<br>对于方法，表示不可覆盖，并且可以通过类名直接访问。</p>
+<p>【自己补充的】<br>5、static还可以修饰内部类，普通类是不允许声明为静态的，只有内部类才可以。被static修饰的内部类可以直接作为一个普通类来使用，而不需实例化一个外部类<br>例如有个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestInner</span></span>&#123;</span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h4><p>关键函数 <code>dispatch_apply</code></p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dispatch_apply(<span class="number">6</span>, queue, ^(size_t index) &#123; </span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@&quot;%zd------%@&quot;</span>,index, [<span class="built_in">NSThread</span> currentThread]); </span><br><span class="line">&#125;); </span><br></pre></td></tr></table></figure>
+<p>那么在main中实例化StaticInnerClass的代码是这样写<br>new TestInner.StaticInnerClass();<br>而实例化InnerClass则必须写成<br>TestInner testInner = new TestInner();<br>testInner.new InnerClass();<br>所以要注意了哦！<br>而且呢，在InnerClass里面已经无法再声明static innner class了，因为The member type inner cannot be declared static; static types can only be declared in static or top level types  </p>
+<!--11.28-->
+<p>抽象类 abstract class<br>     包含抽象方法的类，叫抽象类。而抽象的概念就是抽象出共同属性：成员变量和方法。所以抽象类可以有private等多种权限的成员变量和非abstract的成员方法。当然抽象方法是一定要有的。<br>    抽象类是用于单一继承的，不能实例化。而继承类一定要实现抽象方法，因为抽象方法在抽象类里是没有实现行为的，访问权限只能是public。而非抽象方法则可以赋予方法的默认行为，访问权限可以多种，但需要考虑非抽象方法是否需要被继承类访问。<br>接口 interface<br>     接口，用于多重继承，也不能实例化。只能包含static final的成员变量，不过在interface中一般不定义成员变量。而成员方法在接口里只能是抽象方法，访问权限只能是public。<br><a target="_blank" rel="noopener" href="http://android.blog.51cto.com/268543/385282/">http://android.blog.51cto.com/268543/385282/</a> </p>
+
       
     </div>
 
@@ -1153,7 +851,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/dart%20&%20flutter/dart/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1167,7 +865,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">OS 中的 armv7,armv7s,arm64,i386,x86_64 都是什么</a>
+            <a href="/2018/06/11/dart%20&%20flutter/dart/" class="post-title-link" itemprop="url">dart</a>
         </h2>
 
         <div class="post-meta">
@@ -1192,7 +890,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/dart/" itemprop="url" rel="index"><span itemprop="name">dart</span></a>
                 </span>
             </span>
 
@@ -1207,18 +905,169 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在做静态库的时候以及引用静态库的时候经常会遇到一些关于真机模拟器不通用的情况，会报错找不到相应库导致编译失败，</p>
-<p>这里简单记录一下各种设备支持的架构。</p>
-<h4 id="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"><a href="#iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器" class="headerlink" title="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"></a>iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器</h4><h5 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h5><p>模拟器32位处理器测试需要i386架构，（iphone5,iphone5s以下的模拟器）</p>
-<p>模拟器64位处理器测试需要x86_64架构，(iphone6以上的模拟器)</p>
-<h5 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h5><p>真机32位处理器需要armv7,或者armv7s架构，（iphone4真机/armv7,      ipnone5,iphone5s真机/armv7s）</p>
-<p>真机64位处理器需要arm64架构。(iphone6,iphone6p以上的真机)</p>
-<p>project -&gt; target -&gt; building setting -&gt; Arhitectures 设置</p>
-<h5 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h5><p>debug属性设置为no的时候，会编译支持所有架构的版本，编译的速度会变慢，设置为yes 的时候，只编译当前的architecture版本，编译速度快。</p>
-<p>一般情况下，debug 设置为yes，release为no，这样发行版本能适应不同设备。</p>
-<h5 id="用到的命令行查看或者合并"><a href="#用到的命令行查看或者合并" class="headerlink" title="用到的命令行查看或者合并"></a>用到的命令行查看或者合并</h5><p>静态库.a支持信息：<br>lipo -info .a文件  </p>
-<p>两个静态库合并：<br> lipo -create 文件1  文件2  -output /Users/sunjianfei/Desktop/libPrint.a</p>
+          <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av52490605?from=search&seid=17339603939810978479">Dart Flutter教程</a></p>
+<h2 id="dart"><a href="#dart" class="headerlink" title="dart"></a>dart</h2><p><strong>安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap dart-lang/dart</span><br><span class="line">brew install dart</span><br></pre></td></tr></table></figure>
+<p><strong>开发工具：</strong><br><code>vscode</code> 安装插件 <code>dart</code> 和 <code>code runner</code></p>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E4%B9%8B%20ssh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/git%20%E4%B9%8B%20ssh/" class="post-title-link" itemprop="url">ssh</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h3><p>你拥有了一个 GitHub 账号之后，就可以自由的 clone 或者下载其他项目，也可以创建自己的项目，但是你没法提交代码。仔细想想也知道，肯定不可能随意就能提交代码的，如果随意可以提交代码，那么 GitHub 上的项目岂不乱了套了，所以提交代码之前一定是需要某种授权的，而 GitHub 上一般都是基于 SSH 授权的。<br>那么什么是 SSH 呢？ 简单点说，SSH是一种网络协议，用于计算机之间的加密登录。目前是每一台 Linux 电脑的标准配置。而大多数 Git 服务器都会选择使用 SSH 公钥来进行授权，所以想要在 GitHub 提交代码的第一步就是要先添加 SSH key 配置。</p>
+<h3 id="生成SSH-key"><a href="#生成SSH-key" class="headerlink" title="生成SSH key"></a>生成SSH key</h3><p>Linux 与 Mac 都是默认安装了 SSH ，而 Windows 系统安装了 Git Bash 应该也是带了 SSH 的。大家可以在终端（win下在 Git Bash 里）输入 ssh 检测是否已安装。</p>
+<p>紧接着输入 <code>ssh-keygen -t rsa</code> 或者<code>（ssh-keygen -t rsa -C “邮箱名&quot;）</code> ，什么意思呢？就是指定 rsa 算法生成密钥，接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，而 <code>id_rsa</code> 是密钥，<code>id_rsa.pub</code> 就是公钥。这两文件默认分别在如下目录里生成：<br><code>Linux/Mac</code> 系统 在<code> ~/.ssh</code> 下，win系统在 <code>/c/Documents and Settings/username/.ssh</code> 下，都是隐藏文件，相信你们有办法查看的。<br>接下来要做的是把 <code>id_rsa.pub </code>的内容添加到 GitHub 上，这样你本地的 <code>id_rsa</code> 密钥跟 GitHub 上的 <code>id_rsa.pub</code> 公钥进行配对，授权成功才可以提交代码。</p>
+<h3 id="GitHub-上添加-SSH-key"><a href="#GitHub-上添加-SSH-key" class="headerlink" title="GitHub 上添加 SSH key"></a>GitHub 上添加 SSH key</h3><p>第一步先在 GitHub 上的设置页面，点击最左侧 SSH and GPG keys ：</p>
+<h3 id="怎么查看-id-rsa-pub-文件的内容？"><a href="#怎么查看-id-rsa-pub-文件的内容？" class="headerlink" title="怎么查看 id_rsa.pub 文件的内容？"></a>怎么查看 id_rsa.pub 文件的内容？</h3><p>Linux/Mac 用户执行以下命令：<br>cd ~/.ssh<br>cat id_rsa.pub</p>
+<h3 id="测试是否ok"><a href="#测试是否ok" class="headerlink" title="测试是否ok"></a>测试是否ok</h3><p>SSH key 添加成功之后，输入 ssh -T <a href="mailto:&#x67;&#105;&#116;&#64;&#103;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#111;&#109;">&#x67;&#105;&#116;&#64;&#103;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#111;&#109;</a> 进行测试</p>
+<p><a target="_blank" rel="noopener" href="http://stormzhang.com/github/2016/06/04/learn-github-from-zero4/">ssh向GITHUB 提交代码</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">git 如何删除缓存的远程分支列表.md</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
+<h2 id="列出远程分支"><a href="#列出远程分支" class="headerlink" title="列出远程分支"></a>列出远程分支</h2><p>使用git 部署代码，<pre> git branch -a </pre> 里面列出的很多远程的分支，其实都是已经被删除了的。</p>
+<h2 id="删除缓存的远程分支列表"><a href="#删除缓存的远程分支列表" class="headerlink" title="删除缓存的远程分支列表"></a>删除缓存的远程分支列表</h2><p>用此命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br><span class="line">or</span><br><span class="line">git fetch -p   </span><br></pre></td></tr></table></figure>
+<p>即可解决</p>
+<h2 id="列出提交个数"><a href="#列出提交个数" class="headerlink" title="列出提交个数"></a>列出提交个数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-list --count HEAD</span><br></pre></td></tr></table></figure>
       
     </div>
 

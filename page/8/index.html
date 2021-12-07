@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E8%AF%A6%E8%A7%A3KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +200,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/" class="post-title-link" itemprop="url">android学习(2014、11、14)</a>
+            <a href="/2018/06/11/iOS/%E8%AF%A6%E8%A7%A3KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">详解KVO底层实现</a>
         </h2>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -240,76 +240,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <!--2014、11、14-->
+          <h3 id="一、KVO-Key-Value-Observing"><a href="#一、KVO-Key-Value-Observing" class="headerlink" title="一、KVO (Key-Value Observing)"></a>一、KVO (Key-Value Observing)</h3><p>KVO 是 Objective-C 对观察者模式（Observer Pattern）的实现。也是 Cocoa Binding 的基础。当被观察对象的某个属性发生更改时，观察者对象会获得通知。</p>
+<p>有意思的是，你不需要给被观察的对象添加任何额外代码，就能使用 KVO 。这是怎么做到的？</p>
+<h3 id="二、-KVO内部实现原理"><a href="#二、-KVO内部实现原理" class="headerlink" title="二、 KVO内部实现原理"></a>二、 KVO内部实现原理</h3><p>KVO是基于runtime机制实现的<br>当某个类的属性对象第一次被观察时，系统就会在运行期动态地创建该类的一个派生类，在这个派生类中重写基类中任何被观察属性的setter 方法。派生类在被重写的setter方法内实现真正的通知机制<br>如果原类为Person，那么生成的派生类名为NSKVONotifying_Person<br>每个类对象中都有一个isa指针指向当前类，当一个类对象的第一次被观察，那么系统会偷偷将isa指针指向动态生成的派生类，从而在给被监控属性赋值时执行的是派生类的setter方法<br>键值观察通知依赖于NSObject 的两个方法: willChangeValueForKey: 和 didChangevlueForKey:；在一个被观察属性发生改变之前， willChangeValueForKey:一定会被调用，这就 会记录旧的值。而当改变发生后，didChangeValueForKey:会被调用，继而 observeValueForKey:ofObject:change:context: 也会被调用。<br>补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类</p>
+<h3 id="三、补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"><a href="#三、补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）" class="headerlink" title="三、补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"></a>三、补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）</h3><p><a target="_blank" rel="noopener" href="https://tech.glowing.com/cn/implement-kvo/">如何自己动手实现 KVO</a></p>
+<h3 id="四、附注-KVC底层实现原理-如下"><a href="#四、附注-KVC底层实现原理-如下" class="headerlink" title="四、附注: KVC底层实现原理(如下)"></a>四、附注: KVC底层实现原理(如下)</h3><p>KVC运用了一个isa-swizzling技术. isa-swizzling就是类型混合指针机制, 将2个对象的isa指针互相调换, 就是俗称的黑魔法.<br>KVC主要通过isa-swizzling, 来实现其内部查找定位的. 默认的实现方法�由NSOject提供isa指针, 如其名称所指,(就是is a kind of的意思), 指向分发表对象的类. 该分发表实际上包含了指向实现类中的方法的指针, 和其它数据。</p>
+<p>具体主要分为三大步<br>第一步：寻找该属性有没有setsetter方法？有，就直接赋值<br>第二步：寻找有没有该属性带下划线的成员属性？有，就直接赋值<br>第三步：寻找有没有该属性的成员属性？有，就直接赋值<br>或者这么说<br>1、首先搜索setKey:方法.(key指成员变量名, 首字母大写)<br>2、上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES. 那么按 _key, _isKey，key, iskey的顺序搜索成员名.(NSKeyValueCodingCatogery中实现的类方法, 默认实现为返回YES)<br>3、如果没有找到成员变量, 调用setValue:forUnderfinedKey:<br>比如说如下的一行KVC的代码：</p>
+<p>举个🌰e.g:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[object setValue:<span class="string">@&quot;13123&quot;</span> forKey:<span class="string">@&quot;uuid&quot;</span>];</span><br><span class="line"> </span><br><span class="line">就会被编译器处理成:</span><br><span class="line"><span class="comment">// 首先找到对应sel</span></span><br><span class="line">SEL sel = sel_get_ uuid(<span class="string">&quot;setValue:forKey:&quot;</span>);</span><br><span class="line"><span class="comment">// 根据object-&gt;isa找到sel对应的IMP实现指针</span></span><br><span class="line">IMP method = objc_msg_lookup (object-&gt;isa,sel);</span><br><span class="line"><span class="comment">// 调用指针完成KVC赋值</span></span><br><span class="line">method(object, sel, <span class="string">@&quot;13123&quot;</span>, <span class="string">@&quot;uuid&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="java中的匿名内部类总结"><a href="#java中的匿名内部类总结" class="headerlink" title="java中的匿名内部类总结"></a>java中的匿名内部类总结</h3><p>匿名内部类也就是没有名字的内部类<br>正因为没有名字，所以匿名内部类只能使用一次，它通常用来简化代码编写<br>但使用匿名内部类还有个前提条件：必须继承一个父类或实现一个接口(只要一个类是抽象的或是一个接口，那么其子类中的方法都可以使用匿名内部类来实现最常用的情况就是在多线程的实现上，因为要实现多线程必须继承Thread类或是继承Runnable接口)</p>
-<pre><code class="java">
- sample1：Thread t = new Thread() &#123;
-            public void run() &#123;
-                for (int i = 1; i &lt;= 5; i++) &#123;
-                    System.out.print(i + &quot; &quot;);
-                &#125;
-            &#125;
-        &#125;;
-        t.start();
-sample2：Runnable r = new Runnable() &#123;
-            public void run() &#123;
-                for (int i = 1; i &lt;= 5; i++) &#123;
-                    System.out.print(i + &quot; &quot;);
-                &#125;
-            &#125;
-        &#125;;
-        Thread t = new Thread(r);
-        t.start();
-        
-</code></pre>
-<h3 id="Android中常常使用shape来定义控件的一些显示属性-比如：button，cell的backround"><a href="#Android中常常使用shape来定义控件的一些显示属性-比如：button，cell的backround" class="headerlink" title="Android中常常使用shape来定义控件的一些显示属性(比如：button，cell的backround)"></a>Android中常常使用shape来定义控件的一些显示属性(比如：button，cell的backround)</h3><pre><code class="java">
-http://kofi1122.blog.51cto.com/2815761/521605
-   &lt;shape&gt;
-            &lt;!-- 实心 --&gt;
-            &lt;solid android:color=&quot;#ff9d77&quot;/&gt;
-            &lt;!-- 渐变 --&gt;
-            &lt;gradient
-                android:startColor=&quot;#ff8c00&quot;
-                android:endColor=&quot;#FFFFFF&quot;
-                android:angle=&quot;270&quot; /&gt;
-            &lt;!-- 描边 --&gt;
-            &lt;stroke
-                android:width=&quot;2dp&quot;
-                android:color=&quot;#dcdcdc&quot; /&gt;
-            &lt;!-- 圆角 --&gt;
-            &lt;corners
-                android:radius=&quot;2dp&quot; /&gt;
-            &lt;padding
-                android:left=&quot;10dp&quot;
-                android:top=&quot;10dp&quot;
-                android:right=&quot;10dp&quot;
-                android:bottom=&quot;10dp&quot; /&gt;
-        &lt;/shape&gt;
-        
-</code></pre>
-<p>solid：实心，就是填充的意思<br>android:color指定填充的颜色<br>gradient：渐变<br>android:startColor和android:endColor分别为起始和结束颜色，ndroid:angle是渐变角度，必须为45的整数倍。<br>另外渐变默认的模式为android:type=”linear”，即线性渐变，可以指定渐变为径向渐变，android:type=”radial”，径向渐变需要指定半径  android:gradientRadius=”50”。<br>stroke：描边<br>android:width=”2dp” 描边的宽度，android:color 描边的颜色。<br>我们还可以把描边弄成虚线的形式，设置方式为：<br>android:dashWidth=”5dp”<br>android:dashGap=”3dp”<br>其中android:dashWidth表示’-‘这样一个横线的宽度，android:dashGap表示之间隔开的距离。 </p>
-<h3 id="SharedPreferences的使用"><a href="#SharedPreferences的使用" class="headerlink" title="SharedPreferences的使用"></a>SharedPreferences的使用</h3><p>存：SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>        settings.edit().putString(“name”, editView.getText().toString()).commit();<br>取：  //获取一个 SharedPreferences 对象<br>        SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>          //取出保存的NAME，取出改字段名的值，不存在则创建默认为空<br>            String name = settings.getString(“name”, “”); </p>
-<h3 id="corners：圆角"><a href="#corners：圆角" class="headerlink" title="corners：圆角"></a>corners：圆角</h3><p>android:radius为角的弧度，值越大角越圆。<br>我们还可以把四个角设定成不同的角度，方法为：</p>
-<pre><code class="java">
-&lt;corners 
-        android:topRightRadius=&quot;20dp&quot;    右上角
-        android:bottomLeftRadius=&quot;20dp&quot;    右下角
-        android:topLeftRadius=&quot;1dp&quot;    左上角
-        android:bottomRightRadius=&quot;0dp&quot;    左下角
- /&gt;
- 
-</code></pre>
-<p>这里有个地方需要注意，bottomLeftRadius是右下角，而不是左下角，这个有点郁闷，不过不影响使用，记得别搞错了就行。<br>还有网上看到有人说设置成0dp无效，不过我在测试中发现是可以的，我用的是2.2，可能修复了这个问题吧，如果无效的话那就只能设成1dp了。<br>padding：间隔<br>这个就不用多说了，XML布局文件中经常用到。<br>大体的就是这样，以下是一个使用的具体示例：用在Selector中作为Button的背景，分别定义了按钮的一般状态、获得焦点状态和按下时的状态，具体代码如下：<br>使用地方：</p>
-<pre><code class="java">
-&lt;Button
-    android:layout_width=&quot;wrap_content&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:text=&quot;TestShapeButton&quot;
-    android:background=&quot;@drawable/button_selector&quot;
-    /&gt;
-    
-</code></pre>
+
+<h3 id="如何为一个实例动态替换方法"><a href="#如何为一个实例动态替换方法" class="headerlink" title="如何为一个实例动态替换方法"></a>如何为一个实例动态替换方法</h3><p><a target="_blank" rel="noopener" href="http://ios.jobbole.com/93080/">资料</a><br>根据kvo的实现原理：派生个实例方法所在类的子类，创建hook函数，然后修改isa指针<code>object_setClass(instance, newClass);</code>，实现替换的方法实现。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/oc-bowen/p/5884768.html">详解KVO底层实现</a><br><a target="_blank" rel="noopener" href="https://coding.net/u/dream001/p/CustomKVO/git/tree/master">代码实现仓库地址</a></p>
 
       
     </div>
@@ -329,7 +271,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -343,7 +285,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/" class="post-title-link" itemprop="url">android学习(2014、11、17)</a>
+            <a href="/2018/06/11/iOS/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/" class="post-title-link" itemprop="url">iOS面试题库</a>
         </h2>
 
         <div class="post-meta">
@@ -368,7 +310,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -383,22 +325,54 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <div class="post-body" itemprop="articleBody">
 
       
-          <!--2014、11、17-->
+          <h2 id="简单的做下自我介绍"><a href="#简单的做下自我介绍" class="headerlink" title="简单的做下自我介绍"></a>简单的做下自我介绍</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关注点：考察下介绍和简历是否一致，现场的把控和语言表达能力。</span><br></pre></td></tr></table></figure>
+<h2 id="控制器的生命周期"><a href="#控制器的生命周期" class="headerlink" title="控制器的生命周期"></a>控制器的生命周期</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">1、 alloc                                   创建对象，分配空间</span><br><span class="line">2、init (initWithNibName) 初始化对象，初始化数据</span><br><span class="line">3、loadView                          从nib载入视图 ，通常这一步不需要去干涉。除非你没有使用xib文件创建视图</span><br><span class="line">4、viewDidLoad                   载入完成，可以进行自定义数据以及动态创建其他控件</span><br><span class="line">5、viewWillAppear              视图将出现在屏幕之前，马上这个视图就会被展现在屏幕上了</span><br><span class="line">6、viewDidAppear               视图已在屏幕上渲染完成</span><br><span class="line">7、dealloc 销毁 （通过该方法内还可以检测什么？ 答案：返回后看时候回调该函数 来判断是否有内存泄露）</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line">要求：对生命周期要熟悉精通，中间可以根据情况自己把握 讨论具体某个函数</span><br></pre></td></tr></table></figure>
+<h2 id="如何使UILabel显示多行？"><a href="#如何使UILabel显示多行？" class="headerlink" title="如何使UILabel显示多行？"></a>如何使UILabel显示多行？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考答案：numberOfLines = 0</span><br></pre></td></tr></table></figure>
+<h2 id="frame和bounds有什么不同？"><a href="#frame和bounds有什么不同？" class="headerlink" title="frame和bounds有什么不同？"></a>frame和bounds有什么不同？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考答案：相对父 与 自身</span><br></pre></td></tr></table></figure>
+<h2 id="assign、retain、copy、strong、weak什么时候用？区别？"><a href="#assign、retain、copy、strong、weak什么时候用？区别？" class="headerlink" title="assign、retain、copy、strong、weak什么时候用？区别？"></a>assign、retain、copy、strong、weak什么时候用？区别？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">assign 基本数据类型与代理使用</span><br><span class="line">retain 引用计数在用来的基础上加1</span><br><span class="line">copy 开辟个新的内存空间</span><br><span class="line">strong 相当于老版本的retain,而且可以不再需要做release操作了</span><br><span class="line">weak 相当于老版本的assign。但是只适应于对象</span><br></pre></td></tr></table></figure>
+<h2 id="imageName与imageContentOfFile的区别"><a href="#imageName与imageContentOfFile的区别" class="headerlink" title="imageName与imageContentOfFile的区别"></a>imageName与imageContentOfFile的区别</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">后者没有缓存 适用于只需要一次使用  减少对系统内存的耗用情况</span><br></pre></td></tr></table></figure>
+<h2 id="对于单元格重用的理解？"><a href="#对于单元格重用的理解？" class="headerlink" title="对于单元格重用的理解？"></a>对于单元格重用的理解？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">1、当屏幕上滑出屏幕时，系统会把这个单元格添加到重用队列中，等待被重用。</span><br><span class="line">2、当有新单元从屏幕外滑入屏幕内时，从重用队列中找看有没有可以重用的单元格，</span><br><span class="line">若有，就直接用，没有就重新创建一个。</span><br></pre></td></tr></table></figure>
+<h2 id="Category的优缺点"><a href="#Category的优缺点" class="headerlink" title="Category的优缺点"></a>Category的优缺点</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">优点：可以不创建子类的前提下扩展方法、可以对比较胖的类进行拆分。</span><br><span class="line">缺点：如果和类的方法起的重名会覆盖类中的方法、不能添加实例变量。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Delegate、Notification、Block区别与使用场景"><a href="#Delegate、Notification、Block区别与使用场景" class="headerlink" title="Delegate、Notification、Block区别与使用场景"></a>Delegate、Notification、Block区别与使用场景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">Delegate是一对一的回调机制</span><br><span class="line">Notification是一对多的对所有添加观察者的通知</span><br><span class="line">Block代码比较简洁不需要像代理一样定义协议方法</span><br></pre></td></tr></table></figure>
 
-<p>1、<a target="_blank" rel="noopener" href="http://www.blogjava.net/action/articles/17339.html">http://www.blogjava.net/action/articles/17339.html</a> 快捷键大全<br>2、dp、sp和px的区别<br>看到有很多网友不太理解dp、sp和px的区别：现在这里介绍一下dp和sp。dp也就是dip。这个和sp基本类似。如果设置表示长度、高度等属性时可 以使用dp 或sp。但如果设置字体，需要使用sp。dp是与密度无关，sp除了与密度无关外，还与scale无关。如果屏幕密度为160，这时dp和sp和px是一 样的。1dp=1sp=1px，但如果使用px作单位，如果屏幕大小不变（假设还是3.2寸），而屏幕密度变成了320。那么原来TextView的宽度 设成160px，在密度为320的3.2寸屏幕里看要比在密度为160的3.2寸屏幕上看短了一半。但如果设置成160dp或160sp的话。系统会自动 将width属性值设置成320px的。也就是160 * 320 / 160。其中320 / 160可称为密度比例因子。也就是说，如果使用dp和sp，系统会根据屏幕密度的变化自动进行转换。</p>
-<h3 id="checkBox的使用"><a href="#checkBox的使用" class="headerlink" title="checkBox的使用"></a>checkBox的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CheckBox checkBox1 = (CheckBox)findViewById(R.id.checkBox1);</span><br><span class="line">checkBox1.setOnCheckedChangeListener(<span class="keyword">new</span> CompoundButton.OnCheckedChangeListener() &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        <span class="keyword">if</span>(isChecked)&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你选择了-&quot;</span> + buttonView.getText());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你取消选择了-&quot;</span>+ buttonView.getText());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="RadioGroup的使用"><a href="#RadioGroup的使用" class="headerlink" title="RadioGroup的使用"></a>RadioGroup的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);</span><br><span class="line">radioGroup.setOnCheckedChangeListener(<span class="keyword">new</span> OnCheckedChangeListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(RadioGroup group, <span class="keyword">int</span> checkedId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> radioButtonId = group.getCheckedRadioButtonId();</span><br><span class="line">        Log.v(<span class="string">&quot;RadioGroup&quot;</span>, <span class="string">&quot;onCheckedChanged==id=&quot;</span> + checkedId</span><br><span class="line">                + radioButtonId);</span><br><span class="line">        <span class="comment">// 根据ID获取RadioButton的实例</span></span><br><span class="line">        RadioButton rb = (RadioButton) SecondActivity.<span class="keyword">this</span></span><br><span class="line">                .findViewById(radioButtonId);</span><br><span class="line">        <span class="comment">// 更新文本内容，以符合选中项</span></span><br><span class="line">        textView1.setText(<span class="string">&quot;您的性别是：&quot;</span> + rb.getText());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>delegate针对one-to-one关系，并且reciever可以返回值给sender，notification 可以针对one-to-one/many/none,reciever无法返回值给sender.所以，delegate用于sender希望接受到reciever的某个功能反馈值，notification用于通知多个object某个事件。</p>
+<h2 id="GCD中队列都是哪几种？"><a href="#GCD中队列都是哪几种？" class="headerlink" title="GCD中队列都是哪几种？"></a>GCD中队列都是哪几种？</h2><p>参考答案：以下四种队列</p>
+<table>
+<thead>
+<tr>
+<th>串行队列</th>
+<th>并行队列</th>
+<th>全局队列</th>
+<th>主队列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DISPATCH_QUEUE_SERIAL</td>
+<td>DISPATCH_QUEUE_CONCURRENT</td>
+<td>dispatch_get_global_queue</td>
+<td>dispatch_get_main_queue</td>
+</tr>
+<tr>
+<td>队列中的任务只会顺序执行</td>
+<td>队列中的任务通常会并发执行</td>
+<td>是系统的</td>
+<td>在多线程开发中，使用主队列更新UI</td>
+</tr>
+</tbody></table>
+<h2 id="有A、B-2个异步请求，如何判断A、B都完成执行？如果需要A、B顺序执行，该如何实现？"><a href="#有A、B-2个异步请求，如何判断A、B都完成执行？如果需要A、B顺序执行，该如何实现？" class="headerlink" title="有A、B 2个异步请求，如何判断A、B都完成执行？如果需要A、B顺序执行，该如何实现？"></a>有A、B 2个异步请求，如何判断A、B都完成执行？如果需要A、B顺序执行，该如何实现？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">参考答案：能说出group和group_notify即可</span><br><span class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">dispatch_group_t group = dispatch_group_create();</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; /*任务A */ &#125;);</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; /*任务B */ &#125;);</span><br><span class="line">dispatch_group_notify(group,dispatch_get_main_queue(), ^&#123;</span><br><span class="line"> // 在A、B异步执行完成后，会回调这里</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">第二问：能说出把用串行队列即可</span><br></pre></td></tr></table></figure>
+<h2 id="自动布局之autoresizingMask-UIViewAutoresizingFlexibleWidth-UIViewAutoresizingFlexibleBottomMargin含义和内部原理是怎么样的？"><a href="#自动布局之autoresizingMask-UIViewAutoresizingFlexibleWidth-UIViewAutoresizingFlexibleBottomMargin含义和内部原理是怎么样的？" class="headerlink" title="自动布局之autoresizingMask UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin含义和内部原理是怎么样的？"></a>自动布局之autoresizingMask UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin含义和内部原理是怎么样的？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">知道这段代码的表面含义：左右间距不变自动调整宽度 和 顶部间距不变</span><br><span class="line">其次知道枚举的状态和选项模式 </span><br><span class="line">外部通过按位或 </span><br><span class="line">内部实现是通过位与操作运算实现的（可要求拿笔书写大致内部实现代码流程）</span><br></pre></td></tr></table></figure>
+<h2 id="什么是-RunLoop？"><a href="#什么是-RunLoop？" class="headerlink" title="什么是 RunLoop？"></a>什么是 RunLoop？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">从字面上讲就是运行循环，它内部就是do-while循环，在这个循环内部不断地处理各种任务。</span><br><span class="line">一个线程对应一个RunLoop，基本作用就是保持程序的持续运行，处理app中的各种事件。通过runloop，有事运行，没事就休息，可以节省cpu资源，提高程序性能。</span><br><span class="line"></span><br><span class="line">主线程的run loop默认是启动的。iOS的应用程序里面，程序启动后会有一个如下的main()函数</span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line">	@autoreleasepool &#123;</span><br><span class="line">    	return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后顺势承接下一题</span><br></pre></td></tr></table></figure>
+<h2 id="滑动tableview的时候-定时器不执行的原因？解决办法？"><a href="#滑动tableview的时候-定时器不执行的原因？解决办法？" class="headerlink" title="滑动tableview的时候 定时器不执行的原因？解决办法？"></a>滑动tableview的时候 定时器不执行的原因？解决办法？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">和上一题做承接</span><br><span class="line">参考答案：</span><br><span class="line">首先：将NSTimer添加到主线程NSRunLoop的默认模式下，只有主线程是默认模式下才能执行NSTimer</span><br><span class="line">（滚动scrollView，RunLoop默认进入Tracking模式，所以NSTimer不会有效果）。</span><br><span class="line">其次：只要将 timer 添加到 Common 占位模式下，timer就可以在Default和UITrackingRunLoopMode模式下都能运行（Common是一个表示，它是将NSDefaultRunLoopMode 和 UITrackingRunLoopMode标记为了Common）</span><br></pre></td></tr></table></figure>
+<h2 id="哪些情况下会造成内存泄露？"><a href="#哪些情况下会造成内存泄露？" class="headerlink" title="哪些情况下会造成内存泄露？"></a>哪些情况下会造成内存泄露？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">A、B对象进行强引用、代理强引用、block循环引用、timer、N次循环造成的内存上涨(autoReleasePool添加) 、用到Core Foundation对象（CFRelease）等。</span><br></pre></td></tr></table></figure>
+<h2 id="Runtime实现的机制是什么，一般用于什么场景？"><a href="#Runtime实现的机制是什么，一般用于什么场景？" class="headerlink" title="Runtime实现的机制是什么，一般用于什么场景？"></a>Runtime实现的机制是什么，一般用于什么场景？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">1). 使用时需要导入的头文件 &lt;objc/message.h&gt; &lt;objc/runtime.h&gt;</span><br><span class="line">2). Runtime 运行时机制，它是一套C语言库。</span><br><span class="line">3). 实际上我们编写的所有OC代码，最终都是转成了runtime库的东西。</span><br><span class="line"></span><br><span class="line">应用场景：</span><br><span class="line">    （1）获取类里面的所有成员变量。</span><br><span class="line">    （2）为类动态添加成员变量。</span><br><span class="line">    （3）动态改变类的方法实现。</span><br><span class="line">    （4）为类动态添加新的方法等。</span><br><span class="line">用于模型抽象</span><br></pre></td></tr></table></figure>
+<h2 id="什么是-Method-Swizzle？"><a href="#什么是-Method-Swizzle？" class="headerlink" title="什么是 Method Swizzle？"></a>什么是 Method Swizzle？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">1). 在没有一个类的实现源码的情况下，想改变其中一个方法的实现，除了继承它重写、和借助类别重名方法暴力抢先之外，还有更加灵活的方法 Method Swizzle。</span><br><span class="line">2). Method Swizzle 指的是改变一个已存在的选择器对应的实现的过程。OC中方法的调用能够在运行时通过改变，通过改变类的调度表中选择器到最终函数间的映射关系。</span><br><span class="line">3). 在OC中调用一个方法，其实是向一个对象发送消息，查找消息的唯一依据是selector的名字。利用OC的动态特性，可以实现在运行时偷换selector对应的方法实现。</span><br><span class="line">4). 每个类都有一个方法列表，存放着selector的名字和方法实现的映射关系。IMP有点类似函数指针，指向具体的方法实现。</span><br><span class="line">5). 我们可以利用 method_exchangeImplementations 来交换2个方法中的IMP。</span><br><span class="line">6). 我们可以利用 class_replaceMethod 来修改类。</span><br><span class="line">7). 我们可以利用 method_setImplementation 来直接设置某个方法的IMP。</span><br><span class="line">8). 归根结底，都是偷换了selector的IMP。</span><br></pre></td></tr></table></figure>
+<h2 id="通过简历中开发过的项目，了解下项目分工和面试者负责的模块，怎么进行开发、维护的？"><a href="#通过简历中开发过的项目，了解下项目分工和面试者负责的模块，怎么进行开发、维护的？" class="headerlink" title="通过简历中开发过的项目，了解下项目分工和面试者负责的模块，怎么进行开发、维护的？"></a>通过简历中开发过的项目，了解下项目分工和面试者负责的模块，怎么进行开发、维护的？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考答案：对负责的模块应该有清晰的思路</span><br></pre></td></tr></table></figure>
+<h2 id="在iOS中业务模块的编程风格是怎样的？"><a href="#在iOS中业务模块的编程风格是怎样的？" class="headerlink" title="在iOS中业务模块的编程风格是怎样的？"></a>在iOS中业务模块的编程风格是怎样的？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">MVC、业务逻辑与用户界面分离、代码按区区域划分、多用组合、</span><br><span class="line">用类别防止类过胖保持易维护易扩展等等</span><br><span class="line">（只要编程习惯保证代码的简洁性、可阅读下皆可）  良好的编程风格可减少内存泄露和其它bug的出现。</span><br></pre></td></tr></table></figure>
+<h2 id="最近在技术方面最有成就感的事？或者说最有成就感的项目是哪个？"><a href="#最近在技术方面最有成就感的事？或者说最有成就感的项目是哪个？" class="headerlink" title="最近在技术方面最有成就感的事？或者说最有成就感的项目是哪个？"></a>最近在技术方面最有成就感的事？或者说最有成就感的项目是哪个？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">一般为攻破了某个技术难题。可以针对面试者开发的项目 多聊聊 了解下面试者的思路。</span><br></pre></td></tr></table></figure>
+<h2 id="上面的技术难题怎么攻破的？"><a href="#上面的技术难题怎么攻破的？" class="headerlink" title="上面的技术难题怎么攻破的？"></a>上面的技术难题怎么攻破的？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">了解该面试者解决问题的方式、渠道。</span><br></pre></td></tr></table></figure>
+<h2 id="未来几年的职业规划？"><a href="#未来几年的职业规划？" class="headerlink" title="未来几年的职业规划？"></a>未来几年的职业规划？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">暂无具体  （多聊聊 感受下性格以及与人相处，</span><br><span class="line">至于职业规划只要符合部门的需要即可）</span><br></pre></td></tr></table></figure>
+<h2 id="问下面试者他想了解哪些？"><a href="#问下面试者他想了解哪些？" class="headerlink" title="问下面试者他想了解哪些？"></a>问下面试者他想了解哪些？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">目的：了解下面试者的诉求、看他对公司是否有兴趣、看性格和表达能力</span><br></pre></td></tr></table></figure>
 
-<h3 id="Bundle的使用"><a href="#Bundle的使用" class="headerlink" title="Bundle的使用"></a>Bundle的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        bundle.putString(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;上海&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;狗子&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;12&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;男&quot;</span>);</span><br><span class="line">        String name = bundle.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        Log.v(<span class="string">&quot;Bundle&quot;</span>,<span class="string">&quot;bundle.string=&quot;</span>+ bundle.toString()+<span class="string">&quot;名字：&quot;</span>+name);</span><br><span class="line"><span class="comment">//bundle.string=Bundle[&#123;gender=男, age=12, city=上海, name=狗子&#125;]名字：狗子</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="Android-RelativeLayout-属性"><a href="#Android-RelativeLayout-属性" class="headerlink" title="Android RelativeLayout 属性"></a>Android RelativeLayout 属性</h3><p>// 相对于给定ID控件<br>android:layout_above 将该控件的底部置于给定ID的控件之上;<br>android:layout_below 将该控件的底部置于给定ID的控件之下;<br>android:layout_toLeftOf    将该控件的右边缘与给定ID的控件左边缘对齐;<br>android:layout_toRightOf  将该控件的左边缘与给定ID的控件右边缘对齐;</p>
-<p>android:layout_alignBaseline  将该控件的baseline与给定ID的baseline对齐;<br>android:layout_alignTop        将该控件的顶部边缘与给定ID的顶部边缘对齐;<br>android:layout_alignBottom   将该控件的底部边缘与给定ID的底部边缘对齐;<br>android:layout_alignLeft        将该控件的左边缘与给定ID的左边缘对齐;<br>android:layout_alignRight      将该控件的右边缘与给定ID的右边缘对齐;<br>// 相对于父组件<br>android:layout_alignParentTop      如果为true,将该控件的顶部与其父控件的顶部对齐;<br>android:layout_alignParentBottom 如果为true,将该控件的底部与其父控件的底部对齐;<br>android:layout_alignParentLeft      如果为true,将该控件的左部与其父控件的左部对齐;<br>android:layout_alignParentRight    如果为true,将该控件的右部与其父控件的右部对齐;<br>// 居中<br>android:layout_centerHorizontal 如果为true,将该控件的置于水平居中;<br>android:layout_centerVertical     如果为true,将该控件的置于垂直居中;<br>android:layout_centerInParent   如果为true,将该控件的置于父控件的中央;<br>// 指定移动像素<br>android:layout_marginTop      上偏移的值;<br>android:layout_marginBottom 下偏移的值;<br>android:layout_marginLeft 　　左偏移的值;<br>android:layout_marginRight 　 右偏移的值;</p>
-<!--2014、11、18-->  
-
-<h3 id="下拉列表框-Spinner的使用"><a href="#下拉列表框-Spinner的使用" class="headerlink" title="下拉列表框 Spinner的使用"></a>下拉列表框 Spinner的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">myTextView = (TextView) findViewById(R.id.TextView_city);</span><br><span class="line">        mySpinner = (Spinner) findViewById(R.id.Spinner_city);</span><br><span class="line">        adapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,</span><br><span class="line">                android.R.layout.simple_spinner_item, citys);</span><br><span class="line">        <span class="comment">// 为适配器设置下拉列表下拉时的菜单样式。</span></span><br><span class="line">        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</span><br><span class="line">        <span class="comment">// 将适配器添加到下拉列表上</span></span><br><span class="line">        mySpinner.setAdapter(adapter);</span><br><span class="line">        mySpinner.setOnItemSelectedListener(<span class="keyword">new</span> OnItemSelectedListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                myTextView.setText(<span class="string">&quot;您的选择是：&quot;</span> + adapter.getItem(position));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="comment">// myTextView.setText(&quot;NONE&quot;);</span></span><br><span class="line">                <span class="comment">// parent.setVisibility(View.VISIBLE);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 类名.<span class="keyword">this</span> 的使用</span><br><span class="line"></span><br><span class="line">我们会用到一些内部类和匿名类。当在匿名类中用<span class="keyword">this</span>时，这个<span class="keyword">this</span>则指的是匿名类或内部类本身。这时如果我们要使用外部类的方法和变量的话，则应该加上外部类的类名。</span><br><span class="line"></span><br><span class="line">### GridView 使用方式</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">GridView gridView = (GridView) findViewById(R.id.gridview);</span><br><span class="line">        gridView.setAdapter(<span class="keyword">new</span> ImageAdapter(<span class="keyword">this</span>));</span><br><span class="line">        gridView.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                Toast.makeText(GridViewActivity.<span class="keyword">this</span>, mThumbIds[position], Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 代码法设置背景颜色</span><br><span class="line"></span><br><span class="line">ImageView设置背景颜色</span><br><span class="line">ImageView.setBackgroundColor(android.graphics.Color.parseColor(<span class="string">&quot;#ffffff&quot;</span>));</span><br><span class="line">ImageView.setBackgroundColor(Color.RED);</span><br><span class="line">ImageView.setBackgroundColor(Color.rgb(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">### Android广播机制</span><br><span class="line"></span><br><span class="line">BroadcastReceiver用于接收程序（包括用户开发的程序和系统内建的程序）所发出的Broadcast Intent，与应用程序启动Activity、Service相同的是，程序启动BroadcastReceiver也只需要两步。</span><br><span class="line"><span class="number">1</span>）创建需要启动的BroadcastReceiver的Intent。</span><br><span class="line"><span class="number">2</span>）调用Context的sendBroadcast()或sendOrderedBroadcast()方法来启动指定BroadcastReceiver。</span><br><span class="line">内部类的方式</span><br><span class="line"></span><br><span class="line">#### 注册</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">&#123;</span><br><span class="line">    myBroadCast = <span class="keyword">new</span> MyBroadCast();</span><br><span class="line">        IntentFilter filter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        filter.addAction(ACTION_INTENT_TEST);</span><br><span class="line">        registerReceiver(myBroadCast, filter);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="内部类实现"><a href="#内部类实现" class="headerlink" title="内部类实现"></a>内部类实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBroadCast</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyBroadCast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;myBroadCast&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO 处理接收到得广播</span></span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;onReceive===1111111&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(ThirdActivity.ACTION_INTENT_TEST);</span><br><span class="line">                   sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
-
-<h4 id="取消注册"><a href="#取消注册" class="headerlink" title="取消注册"></a>取消注册</h4><p> java<br>    @Override<br>    protected void onDestroy() {<br>        super.onDestroy();<br>        unregisterReceiver(myBroadCast);<br>    }</p>
 
       
     </div>
@@ -418,7 +392,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E5%89%8D%E7%AB%AF/MVC%EF%BC%8CMVP%20%E5%92%8C%20MVVM%20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -432,7 +406,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">android学习</a>
+            <a href="/2018/06/11/%E5%89%8D%E7%AB%AF/MVC%EF%BC%8CMVP%20%E5%92%8C%20MVVM%20/" class="post-title-link" itemprop="url">MVC，MVP 和 MVVM</a>
         </h2>
 
         <div class="post-meta">
@@ -457,7 +431,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
                 </span>
             </span>
 
@@ -472,44 +446,31 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <div class="post-body" itemprop="articleBody">
 
       
-          <!--2014、11、12-->
-
-<h3 id="Android-之-fill-parent-、wrap-content-、match-parent属性"><a href="#Android-之-fill-parent-、wrap-content-、match-parent属性" class="headerlink" title="Android 之 fill_parent 、wrap_content 、match_parent属性"></a>Android 之 fill_parent 、wrap_content 、match_parent属性</h3><p><code>fill_parent</code> 设置一个顶部布局或控件为<br><code>fill_parent</code>将强制性让它布满整个屏幕。<br><code>wrap_content</code> 设置一个视图的尺寸为<br><code>wrap_content</code>将强制性地使视图扩展以显示全部内容</p>
-<h3 id="在程序中输出日志-使用-android-util-Log-类"><a href="#在程序中输出日志-使用-android-util-Log-类" class="headerlink" title="在程序中输出日志, 使用 android.util.Log 类."></a>在程序中输出日志, 使用 android.util.Log 类.</h3><p>该类提供了若干静态方法<br>Log.v(String tag, String msg);<br>Log.d(String tag, String msg);<br>Log.i(String tag, String msg);<br>Log.w(String tag, String msg);<br>Log.e(String tag, String msg);<br>分别对应 Verbose, Debug, Info, Warning,Error.<br>tag是一个标识,可以是任意字符串,通常可以使用类名+方法名, 主要是用来在查看日志时提供一个筛选条件.<br>程序运行后 并不会在 ide的控制台内输出任何信息.<br>如果要后查看日志 请使用<br>adb logcat  </p>
-<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>command + shift + f 格式化代码 ，option + / 提示，option + 上下键 移动某行代码，option + command + 上下键，option + command + s  弹出菜单功能页，Ctrl+1 快速修复(最经典的快捷键,就不用多说了)</p>
-<h3 id="layout文件夹里新建xml命名"><a href="#layout文件夹里新建xml命名" class="headerlink" title="layout文件夹里新建xml命名"></a>layout文件夹里新建xml命名</h3><p>必须都是小写</p>
-<h3 id="完成A跳转到B操作：要在AndroidMainifest-xml的文件里面"><a href="#完成A跳转到B操作：要在AndroidMainifest-xml的文件里面" class="headerlink" title="完成A跳转到B操作：要在AndroidMainifest.xml的文件里面"></a>完成A跳转到B操作：要在AndroidMainifest.xml的文件里面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"> &lt;activity</span><br><span class="line">            android:name=<span class="string">&quot;com.example.sample1.新加入的类名字”</span></span><br><span class="line"><span class="string">            android:label=“页面的标题” &gt;</span></span><br><span class="line"><span class="string"> &lt;/activity&gt;</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">```     </span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">AndroidManifest.xml是Android应用程序中最重要的文件之一。它是Android程序的全局配置文件，是每个 android程序中必须的文件。它位于我们开发的应用程序的根目录下，描述了package中的全局数据，包括package中暴露的组件 （activities, services, 等等），以及他们各自的实现类，各种能被处理的数据和启动位置等重要信息。</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;!--2014、11、13--&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 布局Layout管理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[布局](http://www.cnblogs.com/mengdd/archive/2012/12/19/2825382.html)  </span></span><br><span class="line"><span class="string"> 　</span></span><br><span class="line"><span class="string"> 　　布局即是指Activity中组件的呈现方式，即组件大小、间距和对齐方式等。  </span></span><br><span class="line"><span class="string">　　Android提供了两种创建布局的方式：  </span></span><br><span class="line"><span class="string">　　　　1.在XML配置文件中声明（推荐）。  </span></span><br><span class="line"><span class="string">　　　　2.在程序中通过代码直接实例化布局及其组件。  </span></span><br><span class="line"><span class="string">在Android中常见的布局方式：  </span></span><br><span class="line"><span class="string">线性布局（LinearLayout）：按照垂直或者水平方向布局组件。  </span></span><br><span class="line"><span class="string">　　帧布局（FrameLayout）：组件从屏幕的左上角坐标布局组件。  </span></span><br><span class="line"><span class="string">　　表格布局（TableLayout）：按照行列方式布局组件。  </span></span><br><span class="line"><span class="string">　　相对布局（RelativeLayout）：相对其他组件的布局方式。  </span></span><br><span class="line"><span class="string">　　绝对布局（AbsoluteLayout）：按照绝对坐标来布局组件。（已废）。  </span></span><br><span class="line"><span class="string">2、一个ListView通常有两个职责。  </span></span><br><span class="line"><span class="string">（1）将数据填充到布局。  </span></span><br><span class="line"><span class="string">（2）处理用户的选择点击等操作。  </span></span><br><span class="line"><span class="string">第一点很好理解，ListView就是实现这个功能的。第二点也不难做到，在后面的学习中读者会发现，这非常简单。  </span></span><br><span class="line"><span class="string">一个ListView的创建需要3个元素。  </span></span><br><span class="line"><span class="string">（1）ListView中的每一列的View。  </span></span><br><span class="line"><span class="string">（2）填入View的数据或者图片等。  </span></span><br><span class="line"><span class="string">（3）连接数据与ListView的适配器。  </span></span><br><span class="line"><span class="string">3、关于List&lt;E&gt;的用法  </span></span><br><span class="line"><span class="string">List l=new List();  </span></span><br><span class="line"><span class="string"> 现在这样，如果你想放得是User类，就这样new:  </span></span><br><span class="line"><span class="string"> List &lt;User&gt; l=new List &lt;User&gt;();  </span></span><br><span class="line"><span class="string"> 这样编译器就可以帮你监督，如果你往里面放其他类对象，就会报错咯。  </span></span><br><span class="line"><span class="string"> 当然好处就是你拿出来就是User类对象，不用再强制转换了。比如过去：  </span></span><br><span class="line"><span class="string"> User u=(User)l.get(1);  </span></span><br><span class="line"><span class="string"> 现在就可以：  </span></span><br><span class="line"><span class="string"> User u=l.get(1);  </span></span><br><span class="line"><span class="string">4、ArrayList &amp;&amp; HashMap 的使用 </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">``` java</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> 	ArrayList&lt;HashMap&lt;String,String&gt;&gt; list=new ArrayList&lt;HashMap&lt;String,String&gt;&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map1= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map2= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map3= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>user<span class="string">&quot;, &quot;</span>zhang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>user<span class="string">&quot;, &quot;</span>wang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        list.add(map1);  </span></span><br><span class="line"><span class="string">        list.add(map2);  </span></span><br><span class="line"><span class="string">        list.add(map3); </span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Log.v(&quot;</span>ArrayList==HashMap===:<span class="string">&quot;, list.toString());</span></span><br><span class="line"><span class="string">        </span></span><br></pre></td></tr></table></figure>
-
-<h3 id="AlertDialog-的使用"><a href="#AlertDialog-的使用" class="headerlink" title="AlertDialog 的使用"></a>AlertDialog 的使用</h3><pre><code class="java">         
-         Builder alertDialog = new AlertDialog.Builder(this);
-         alertDialog.setTitle(&quot;标题&quot;);// 设置标题
-         alertDialog.setMessage(&quot;一个消息框&quot;);// 设置消息
-         alertDialog.setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() &#123;
-             
-             @Override
-             public void onClick(DialogInterface dialog, int which) &#123;
-                 // toast 的用法
-                 Toast.makeText(getApplicationContext(), &quot;你选择了确定&quot;,
-                         Toast.LENGTH_SHORT).show();
-             &#125;
-         &#125;);
-         alertDialog.show();
-         
-</code></pre>
-<h3 id="Button-的使用-通过具体的id-找到某个控件"><a href="#Button-的使用-通过具体的id-找到某个控件" class="headerlink" title="Button 的使用: 通过具体的id 找到某个控件"></a>Button 的使用: 通过具体的id 找到某个控件</h3><pre><code class="java">        // 给按钮加上点击事件
-        clickMeButton.setOnClickListener(new OnClickListener() &#123;
-            @Override
-            public void onClick(View v) &#123;
-                Log.v(&quot;click&quot;, &quot;=======clickButton=======&quot;);
-                // 跳转到SecondActivity页面
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SecondActivity.class);
-                startActivity(intent);
-            &#125;
-        &#125;);
-        
-</code></pre>
-<h3 id="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如"><a href="#dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如" class="headerlink" title="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:"></a>dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:</h3><p>在320x480分辨率，像素密度为160,1dp=1px<br>在480x800分辨率，像素密度为240,1dp=1.5px<br>计算公式:1dp*像素密度/160 = 实际像素数<br>px（像素）：屏幕上的点。<br>dp（与密度无关的像素）：一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，1dp = 1px。<br>尽量使用dp作为空间大小单位，sp作为和文字相关大小单位 </p>
+          <p>复杂的软件必须有清晰合理的架构，否则无法开发和维护。<br>MVC（Model-View-Controller）是最常见的软件架构之一，业界有着广泛应用。它本身很容易理解，但是要讲清楚，它与衍生的 MVP 和 MVVM 架构的区别就不容易了。<br>昨天晚上，我读了《Scaling Isomorphic Javascript Code》，突然意识到，它们的区别非常简单。我用几段话，就可以说清。</p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>MVC模式的意思是，软件可以分成三个部分。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020104.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 视图（View）：用户界面。</span><br><span class="line">* 控制器（Controller）：业务逻辑</span><br><span class="line">* 模型（Model）：数据保存</span><br></pre></td></tr></table></figure>
+<p>各部分之间的通信方式如下。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020105.png"></p>
+<ol>
+<li>View 传送指令到 Controller</li>
+<li>Controller 完成业务逻辑后，要求 Model 改变状态</li>
+<li>Model 将新的数据发送到 View，用户得到反馈<br>所有通信都是单向的。<h2 id="互动模式"><a href="#互动模式" class="headerlink" title="互动模式"></a>互动模式</h2></li>
+</ol>
+<p>接受用户指令时，MVC 可以分成两种方式。一种是通过 View 接受指令，传递给 Controller。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020106.png"></p>
+<p>另一种是直接通过controller接受指令。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020107.png"></p>
+<h2 id="实例：Backbone"><a href="#实例：Backbone" class="headerlink" title="实例：Backbone"></a>实例：Backbone</h2><p>实际项目往往采用更灵活的方式，以 Backbone.js 为例。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020108.png"></p>
+<ol>
+<li>用户可以向 View 发送指令（DOM 事件），再由 View 直接要求 Model 改变状态。</li>
+<li>用户也可以直接向 Controller 发送指令（改变 URL 触发 hashChange 事件），再由 Controller 发送给 View。</li>
+<li>Controller 非常薄，只起到路由的作用，而 View 非常厚，业务逻辑都部署在 View。所以，Backbone 索性取消了 Controller，只保留一个 Router（路由器） 。<h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2></li>
+</ol>
+<p>MVP 模式将 Controller 改名为 Presenter，同时改变了通信方向。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020109.png"></p>
+<ol>
+<li>各部分之间的通信，都是双向的。</li>
+<li>View 与 Model 不发生联系，都通过 Presenter 传递。</li>
+<li>View 非常薄，不部署任何业务逻辑，称为”被动视图”（Passive View），即没有任何主动性，而 Presenter非常厚，所有逻辑都部署在那里。<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2></li>
+</ol>
+<p>MVVM 模式将 Presenter 改名为 ViewModel，基本上与 MVP 模式完全一致。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020110.png"></p>
+<p>唯一的区别是，它采用双向绑定（data-binding）：View的变动，自动反映在 ViewModel，反之亦然。<a target="_blank" rel="noopener" href="https://angularjs.org/">Angular</a> 和 <a target="_blank" rel="noopener" href="http://emberjs.com/">Ember</a> 都采用这种模式。<br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html">来自</a></p>
 
       
     </div>
@@ -529,7 +490,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E5%89%8D%E7%AB%AF/%E7%94%A8%E4%BA%8E%E5%9C%A8safari%E8%B7%B3%E8%BD%AC%E5%88%B0APP%E7%9A%84web%E9%A1%B5%E9%9D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -543,7 +504,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/" class="post-title-link" itemprop="url">android学习(2014、11、19)</a>
+            <a href="/2018/06/11/%E5%89%8D%E7%AB%AF/%E7%94%A8%E4%BA%8E%E5%9C%A8safari%E8%B7%B3%E8%BD%AC%E5%88%B0APP%E7%9A%84web%E9%A1%B5%E9%9D%A2/" class="post-title-link" itemprop="url">web页面打开APP</a>
         </h2>
 
         <div class="post-meta">
@@ -568,7 +529,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
                 </span>
             </span>
 
@@ -583,528 +544,494 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <div class="post-body" itemprop="articleBody">
 
       
-          <!--2014、11、19-->
-<p>1、fragment的使用<br>Fragment必须是依存与Activity而存在的<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/lmj623565791/article/details/37970961">http://blog.csdn.net/lmj623565791/article/details/37970961</a><br>找fragment的方法：<br>LeftFragment fragment = (LeftFragment) getFragmentManager().findFragmentById(R.id.left_fragment);<br>2、Java关键字final、static使用总结</p>
-<p>一、final<br>　根据程序上下文环境，Java关键字final有“这是无法改变的”或者“终态的”含义，它可以修饰非抽象类、非抽象类成员方法和变量。你可能出于两种理解而需要阻止改变：设计或效率。<br>final类不能被继承，没有子类，final类中的方法默认是final的。<br>final方法不能被子类的方法覆盖，但可以被继承。<br>final成员变量表示常量，只能被赋值一次，赋值后值不再改变。<br>final不能用于修饰构造方法。<br>注意：父类的private成员方法是不能被子类方法覆盖的，因此private类型的方法默认是final类型的。<br>1、final类<br>　final类不能被继承，因此final类的成员方法没有机会被覆盖，默认都是final的。在设计类时候，如果这个类不需要有子类，类的实现细节不允许改变，并且确信这个类不会载被扩展，那么就设计为final类。<br>2、final方法<br>如果一个类不允许其子类覆盖某个方法，则可以把这个方法声明为final方法。<br>使用final方法的原因有二：<br>第一、把方法锁定，防止任何继承类修改它的意义和实现。<br>第二、高效。编译器在遇到调用final方法时候会转入内嵌机制，大大提高执行效率。<br>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// TODO 自动生成方法存根 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f1&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//无法被子类覆盖的方法 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">f2</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f2&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f3</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f3&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">f4</span><span class="params">()</span> </span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;f4&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> <span class="keyword">extends</span> <span class="title">Test1</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;Test1父类方法f1被覆盖!&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">Test2 t=<span class="keyword">new</span> Test2(); </span><br><span class="line">t.f1(); </span><br><span class="line">t.f2(); <span class="comment">//调用从父类继承过来的final方法 </span></span><br><span class="line">t.f3(); <span class="comment">//调用从父类继承过来的方法 </span></span><br><span class="line"><span class="comment">//t.f4(); //调用失败，无法从父类继承获得 </span></span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p>3、final变量（常量）<br>　用final修饰的成员变量表示常量，值一旦给定就无法改变！<br>　final修饰的变量有三种：静态变量、实例变量和局部变量，分别表示三种类型的常量。<br>　从下面的例子中可以看出，一旦给final变量初值后，值就不能再改变了。<br>　另外，final变量定义的时候，可以先声明，而不给初值，这中变量也称为final空白，无论什么情况，编译器都确保空白final在使用之前必须被初始化。但是，final空白在final关键字final的使用上提供了更大的灵活性，为此，一个类中的final数据成员就可以实现依对象而有所不同，却有保持其恒定不变的特征。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.leizhimin; </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String S=<span class="string">&quot;final实例变量S&quot;</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> A=<span class="number">100</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> B=<span class="number">90</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> C=<span class="number">80</span>; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> D=<span class="number">70</span>; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> E; <span class="comment">//final空白,必须在初始化对象的时候赋初值 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Test3</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123; </span><br><span class="line">E=x; </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> args </span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line">Test3 t=<span class="keyword">new</span> Test3(<span class="number">2</span>); </span><br><span class="line"><span class="comment">//t.A=101; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.B=91; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.C=81; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line"><span class="comment">//t.D=71; //出错,final变量的值一旦给定就无法改变 </span></span><br><span class="line">System.out.println(t.A); </span><br><span class="line">System.out.println(t.B); </span><br><span class="line">System.out.println(t.C); <span class="comment">//不推荐用对象方式访问静态字段 </span></span><br><span class="line">System.out.println(t.D); <span class="comment">//不推荐用对象方式访问静态字段 </span></span><br><span class="line">System.out.println(Test3.C); </span><br><span class="line">System.out.println(Test3.D); </span><br><span class="line"><span class="comment">//System.out.println(Test3.E); //出错,因为E为final空白,依据不同对象值有所不同. </span></span><br><span class="line">System.out.println(t.E); </span><br><span class="line">Test3 t1=<span class="keyword">new</span> Test3(<span class="number">3</span>); </span><br><span class="line">System.out.println(t1.E); <span class="comment">//final空白变量E依据对象的不同而不同 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="keyword">new</span> Test3(<span class="number">1</span>).A); </span><br><span class="line">System.out.println(Test3.C); </span><br><span class="line">System.out.println(Test3.D); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123; </span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> a; <span class="comment">//final空白,在需要的时候才赋值 </span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> b=<span class="number">4</span>; <span class="comment">//局部常量--final用于局部变量的情形 </span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">int</span> c; <span class="comment">//final空白,一直没有给赋值. </span></span><br><span class="line">a=<span class="number">3</span>; </span><br><span class="line"><span class="comment">//a=4; 出错,已经给赋过值了. </span></span><br><span class="line"><span class="comment">//b=2; 出错,已经给赋过值了. </span></span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p>4、final参数<br>当函数参数为final类型时，你可以读取使用该参数，但是无法改变该参数的值。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test4</span> </span>&#123; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="keyword">new</span> Test4().f1(<span class="number">2</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> i)</span></span>&#123; </span><br><span class="line"><span class="comment">//i++; //i是final类型的,值不允许改变的. </span></span><br><span class="line">System.out.print(i); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+          <h3 id="在WXApp上设置一个URL-Schemes"><a href="#在WXApp上设置一个URL-Schemes" class="headerlink" title="在WXApp上设置一个URL Schemes"></a>在WXApp上设置一个URL Schemes</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">为了能让别的App(包括我们刚才创建的MyApp)能够打开 OpenTest，</span><br><span class="line">我们需要为app添加一个URL Schemes。</span><br><span class="line">步骤：选中app工程-&gt;Info-&gt;URL Types-&gt;点击“+”-&gt;在URL Schemes栏填上 OpenTest</span><br></pre></td></tr></table></figure>
 
-<p>二、static<br>　static表示“全局”或者“静态”的意思，用来修饰成员变量和成员方法，也可以形成静态static代码块，但是Java语言中没有全局变量的概念。<br>　被static修饰的成员变量和成员方法独立于该类的任何对象。也就是说，它不依赖类特定的实例，被类的所有实例共享。只要这个类被加载，Java虚拟机就能根据类名在运行时数据区的方法区内定找到他们。因此，static对象可以在它的任何对象创建之前访问，无需引用任何对象。<br>　用public修饰的static成员变量和成员方法本质是全局变量和全局方法，当声明它类的对象市，不生成static变量的副本，而是类的所有实例共享同一个static变量。<br>　static变量前可以有private修饰，表示这个变量可以在类的静态代码块中，或者类的其他静态成员方法中使用（当然也可以在非静态成员方法中使用–废话），但是不能在其他类中通过类名来直接引用，这一点很重要。实际上你需要搞明白，private是访问权限限定，static表示不要实例化就可以使用，这样就容易理解多了。static前面加上其它访问权限关键字的效果也以此类推。<br>　static修饰的成员变量和成员方法习惯上称为静态变量和静态方法，可以直接通过类名来访问，访问语法为：<br>类名.静态方法名(参数列表…)<br>类名.静态变量名<br>　用static修饰的代码块表示静态代码块，当Java虚拟机（JVM）加载类时，就会执行该代码块（用处非常大，呵呵）。<br>1、static变量<br>　按照是否静态的对类成员变量进行分类可分两种：一种是被static修饰的变量，叫静态变量或类变量；另一种是没有被static修饰的变量，叫实例变量。两者的区别是：<br>　对于静态变量在内存中只有一个拷贝（节省内存），JVM只为静态分配一次内存，在加载类的过程中完成静态变量的内存分配，可用类名直接访问（方便），当然也可以通过对象来访问（但是这是不推荐的）。<br>　对于实例变量，没创建一个实例，就会为实例变量分配一次内存，实例变量可以在内存中有多个拷贝，互不影响（灵活）。<br>2、静态方法<br>　静态方法可以直接通过类名调用，任何的实例也都可以调用，因此静态方法中不能用this和super关键字，不能直接访问所属类的实例变量和实例方法(就是不带static的成员变量和成员成员方法)，只能访问所属类的静态成员变量和成员方法。因为实例成员与特定的对象关联！这个需要去理解，想明白其中的道理，不是记忆！！！<br>　因为static方法独立于任何实例，因此static方法必须被实现，而不能是抽象的abstract。<br>3、static代码块<br>　static代码块也叫静态代码块，是在类中独立于类成员的static语句块，可以有多个，位置可以随便放，它不在任何的方法体内，JVM加载类时会执行这些静态的代码块，如果static代码块有多个，JVM将按照它们在类中出现的先后顺序依次执行它们，每个代码块只会被执行一次。例如：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test5</span> </span>&#123; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> b; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">3</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">Test5 t=<span class="keyword">new</span> Test5(); </span><br><span class="line">t.f(); </span><br><span class="line">t.b=<span class="number">1000</span>; </span><br><span class="line">System.out.println(t.b); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">4</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// TODO 自动生成方法存根 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">5</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;hhahhahah&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>运行结果：<br>3<br>hhahhahah<br>1000<br>4<br>5<br>　利用静态代码块可以对一些static变量进行赋值，最后再看一眼这些例子，都一个static的main方法，这样JVM在运行main方法的时候可以直接调用而不用创建实例。<br>4、static和final一块用表示什么<br>static final用来修饰成员变量和成员方法，可简单理解为“全局常量”！<br>对于变量，表示一旦给值就不可修改，并且通过类名可以访问。<br>对于方法，表示不可覆盖，并且可以通过类名直接访问。</p>
-<p>【自己补充的】<br>5、static还可以修饰内部类，普通类是不允许声明为静态的，只有内部类才可以。被static修饰的内部类可以直接作为一个普通类来使用，而不需实例化一个外部类<br>例如有个类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestInner</span></span>&#123;</span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么在main中实例化StaticInnerClass的代码是这样写<br>new TestInner.StaticInnerClass();<br>而实例化InnerClass则必须写成<br>TestInner testInner = new TestInner();<br>testInner.new InnerClass();<br>所以要注意了哦！<br>而且呢，在InnerClass里面已经无法再声明static innner class了，因为The member type inner cannot be declared static; static types can only be declared in static or top level types  </p>
-<!--11.28-->
-<p>抽象类 abstract class<br>     包含抽象方法的类，叫抽象类。而抽象的概念就是抽象出共同属性：成员变量和方法。所以抽象类可以有private等多种权限的成员变量和非abstract的成员方法。当然抽象方法是一定要有的。<br>    抽象类是用于单一继承的，不能实例化。而继承类一定要实现抽象方法，因为抽象方法在抽象类里是没有实现行为的，访问权限只能是public。而非抽象方法则可以赋予方法的默认行为，访问权限可以多种，但需要考虑非抽象方法是否需要被继承类访问。<br>接口 interface<br>     接口，用于多重继承，也不能实例化。只能包含static final的成员变量，不过在interface中一般不定义成员变量。而成员方法在接口里只能是抽象方法，访问权限只能是public。<br><a target="_blank" rel="noopener" href="http://android.blog.51cto.com/268543/385282/">http://android.blog.51cto.com/268543/385282/</a> </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E4%B9%8B%20ssh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/git%20%E4%B9%8B%20ssh/" class="post-title-link" itemprop="url">ssh</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h3><p>你拥有了一个 GitHub 账号之后，就可以自由的 clone 或者下载其他项目，也可以创建自己的项目，但是你没法提交代码。仔细想想也知道，肯定不可能随意就能提交代码的，如果随意可以提交代码，那么 GitHub 上的项目岂不乱了套了，所以提交代码之前一定是需要某种授权的，而 GitHub 上一般都是基于 SSH 授权的。<br>那么什么是 SSH 呢？ 简单点说，SSH是一种网络协议，用于计算机之间的加密登录。目前是每一台 Linux 电脑的标准配置。而大多数 Git 服务器都会选择使用 SSH 公钥来进行授权，所以想要在 GitHub 提交代码的第一步就是要先添加 SSH key 配置。</p>
-<h3 id="生成SSH-key"><a href="#生成SSH-key" class="headerlink" title="生成SSH key"></a>生成SSH key</h3><p>Linux 与 Mac 都是默认安装了 SSH ，而 Windows 系统安装了 Git Bash 应该也是带了 SSH 的。大家可以在终端（win下在 Git Bash 里）输入 ssh 检测是否已安装。</p>
-<p>紧接着输入 <code>ssh-keygen -t rsa</code> 或者<code>（ssh-keygen -t rsa -C “邮箱名&quot;）</code> ，什么意思呢？就是指定 rsa 算法生成密钥，接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，而 <code>id_rsa</code> 是密钥，<code>id_rsa.pub</code> 就是公钥。这两文件默认分别在如下目录里生成：<br><code>Linux/Mac</code> 系统 在<code> ~/.ssh</code> 下，win系统在 <code>/c/Documents and Settings/username/.ssh</code> 下，都是隐藏文件，相信你们有办法查看的。<br>接下来要做的是把 <code>id_rsa.pub </code>的内容添加到 GitHub 上，这样你本地的 <code>id_rsa</code> 密钥跟 GitHub 上的 <code>id_rsa.pub</code> 公钥进行配对，授权成功才可以提交代码。</p>
-<h3 id="GitHub-上添加-SSH-key"><a href="#GitHub-上添加-SSH-key" class="headerlink" title="GitHub 上添加 SSH key"></a>GitHub 上添加 SSH key</h3><p>第一步先在 GitHub 上的设置页面，点击最左侧 SSH and GPG keys ：</p>
-<h3 id="怎么查看-id-rsa-pub-文件的内容？"><a href="#怎么查看-id-rsa-pub-文件的内容？" class="headerlink" title="怎么查看 id_rsa.pub 文件的内容？"></a>怎么查看 id_rsa.pub 文件的内容？</h3><p>Linux/Mac 用户执行以下命令：<br>cd ~/.ssh<br>cat id_rsa.pub</p>
-<h3 id="测试是否ok"><a href="#测试是否ok" class="headerlink" title="测试是否ok"></a>测试是否ok</h3><p>SSH key 添加成功之后，输入 ssh -T <a href="mailto:&#x67;&#105;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;">&#x67;&#105;&#116;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#x6f;&#x6d;</a> 进行测试</p>
-<p><a target="_blank" rel="noopener" href="http://stormzhang.com/github/2016/06/04/learn-github-from-zero4/">ssh向GITHUB 提交代码</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">git 如何删除缓存的远程分支列表.md</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
-<h2 id="列出远程分支"><a href="#列出远程分支" class="headerlink" title="列出远程分支"></a>列出远程分支</h2><p>使用git 部署代码，<pre> git branch -a </pre> 里面列出的很多远程的分支，其实都是已经被删除了的。</p>
-<h2 id="删除缓存的远程分支列表"><a href="#删除缓存的远程分支列表" class="headerlink" title="删除缓存的远程分支列表"></a>删除缓存的远程分支列表</h2><p>用此命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br><span class="line">or</span><br><span class="line">git fetch -p   </span><br></pre></td></tr></table></figure>
-<p>即可解决</p>
-<h2 id="列出提交个数"><a href="#列出提交个数" class="headerlink" title="列出提交个数"></a>列出提交个数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-list --count HEAD</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/git%20%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">git项目中的常用功能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="列出提交个数-主要用来设置项目build号"><a href="#列出提交个数-主要用来设置项目build号" class="headerlink" title="列出提交个数   主要用来设置项目build号"></a>列出提交个数   主要用来设置项目build号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-list --count HEAD</span><br></pre></td></tr></table></figure>
-
-<h3 id="获得两个版本间所有变更的文件列表"><a href="#获得两个版本间所有变更的文件列表" class="headerlink" title="获得两个版本间所有变更的文件列表"></a>获得两个版本间所有变更的文件列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff 6962e097c87bcbd937eb59d94f9f79b9a709455d   </span><br><span class="line">c02e20f5ad5eb1a675b6b3d30fed5b66f309871c --stat &gt; log.txt -p</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看某个文件的修改历史"><a href="#查看某个文件的修改历史" class="headerlink" title="查看某个文件的修改历史"></a>查看某个文件的修改历史</h3><p><code>git log -p filePath/fileName.m </code></p>
-<h3 id="使用-pull-rebase-操作替代-merge"><a href="#使用-pull-rebase-操作替代-merge" class="headerlink" title="使用 pull rebase 操作替代 merge"></a>使用 pull rebase 操作替代 merge</h3><p>　　如果你工作的团队正工作在同一个分支，那么你所要做的获取/合并或经常拉取。分支合并的 git 记录与合并提交时提示功能分支被并入主干。但在多个团队成员工作的同一分支的情况下，经常合并导致在日志中多个合并的消息引起混乱。所以你可以使用 pull rebase，以保持历史信息清除了无用合并的消息。</p>
-<p><code>git config branch.BRANCH_NAME_HERE.rebase true</code></p>
-<p>　　此外，您可以配置一个特定的分支总是衍合：</p>
-<p><code>git pull --rebase </code></p>
-<h3 id="gc-命令"><a href="#gc-命令" class="headerlink" title="gc 命令"></a>gc 命令</h3><p>“垃圾回收”是一个很亲切的功能。让我们开始吧：<br><code>$ git gc --prune=now</code><br>现在，重新检视一下仓库的大小，发现确实有效啊：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ find .git/objects -type f</span><br><span class="line">.git/objects/info/packs</span><br><span class="line">.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.idx</span><br><span class="line">.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.pack</span><br><span class="line">$</span><br><span class="line">$ du -ah    # 此处略去了无关输出</span><br><span class="line">4.0K    ./.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.idx</span><br><span class="line"> 52M    ./.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.pack</span><br><span class="line"> 77M    ./bigfile</span><br><span class="line">130M    .</span><br></pre></td></tr></table></figure>
-
-<h3 id="cherry-pick用法"><a href="#cherry-pick用法" class="headerlink" title="cherry-pick用法"></a>cherry-pick用法</h3><p>使用场景：在branch1开发，进行多个提交，这是切换到branch2，想把之前branch1分支提交的commit都复制过来。</p>
-<p>单个<code>commit</code>只需要<code>git cherry-pick commitid</code></p>
-<p>多个<code>commit</code> 只需要<code>git cherry-pick commitid1..commitid100</code></p>
-<p>注意，不包含第一个<code>commitid</code> ， 即  <code>git cherry-pick (commitid1..commitid100]</code></p>
-<h3 id="Git更新远程分支列表"><a href="#Git更新远程分支列表" class="headerlink" title="Git更新远程分支列表"></a>Git更新远程分支列表</h3><p><code>git remote update origin --prune</code></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%20%E6%9B%B4%E6%8D%A2%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/git%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%20%E6%9B%B4%E6%8D%A2%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" class="post-title-link" itemprop="url">git 本地仓库 更换远程仓库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
-<h2 id="git修改远程仓库地址的三种方法"><a href="#git修改远程仓库地址的三种方法" class="headerlink" title="git修改远程仓库地址的三种方法"></a>git修改远程仓库地址的三种方法</h2><h3 id="直接命令修改"><a href="#直接命令修改" class="headerlink" title="直接命令修改"></a>直接命令修改</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin [url]</span><br></pre></td></tr></table></figure>
-
-<h3 id="命令，先删除后设新地址"><a href="#命令，先删除后设新地址" class="headerlink" title="命令，先删除后设新地址"></a>命令，先删除后设新地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git remote rm origin </span><br><span class="line">git remote add origin [url]</span><br></pre></td></tr></table></figure>
-
-<h3 id="直接修改配置文件"><a href="#直接修改配置文件" class="headerlink" title="直接修改配置文件"></a>直接修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">文件位置：git/config </span><br><span class="line">config</span><br><span class="line"></span><br><span class="line">[core]</span><br><span class="line">    repositoryformatversion = 0</span><br><span class="line">    filemode = false</span><br><span class="line">    bare = false</span><br><span class="line">    logallrefupdates = true</span><br><span class="line">    symlinks = false</span><br><span class="line">    ignorecase = true</span><br><span class="line">[gui]</span><br><span class="line">    wmstate = normal</span><br><span class="line">    geometry = 841x483+225+101 189 218</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">    url = git@github.com:project.git</span><br><span class="line">    fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch &quot;master&quot;]</span><br><span class="line">    remote = origin</span><br><span class="line">    merge = refs/heads/master</span><br></pre></td></tr></table></figure>
-
-<h3 id="补充：如果用sourcetree的话可以直接修改远程仓库地址"><a href="#补充：如果用sourcetree的话可以直接修改远程仓库地址" class="headerlink" title="补充：如果用sourcetree的话可以直接修改远程仓库地址"></a>补充：如果用sourcetree的话可以直接修改远程仓库地址</h3>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/%E5%88%9D%E5%A7%8B%E5%8C%96git%E4%BB%93%E5%BA%93%E9%A1%B9%E7%9B%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/%E5%88%9D%E5%A7%8B%E5%8C%96git%E4%BB%93%E5%BA%93%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">初始化git仓库项目.md</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
-<h1 id="Command-line-instructions-命令行指令"><a href="#Command-line-instructions-命令行指令" class="headerlink" title="Command line instructions 命令行指令"></a>Command line instructions 命令行指令</h1><h2 id="Git-global-setup"><a href="#Git-global-setup" class="headerlink" title="Git global setup"></a>Git global setup</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;xxx@email.com&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="Create-a-new-repository"><a href="#Create-a-new-repository" class="headerlink" title="Create a new repository"></a>Create a new repository</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git@git.jd.com:xxx/yyy.git</span><br><span class="line">cd JDViewKitDoc</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;add README&quot;</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-
-<h2 id="Existing-folder"><a href="#Existing-folder" class="headerlink" title="Existing folder"></a>Existing folder</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd existing_folder</span><br><span class="line">git init</span><br><span class="line">git remote add origin git@git.jd.com:xxx/yyy.git</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-<h2 id="Existing-Git-repository"><a href="#Existing-Git-repository" class="headerlink" title="Existing Git repository"></a>Existing Git repository</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd existing_repo</span><br><span class="line">git remote add origin git@git.jd.com:xxx/yyy.git</span><br><span class="line">git push -u origin --all</span><br><span class="line">git push -u origin --tags</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题解决方案"><a href="#问题解决方案" class="headerlink" title="问题解决方案"></a>问题解决方案</h2><h3 id="fatal-refusing-to-merge-unrelated-histories-解决方案"><a href="#fatal-refusing-to-merge-unrelated-histories-解决方案" class="headerlink" title="fatal: refusing to merge unrelated histories 解决方案"></a>fatal: refusing to merge unrelated histories 解决方案</h3><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>可以使用 rebase 的方式来进行合并。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase origin master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">mkdir rebaseTmp</span><br><span class="line">cd rebaseTmp</span><br><span class="line">echo &quot;hello a line&quot; &gt; tmp.txt</span><br><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;Local first commit&quot;</span><br><span class="line">git remote add origin  https://github.com/HustLion/java_console_log4j.git</span><br><span class="line">git pull --rebase origin master</span><br><span class="line"></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/%E6%B7%BB%E5%8A%A0%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/git/%E6%B7%BB%E5%8A%A0%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">git gitignore的设置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="在项目中添加-gitignore文件"><a href="#在项目中添加-gitignore文件" class="headerlink" title="在项目中添加.gitignore文件"></a>在项目中添加.gitignore文件</h3><blockquote>
-<p>.gitignore文件可以直接从 <a target="_blank" rel="noopener" href="https://github.com/github/gitignore">https://github.com/github/gitignore</a> 上面下载，里面包含了各个语言对应的.gitignore文件</p>
+<h3 id="打开APP-xxx-html"><a href="#打开APP-xxx-html" class="headerlink" title="打开APP  xxx.html"></a>打开APP  xxx.html</h3><blockquote>
+<p>可以保存一下页面为.html 放在本地服务Document目录下 快速启动</p>
 </blockquote>
-<h3 id="配置添加所需要忽略的文件或者文件类型"><a href="#配置添加所需要忽略的文件或者文件类型" class="headerlink" title="配置添加所需要忽略的文件或者文件类型"></a>配置添加所需要忽略的文件或者文件类型</h3><blockquote>
-<p>使用命令vim .gitignore打开.gitignore文件，回车后 添加和修改要忽略的文件</p>
-</blockquote>
-<h3 id="将-gitignore文件提交到仓库"><a href="#将-gitignore文件提交到仓库" class="headerlink" title="将.gitignore文件提交到仓库"></a>将.gitignore文件提交到仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .gitignore</span><br><span class="line">git commit -m &quot;添加项目忽略文件&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=utf-8&quot;</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;HandheldFriendly&quot;</span> <span class="attr">content</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">open_win</span>(<span class="params"></span>) </span></span></span><br><span class="line"><span class="function"><span class="javascript">		</span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">window</span>.open(<span class="string">&quot;OpenTest&quot;</span>)</span></span><br><span class="line"><span class="javascript">		<span class="comment">// window.open(&quot;http://www.baidu.com&quot;)</span></span></span><br><span class="line"><span class="javascript">		&#125;</span></span><br><span class="line"><span class="javascript">		</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width:100%;height: 100%;background: white; position: absolute;&quot;</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 方法一 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;margin-top:200px; width:100%;color:#666; font-size:32px; text-align: center ;display:inline-block;&quot;</span></span></span><br><span class="line"><span class="tag">			<span class="attr">href</span>=<span class="string">&quot;OpenTest&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>打开OpenTest App页面<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- OpenTest --&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- 方法二跳转有点问题 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- &lt;input type=button </span></span><br><span class="line"><span class="comment">		style=&quot;width:250px; height=200px;&quot;</span></span><br><span class="line"><span class="comment">		size=&quot;60&quot;</span></span><br><span class="line"><span class="comment">		value=&quot;dsl open 打开&quot; onclick=&quot;open_win()&quot; /&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>提交.gitignore文件的目的主要是保证其他开发者提交的时候也会自动筛选掉不需要的文件，因为已提交到仓库的文件再设置.gitignore文件中忽略是无效的，需要先将其移除版本控制后，.gitignore文件才会生效。具体方法见下文。</p>
-</blockquote>
-<h3 id="关于-git-将文件或文件夹移除版本控制"><a href="#关于-git-将文件或文件夹移除版本控制" class="headerlink" title="关于 git 将文件或文件夹移除版本控制"></a>关于 git 将文件或文件夹移除版本控制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git rm -r -n --cached &quot;bin/&quot; //-n：加上这个参数，执行命令时，是不会删除任何文件，而是展示此命令要删除的文件列表预览。</span><br><span class="line">git rm -r --cached  &quot;bin/&quot;      //最终执行命令. </span><br><span class="line">git commit -m&quot; remove bin folder all file out of control&quot;    //提交</span><br><span class="line">git push    //提交到远程服务器</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<blockquote>
-<p>如果是要忽略一种类型的文件（如.DS_Store文件），将bin/换成*.DS_Store即可。</p>
-</blockquote>
-<h3 id="设置Git全局忽略文件方法"><a href="#设置Git全局忽略文件方法" class="headerlink" title="设置Git全局忽略文件方法"></a>设置Git全局忽略文件方法</h3><p>配置全局忽略文件的我们就不必给每一个项目添加单独的忽略文件<br>1、 进入用户目录下，将第一步中配置好的.gitignore文件拷贝到用户目录下，将这个文件改个名字，名字随意，自己好认就行<br>2、 执行命令git config –global core.excludesfile ~/.gitignore_globalxxxx</p>
-<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>命令git config –global core.excludesfile ~/.gitignore_globalaaaa的效果其实就是修改了在用户目录下的.gitconfig文件</p>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">Intellij IDEA 创建Spring-Boot项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="1-1-SpringBoot简介"><a href="#1-1-SpringBoot简介" class="headerlink" title="1.1 SpringBoot简介"></a>1.1 SpringBoot简介</h3><p>① 为所有Spring 开发提供一个更快更广泛的人门体验。</p>
+<p>② 零配置。无冗余代码生成和XML 强制配置，遵循“约定大于配置” 。</p>
+<p>③ 集成了大量常用的第三方库的配置， Spring Boot 应用为这些第三方库提供了几乎可以零配置的开箱即用的能力。</p>
+<p>④）提供一系列大型项目常用的非功能性特征，如嵌入式服务器、安全性、度量、运行状况检查、外部化配置等。</p>
+<h3 id="1-2-Spring-Boot-不是Spring-的替代者"><a href="#1-2-Spring-Boot-不是Spring-的替代者" class="headerlink" title="1.2 Spring Boot 不是Spring 的替代者"></a>1.2 Spring Boot 不是Spring 的替代者</h3><p>        Spring 框架是通过IOC 机制来管理Bean 的。Spring Boot 依赖Spring 框架来管理对象的依赖。</p>
+<p>        Spring Boot 并不是Spring 的精简版本，而是为使用Spring 做好各种产品级准备。</p>
+<p>        简单的说，平常我们开发一个项目就好比组装一台电脑主机，需要我们自己购买各式各样的配件，最后把它们组装在一起。而Spring Boot 就好比是厂商帮我们组装好的品牌机电脑，各种常用的配件都帮我们封装好了，并且提供了许多的接口，只要我们想增加某个配件，或者修改某个配件的版本，只要跟他讲一下名称，都不需要我们自己去购买，他就会把配件送上门并且帮你装好，用springboot就是这么轻松！</p>
+<h3 id="1-3-Spring-Boot-2-新特性"><a href="#1-3-Spring-Boot-2-新特性" class="headerlink" title="1.3 Spring Boot 2 新特性"></a>1.3 Spring Boot 2 新特性</h3><p>    目前Spring Boot 已经开发到了2.0.2版本 ，而我们之后的项目案例也是基于springboot2来开发的。</p>
+<p>    Spring Boot 2 基于最新的Java 8 和Spring Framework 5 ，这意味着Spring Boot 2 拥有构建现代应用的能力。</p>
+<p>    ( 1 ）基于Java 8 的反射增强， Spring Framework 5.0 中的方法参数可以更加高效地进行访问。<br>    ( 2 ）接口提供基于Java 8 的默认方法构建的选择性声明。<br>    ( 3 ）支持候选组件索引作为类路径扫描的替代方案。<br>    ( 4 ）当然，最为重要的是， 此次Spring Framework 5.0 推出了新的响应式堆钱WEB 框架。  </p>
+<p>相应地， Spring Boot 2 会集成最新的技术枝，包括Spring Data 、Spring Security 、Spring Integration 、Spring  AMQP, Spring Session 、Spring Batch 等都做了更新，其他的第三方依赖也会尝试使用最新的版本。</p>
+<p>毫无疑问，Spring Boot  是一种趋势，同时我们在使用spring boot 的同时也在使用着其它新的技术框架。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014296316/article/details/79382186">Intellij IDEA 创建Spring-Boot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zyhlwzy/article/details/78730587">使用Intellij IDEA创建SpringBoot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xwd718/article/details/80640357">基于SpringBoot开发一套完整的项目</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">Java Web应用程序的推荐目录结构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Java-Web应用程序的推荐目录结构"><a href="#Java-Web应用程序的推荐目录结构" class="headerlink" title="Java Web应用程序的推荐目录结构"></a>Java Web应用程序的推荐目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   │   └── mygroup</span><br><span class="line">    │   │       ├── controller</span><br><span class="line">    │   │       │   ├── HomeController.java</span><br><span class="line">    │   │       │   └── PersonController.java</span><br><span class="line">    │   │       ├── dao</span><br><span class="line">    │   │       │   └── PersonDao.java</span><br><span class="line">    │   │       └── model</span><br><span class="line">    │   │           └── Person.java</span><br><span class="line">    │   ├── resources</span><br><span class="line">    │   │   ├── db.properties</span><br><span class="line">    │   │   ├── log4j.xml</span><br><span class="line">    │   │   └── META-INF</span><br><span class="line">    │   │       └── persistence.xml</span><br><span class="line">    │   └── webapp</span><br><span class="line">    │       ├── index.html</span><br><span class="line">    │       ├── META-INF</span><br><span class="line">    │       │   ├── context.xml</span><br><span class="line">    │       │   └── MANIFEST.MF</span><br><span class="line">    │       ├── resources</span><br><span class="line">    │       │   └── css</span><br><span class="line">    │       │       └── screen.css</span><br><span class="line">    │       └── WEB-INF</span><br><span class="line">    │           ├── spring</span><br><span class="line">    │           │   ├── app</span><br><span class="line">    │           │   │   ├── controllers.xml</span><br><span class="line">    │           │   │   └── servlet-context.xml</span><br><span class="line">    │           │   ├── db.xml</span><br><span class="line">    │           │   └── root-context.xml</span><br><span class="line">    │           ├── views</span><br><span class="line">    │           │   ├── edit.jsp</span><br><span class="line">    │           │   ├── home.jsp</span><br><span class="line">    │           │   └── list.jsp</span><br><span class="line">    │           └── web.xml</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        │   └── mygroup</span><br><span class="line">        │       ├── controller</span><br><span class="line">        │       │   ├── DataInitializer.java</span><br><span class="line">        │       │   ├── HomeControllerTest.java</span><br><span class="line">        │       │   └── PersonControllerTest.java</span><br><span class="line">        │       └── dao</span><br><span class="line">        │           └── PersonDaoTest.java</span><br><span class="line">        └── resources</span><br><span class="line">            ├── db.properties</span><br><span class="line">            ├── log4j.xml</span><br><span class="line">            ├── test-context.xml</span><br><span class="line">            └── test-db.xml</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yudy/archive/2012/06/26/2563638.html">Java Web应用程序的推荐目录结构</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/scown/p/5561677.html">Java Web 项目目录规范</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28018283/article/details/79398661">用IntelliJ idea 创建 springMVC 的Maven 项目</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java-spring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/java-spring/" class="post-title-link" itemprop="url">java-spring</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="spring框架"><a href="#spring框架" class="headerlink" title="spring框架"></a>spring框架</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Spring是一个开放源代码的设计层面框架，他解决的是业务逻辑层和其他各层的松耦合问题，</span><br><span class="line">因此它将面向接口的编程思想贯穿整个系统应用。</span><br><span class="line">Spring是于2003 年兴起的一个轻量级的Java 开发框架，由Rod Johnson创建。</span><br><span class="line">简单来说，Spring是一个分层的JavaSE/EE full-stack(一站式) 轻量级开源框架。</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载和安装Spring请按如下步骤进行。"><a href="#下载和安装Spring请按如下步骤进行。" class="headerlink" title="下载和安装Spring请按如下步骤进行。"></a>下载和安装Spring请按如下步骤进行。</h2><p>（1）登录站点，下载Spring的最新稳定版本。最新版本为spring-framework-5.0.建议下载spring-framework-spring-framework-4.0.0.M2-dist这个压缩包不仅包含Spring的开发包，而且包含Spring编译和运行所依赖的第三方类库。<br>解压缩下载到的压缩包，解压缩后的文件夹应用如下几个文件夹。<br>dist：该文件夹下放Spring的jar包，通常只需要Spring.jar文件即可。该文件夹下还有一些类似spring－Xxx.jar的压缩包， 这些压缩包是spring.jar压缩包的子模块压缩包。除非确定整个J2EE应用只需要使用Spring的某一方面时，才考虑使用这种分模块压缩包。通常建议使用Spring.jar<br>docs：该文件夹下包含spring的相关文档、开发指南及API参考文档。<br>lib：该文件夹下包含spring编译和运行所依赖的第三方类库，该路径下的类库并不是  spring必需的，但如果需要使用第三方类库的支持，这里的类库就是必需要的。<br>samples：该文件夹下包含Spring的几个简单例子，可作为Spring入门学习的案例。<br>src：该文件夹下包含Spring的全部源文件，如果开发过程中有地方无法把握，可以参考该源文件，了解底层实现。<br>spring<br>spring<br>test：该文件夹下包含Spring的测试示例。<br>tiger：该路径下存放关于JDK的相关内容<br>解压缩后的文件夹下，还包含一些关于Spring的License和项目相关文件<br>（2）将spring.jar复制到项目的CLASSPATH路径下，对于Web应用，将spring.jar文件复制到WEB-INF/lib路径下，该应用即可以利用Spring框架了。<br>（3）通常Spring的框架还依赖于其他一些jar文件，因此还须将lib下对应的包复制到WEB-INF/lib路径下，具体要复制哪些jar文件，取决于应用所需要使用的项目。通常需要复制cglib，dom4j，jakarta-commons，log4j等文件夹下的jar文件。<br>（4）为了编译java文件，可以找到Spring的基础类，将Spring.jar文件的路径添加到环境变量CLASSPATH中。当然，也可以使用ANT工具，但无须添加环境变量。如果使用Eclipse或者NetBeans等IDE时，也不需要设置环境变量。  </p>
+<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><p>传统的web架构的view 表现层使用struts作为表现层。但是如果试用下spring自带的MVC，会发现spring 在一般场合完全可以取代struts。从某些角度来说，spring的mvc设计的更加合理，有兴趣的话不妨尝试下单个的spring的MVC。</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/wkspring/">w3Cschool-spring学习</a></p>
+<h2 id="Spring-Boot-是什么？"><a href="#Spring-Boot-是什么？" class="headerlink" title="Spring Boot 是什么？"></a>Spring Boot 是什么？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Spring Boot 的目的是提供一组工具，以便快速构建容易配置的 Spring 应用程序。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" class="post-title-link" itemprop="url">java 基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/springboot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/springboot/" class="post-title-link" itemprop="url">springboot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FJ41197rF?p=36">SpringBoot核心技术篇</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、大量的XML让开发者厌恶,因此Spring提供了许多注解来完成各种功能。</span><br><span class="line">2、大量的注解让开发者厌恶 ,因此Spring提供了组合注解来完成各种功能。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>Docker是一个开源的应用容器引擎。</p>
+<h2 id="Spring-Boot与数据访问"><a href="#Spring-Boot与数据访问" class="headerlink" title="Spring Boot与数据访问"></a>Spring Boot与数据访问</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/spring%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/spring%E6%B3%A8%E8%A7%A3/" class="post-title-link" itemprop="url">spring注解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、大量的XML让开发者厌恶,因此Spring提供了许多注解来完成各种功能。</span><br><span class="line">2、大量的注解让开发者厌恶 ,因此Spring提供了组合注解来完成各种功能。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Spring-Boot-注解的意义以及作用"><a href="#Spring-Boot-注解的意义以及作用" class="headerlink" title="Spring Boot 注解的意义以及作用"></a>Spring Boot 注解的意义以及作用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">利用注解：隐式配置，例如：@Autowired、@Bean、@Component等，通过注解来简化xml文件。</span><br><span class="line"></span><br><span class="line">利用Java文件：显示配置，比xml配置的优势是具备类型安全。</span><br><span class="line"></span><br><span class="line">利用传统的xml配置文件。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注解(annotations)列表</p>
+<p>@ResponseBody </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用该注解修饰的函数，会将结果直接填充到HTTP的响应体中，一般用于构建RESTful的api；</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>@Controller</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用于定义控制器类，在spring 项目中由控制器负责将用户发来的URL请求转发到对应的服务接口（service层）。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>@RestController</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ResponseBody和@Controller的合集</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>@RequestMapping</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">提供路由信息，负责URL到Controller中的具体函数的映射。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37995707/article/details/77447764">更多注解详看</a></p>
 
       
     </div>

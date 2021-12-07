@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/ES6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/Flex%E5%B8%83%E5%B1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +200,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/ES6/" class="post-title-link" itemprop="url">ES6</a>
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/Flex%E5%B8%83%E5%B1%80/" class="post-title-link" itemprop="url">Flex布局</a>
         </h2>
 
         <div class="post-meta">
@@ -233,33 +233,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="ECMAScript-6-入门"><a href="#ECMAScript-6-入门" class="headerlink" title="ECMAScript 6 入门"></a>ECMAScript 6 入门</h4><ul>
-<li>ECMAScript 6简介</li>
-<li>let 和 const 命令</li>
-<li>变量的解构赋值</li>
-<li>字符串的扩展</li>
-<li>正则的扩展</li>
-<li>数值的扩展</li>
-<li>函数的扩展</li>
-<li>数组的扩展</li>
-<li>对象的扩展</li>
-<li>对象的新增方法</li>
-<li>Symbol</li>
-<li>Set 和 Map 数据结构</li>
-<li>Proxy</li>
-<li>Reflect</li>
-<li>Promise 对象</li>
-<li>Iterator 和 for…of 循环</li>
-<li>Generator 函数的语法</li>
-<li>Generator 函数的异步应用</li>
-<li>async 函数</li>
-<li>Class 的基本语法</li>
-<li>Class 的继承</li>
-<li>Decorator</li>
-<li>Module 的语法</li>
-<li>Module 的加载实现</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">ECMAScript 6 入门</a></p>
+          <h4 id="Flex布局是什么？"><a href="#Flex布局是什么？" class="headerlink" title="Flex布局是什么？"></a>Flex布局是什么？</h4><p>Flex是Flexible Box的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/3791e575c48b3698be6a94ae1dbff79d.png"></p>
+<p>容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。<br><strong>项目默认沿主轴排列</strong>。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size。</p>
+<h4 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h4><p>以下6个属性设置在容器上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flex-direction</span><br><span class="line">flex-wrap</span><br><span class="line">flex-flow</span><br><span class="line">justify-content</span><br><span class="line">align-items</span><br><span class="line">align-content</span><br></pre></td></tr></table></figure>
+
+<h5 id="flex-direction属性"><a href="#flex-direction属性" class="headerlink" title="flex-direction属性"></a>flex-direction属性</h5><p>flex-direction属性决定主轴的方向（即项目的排列方向）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/0cbe5f8268121114e87d0546e53cda6e.png"></p>
+<p>它可能有4个值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">row（默认值）：主轴为水平方向，起点在左端。</span><br><span class="line">row-reverse：主轴为水平方向，起点在右端。</span><br><span class="line">column：主轴为垂直方向，起点在上沿。</span><br><span class="line">column-reverse：主轴为垂直方向，起点在下沿。</span><br></pre></td></tr></table></figure>
+<h5 id="justify-content属性"><a href="#justify-content属性" class="headerlink" title="justify-content属性"></a>justify-content属性</h5><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  justify-content: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/c55dfe8e3422458b50e985552ef13ba5.png"></p>
+<p>5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flex-start（默认值）：左对齐</span><br><span class="line">flex-end：右对齐</span><br><span class="line">center： 居中</span><br><span class="line">space-between：两端对齐，项目之间的间隔都相等。</span><br><span class="line">space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</span><br></pre></td></tr></table></figure>
+
+<h5 id="align-items属性"><a href="#align-items属性" class="headerlink" title="align-items属性"></a>align-items属性</h5><p>align-items属性定义项目在交叉轴上如何对齐。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/2b0c39c7e7a80d5a784c8c2ca63cde17.png"></p>
+<p>取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flex-start：交叉轴的起点对齐。</span><br><span class="line">flex-end：交叉轴的终点对齐。</span><br><span class="line">center：交叉轴的中点对齐。</span><br><span class="line">baseline: 项目的第一行文字的基线对齐。</span><br><span class="line">stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.runoob.com/w3cnote/flex-grammar.html">Flex布局出处</a><br><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css3/flexbox-basics.html">Flexbox——快速布局神器</a></p>
 
       
     </div>

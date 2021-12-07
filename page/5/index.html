@@ -186,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20JavaScriptCore%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +200,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%20JavaScriptCore%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">iOS JavaScriptCore使用</a>
+            <a href="/2018/06/11/git/git%20%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/" class="post-title-link" itemprop="url">git项目中的常用功能</a>
         </h2>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
                 </span>
             </span>
 
@@ -240,261 +240,278 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="iOS-JavaScriptCore使用"><a href="#iOS-JavaScriptCore使用" class="headerlink" title="iOS JavaScriptCore使用"></a>iOS JavaScriptCore使用</h3><p>JavaScriptCore是iOS7引入的新功能，JavaScriptCore可以理解为一个浏览器的运行内核，使用JavaScriptCore可以使用native代码（这里主要指objectiveC和swift）与js代码进行相互的调用，本文主要从几个方面进行了解。</p>
-<ul>
-<li>native调用js代码</li>
-<li>js调用native代码</li>
-<li>异常处理</li>
-<li>JavaScriptCore和webView的结合使用</li>
-</ul>
-<p>要使用JavaScriptCore，首先我们需要引入它的头文件 <code>#import &lt;JavaScriptCore/JavaScriptCore.h&gt;</code><br>这个头里面引入了几个重要的对象</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSContext.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSValue.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSManagedValue.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSVirtualMachine.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSExport.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+          <h3 id="列出提交个数-主要用来设置项目build号"><a href="#列出提交个数-主要用来设置项目build号" class="headerlink" title="列出提交个数   主要用来设置项目build号"></a>列出提交个数   主要用来设置项目build号</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-list --count HEAD</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>JSContext是JavaScript的运行上下文，他主要作用是执行js代码和注册native方法接口</li>
-<li>JSValue是JSContext执行后的返回结果，他可以是任何js类型（比如基本数据类型和函数类型，对象类型等），并且都有对象的方法转换为native对象。</li>
-<li>JSManagedValue是JSValue的封装，用它可以解决js和原声代码之间循环引用的问题</li>
-<li>JSVirtualMachine 管理JS运行时和管理js暴露的native对象的内存</li>
-<li>JSExport是一个协议，通过实现它可以完成把一个native对象暴漏给js</li>
-</ul>
-<h3 id="native调用js代码"><a href="#native调用js代码" class="headerlink" title="native调用js代码"></a>native调用js代码</h3><p>先看下面常见的三种情况，之间执行js代码、执行文件或网络中的js代码、注册js方法再利用JSValue调用</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接执行js代码</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateScript &#123;</span><br><span class="line">    <span class="comment">//定义一个js并执行函数</span></span><br><span class="line">    JSValue *exeFunction1 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;function hi()&#123; return &#x27;hi&#x27; &#125;; hi()&quot;</span>];</span><br><span class="line">    <span class="comment">//执行一个闭包js</span></span><br><span class="line">    JSValue *exeFunction2 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;(function()&#123; return &#x27;hi&#x27; &#125;)()&quot;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行一段js文件中的代码</span></span><br><span class="line"><span class="comment">//更多的应用场景使用网络或者本地文件加载一段js代码，充分利用其灵活性</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateScriptFromJSFile &#123;</span><br><span class="line">    <span class="built_in">NSString</span> * path = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@&quot;core&quot;</span> ofType:<span class="string">@&quot;js&quot;</span>];</span><br><span class="line">    <span class="built_in">NSString</span> * html = [<span class="built_in">NSString</span> stringWithContentsOfFile:path encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line">    JSValue *constructor = [<span class="keyword">self</span>.jsContext evaluateScript:html];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注册js方法，然后在利用JSValue调用</span></span><br><span class="line">- (<span class="keyword">void</span>)regiestJSFunction &#123;</span><br><span class="line">    <span class="comment">//注册一个函数</span></span><br><span class="line">    [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;var hello = function()&#123; return &#x27;hello&#x27; &#125;&quot;</span>];</span><br><span class="line">    <span class="comment">//调用</span></span><br><span class="line">    JSValue *value1 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;hello()&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//注册一个匿名函数</span></span><br><span class="line">    JSValue *jsFunction = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot; (function()&#123; return &#x27;hello objc&#x27; &#125;)&quot;</span>];</span><br><span class="line">    <span class="comment">//调用</span></span><br><span class="line">    JSValue *value2 = [jsFunction callWithArguments:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获得两个版本间所有变更的文件列表"><a href="#获得两个版本间所有变更的文件列表" class="headerlink" title="获得两个版本间所有变更的文件列表"></a>获得两个版本间所有变更的文件列表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff 6962e097c87bcbd937eb59d94f9f79b9a709455d   </span><br><span class="line">c02e20f5ad5eb1a675b6b3d30fed5b66f309871c --stat &gt; log.txt -p</span><br></pre></td></tr></table></figure>
 
-<p>这里有几个重要的地方需要说明。</p>
-<h3 id="jsContext执行evaluateScript方法后的返回值类型"><a href="#jsContext执行evaluateScript方法后的返回值类型" class="headerlink" title="jsContext执行evaluateScript方法后的返回值类型"></a>jsContext执行evaluateScript方法后的返回值类型</h3><p>对于native来说，返回的类型都是JSValue，这是Native对js执行对象的统一封装类型，实际上他对应的js类型不同会导致它的使用方法也不相同，常见的类型比如返回数值类型和返回一个函数。<br>如果是返回数值类型，JSValue也对应了一组转换的API可以把JSValue转换成任何对于的native对象，例如：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSArray</span> *)toArray;</span><br><span class="line">- (<span class="built_in">NSDictionary</span> *)toDictionary;</span><br><span class="line">- (<span class="built_in">NSDate</span> *)toDate;</span><br><span class="line">- (<span class="built_in">NSString</span> *)toString;</span><br><span class="line">- (<span class="built_in">NSNumber</span> *)toNumber;</span><br><span class="line">- (uint32_t)toUInt32;</span><br><span class="line">- (<span class="keyword">id</span>)toObject;</span><br></pre></td></tr></table></figure>
+<h3 id="查看某个文件的修改历史"><a href="#查看某个文件的修改历史" class="headerlink" title="查看某个文件的修改历史"></a>查看某个文件的修改历史</h3><p><code>git log -p filePath/fileName.m </code></p>
+<h3 id="使用-pull-rebase-操作替代-merge"><a href="#使用-pull-rebase-操作替代-merge" class="headerlink" title="使用 pull rebase 操作替代 merge"></a>使用 pull rebase 操作替代 merge</h3><p>　　如果你工作的团队正工作在同一个分支，那么你所要做的获取/合并或经常拉取。分支合并的 git 记录与合并提交时提示功能分支被并入主干。但在多个团队成员工作的同一分支的情况下，经常合并导致在日志中多个合并的消息引起混乱。所以你可以使用 pull rebase，以保持历史信息清除了无用合并的消息。</p>
+<p><code>git config branch.BRANCH_NAME_HERE.rebase true</code></p>
+<p>　　此外，您可以配置一个特定的分支总是衍合：</p>
+<p><code>git pull --rebase </code></p>
+<h3 id="gc-命令"><a href="#gc-命令" class="headerlink" title="gc 命令"></a>gc 命令</h3><p>“垃圾回收”是一个很亲切的功能。让我们开始吧：<br><code>$ git gc --prune=now</code><br>现在，重新检视一下仓库的大小，发现确实有效啊：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ find .git/objects -type f</span><br><span class="line">.git/objects/info/packs</span><br><span class="line">.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.idx</span><br><span class="line">.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.pack</span><br><span class="line">$</span><br><span class="line">$ du -ah    # 此处略去了无关输出</span><br><span class="line">4.0K    ./.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.idx</span><br><span class="line"> 52M    ./.git/objects/pack/pack-9d75315485cb7bfbf51ce5c94a4535da99b58dbb.pack</span><br><span class="line"> 77M    ./bigfile</span><br><span class="line">130M    .</span><br></pre></td></tr></table></figure>
 
-<p>… 还有很多就不一一列举<br>如果返回的是一个函数类型，这可以使用 <code>jsvalue callWithArguments</code>方法进行js函数调用，例如：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注册一个匿名函数</span></span><br><span class="line"> JSValue *jsFunction = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot; (function() &#123; return &#x27;hello objc&#x27; &#125;)&quot;</span>];</span><br><span class="line"> <span class="comment">//调用</span></span><br><span class="line"> JSValue *value2 = [jsFunction callWithArguments:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
-<p>js是非常美妙的，主要这里的js是一段闭包代码，主要看下面两段代码的区别</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(function() &#123; <span class="keyword">return</span> <span class="string">&#x27;hello objc&#x27;</span> &#125;)</span><br><span class="line">function() &#123; <span class="keyword">return</span> <span class="string">&#x27;hello objc&#x27;</span> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cherry-pick用法"><a href="#cherry-pick用法" class="headerlink" title="cherry-pick用法"></a>cherry-pick用法</h3><p>使用场景：在branch1开发，进行多个提交，这是切换到branch2，想把之前branch1分支提交的commit都复制过来。</p>
+<p>单个<code>commit</code>只需要<code>git cherry-pick commitid</code></p>
+<p>多个<code>commit</code> 只需要<code>git cherry-pick commitid1..commitid100</code></p>
+<p>注意，不包含第一个<code>commitid</code> ， 即  <code>git cherry-pick (commitid1..commitid100]</code></p>
+<h3 id="Git更新远程分支列表"><a href="#Git更新远程分支列表" class="headerlink" title="Git更新远程分支列表"></a>Git更新远程分支列表</h3><p><code>git remote update origin --prune</code></p>
 
-<p>第一行是一个闭包，在js中执行这段代码会返回一个函数，而第二行是定义一个函数，执行第二行的结果是定义了一个匿名函数，但是执行结果无返回值。<br>所以执行下面这段代码时省略了()，那么jsFunction的值就会为空了，很多移动端研发工程师不熟悉js代码很容易出现这样的错误。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSValue *jsFunction = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot; (function() &#123; return &#x27;hello objc&#x27; &#125;)&quot;</span>];</span><br></pre></td></tr></table></figure>
-<p>当然如果我们在运行时中定义一个函数，后面也是可以调用的，只是不是使用callWithArguments方法了，示例如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;var hello = function()&#123; return &#x27;hello&#x27; &#125;&quot;</span>];  </span><br><span class="line"></span><br><span class="line"> JSValue *value1 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;hello()&quot;</span>];</span><br></pre></td></tr></table></figure>
+      
+    </div>
 
-<p>执行后的结果就是value1或得到一个string类型的值：“hello”</p>
-<h3 id="js调用native代码"><a href="#js调用native代码" class="headerlink" title="js调用native代码"></a>js调用native代码</h3><p>js调用native代码之前需要native先注册接口，使用jsContext[“方法名”]就可以注册，后面是一个闭包，闭包可以定义函数参数，也可以使用 [JSContext currentArguments] 方法获取到所有函数调用的参数<br>看一段例子：<br>//注册js方法给Native调用</p>
-<ul>
-<li>(void)regiestNativeFunction {<br>  //注册一个objc方法给js调用<br>  self.jsContext[@”log”] = ^(NSString *msg){<pre><code>  NSLog(@&quot;js:msg:%@&quot;,msg);
-</code></pre>
-  };<br>  //另一种方式，利用currentArguments获取参数<br>  self.jsContext[@”log”] = ^() {<pre><code>  NSArray *args = [JSContext currentArguments];
-  for (id obj in args) &#123; NSLog(@&quot;%@&quot;,obj); &#125;
-</code></pre>
-  };  //使用js调用objc<br>  [self.jsContext evaluateScript:@”log(‘hello,i am js side’)”];<br>}<br>block使用仍然需要注意循环引用的问题，所以在block中可以使用JSContext的静态方法 <code>+ (JSContext *)currentContext</code> 获取到context<br>初次之外，JSContext还可以获取到更多的内容，比如：<br>currentCallee<br>currentThis<br>currentArguments<br>globalObject<br>callee和this都是js中的对象，callee简单的说就是调用函数的对象，this类似于native中的self。<br>当然，jsContext中下标不仅仅可以放函数，也可以放对象和数值，对于熟悉js代码的人也不会觉得奇怪，因为js中基本上不太区分对象，函数的概念，对象和函数都是一样的东西。<br>除了使用jsContext下标方法暴露js对象以外，还可以使用JSExprot协议去把objc复杂对象转换成JSValue并暴露给js对象</li>
-</ul>
-<h3 id="JSExport对象的用法"><a href="#JSExport对象的用法" class="headerlink" title="JSExport对象的用法"></a>JSExport对象的用法</h3><p>1: 首先自定义个协议继承自JSExprot，并定义需要暴露给js的属性和方法，比如：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">JSPersonProtocol</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSDictionary</span> *data;</span><br><span class="line">- (<span class="built_in">NSString</span> *)whatYouName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>2: 新建一个native对象，实现协议和方法,比如：<br>.h</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">JSPersonProtocol</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>)<span class="built_in">NSString</span> *name;</span><br><span class="line">- (<span class="built_in">NSString</span> *)whatYouName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<p>.m</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&quot;Person.h&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></span><br><span class="line"></span><br><span class="line">-(<span class="built_in">NSString</span> *)whatYouName &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">@&quot;my name is liuyanwei&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="built_in">NSString</span> *)name &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">@&quot;liuyanwei&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
 
-<p>使用</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)useJSExprot &#123;</span><br><span class="line">    Person *p = [[Person alloc]init];</span><br><span class="line">    <span class="keyword">self</span>.jsContext[<span class="string">@&quot;person&quot;</span>] = p;</span><br><span class="line">    JSValue *value = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;person.whatYouName()&quot;</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行后的结果就是，value的值为：my name is liuyanwei</p>
-<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注册js错误处理</span></span><br><span class="line">- (<span class="keyword">void</span>)jsExceptionHandler &#123;</span><br><span class="line">    <span class="keyword">self</span>.jsContext.exceptionHandler = ^(JSContext *con, JSValue *exception) &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, exception);</span><br><span class="line">        con.exception = exception;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="JavaScriptCore和UIWebView的结合使用"><a href="#JavaScriptCore和UIWebView的结合使用" class="headerlink" title="JavaScriptCore和UIWebView的结合使用"></a>JavaScriptCore和UIWebView的结合使用</h3><p>上面的代码都是基于JSContext的，如果声明了一个UIWebView，也可以使用UIWebView获取到JSContext对象，就可以使用JavaScriptCore的Api了，在UIWebView中获取JSContext的方法是：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSContext *context=[webView valueForKeyPath:<span class="string">@&quot;documentView.webView.mainFrame.javaScriptContext&quot;</span>];</span><br></pre></td></tr></table></figure>
-<p>不过遗憾的是WKWebView目前我还没有找到获取JSContext的方法，如果有知道的朋友也希望能联系我。</p>
-<h3 id="JSVirtualMachine"><a href="#JSVirtualMachine" class="headerlink" title="JSVirtualMachine"></a>JSVirtualMachine</h3><p>在创建jscontext的时候，可以传入一个JSVirtualMachine对象，如果没有传入这个对象，会新建一个JSVirtualMachine对象。<br>JSVirtualMachine主要有3个作用：<br>1: 支持js并发，多个VM之间的js操作是并发的 1：使用JSVirtualMachine初始化的多个context，可以共享jsvalue对象 2：解决循环引用问题</p>
-<blockquote>
-<p>注意，当我们 export 一个 OC 或 Swift object 到 JS 中时，不能在这个object 中存储对应的 JS values。这种行为会导致一个retain cycle，JSValue objects 持有他们对应的 JSContext 的强引用，JSContext 则持有export到JS的native object的强引用，即 native object(OC or Swift object) —&gt; JSValue —&gt; JSContext —&gt; native object<br>参考</p>
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%20%E6%9B%B4%E6%8D%A2%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/git%20%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%20%E6%9B%B4%E6%8D%A2%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" class="post-title-link" itemprop="url">git 本地仓库 更换远程仓库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
+<h2 id="git修改远程仓库地址的三种方法"><a href="#git修改远程仓库地址的三种方法" class="headerlink" title="git修改远程仓库地址的三种方法"></a>git修改远程仓库地址的三种方法</h2><h3 id="直接命令修改"><a href="#直接命令修改" class="headerlink" title="直接命令修改"></a>直接命令修改</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin [url]</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令，先删除后设新地址"><a href="#命令，先删除后设新地址" class="headerlink" title="命令，先删除后设新地址"></a>命令，先删除后设新地址</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git remote rm origin </span><br><span class="line">git remote add origin [url]</span><br></pre></td></tr></table></figure>
+
+<h3 id="直接修改配置文件"><a href="#直接修改配置文件" class="headerlink" title="直接修改配置文件"></a>直接修改配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">文件位置：git/config </span><br><span class="line">config</span><br><span class="line"></span><br><span class="line">[core]</span><br><span class="line">    repositoryformatversion = 0</span><br><span class="line">    filemode = false</span><br><span class="line">    bare = false</span><br><span class="line">    logallrefupdates = true</span><br><span class="line">    symlinks = false</span><br><span class="line">    ignorecase = true</span><br><span class="line">[gui]</span><br><span class="line">    wmstate = normal</span><br><span class="line">    geometry = 841x483+225+101 189 218</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">    url = git@github.com:project.git</span><br><span class="line">    fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch &quot;master&quot;]</span><br><span class="line">    remote = origin</span><br><span class="line">    merge = refs/heads/master</span><br></pre></td></tr></table></figure>
+
+<h3 id="补充：如果用sourcetree的话可以直接修改远程仓库地址"><a href="#补充：如果用sourcetree的话可以直接修改远程仓库地址" class="headerlink" title="补充：如果用sourcetree的话可以直接修改远程仓库地址"></a>补充：如果用sourcetree的话可以直接修改远程仓库地址</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/%E5%88%9D%E5%A7%8B%E5%8C%96git%E4%BB%93%E5%BA%93%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/%E5%88%9D%E5%A7%8B%E5%8C%96git%E4%BB%93%E5%BA%93%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">初始化git仓库项目.md</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
+<h1 id="Command-line-instructions-命令行指令"><a href="#Command-line-instructions-命令行指令" class="headerlink" title="Command line instructions 命令行指令"></a>Command line instructions 命令行指令</h1><h2 id="Git-global-setup"><a href="#Git-global-setup" class="headerlink" title="Git global setup"></a>Git global setup</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;xxx&quot;</span><br><span class="line">git config --global user.email &quot;xxx@email.com&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="Create-a-new-repository"><a href="#Create-a-new-repository" class="headerlink" title="Create a new repository"></a>Create a new repository</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git@git.jd.com:xxx/yyy.git</span><br><span class="line">cd JDViewKitDoc</span><br><span class="line">touch README.md</span><br><span class="line">git add README.md</span><br><span class="line">git commit -m &quot;add README&quot;</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<h2 id="Existing-folder"><a href="#Existing-folder" class="headerlink" title="Existing folder"></a>Existing folder</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd existing_folder</span><br><span class="line">git init</span><br><span class="line">git remote add origin git@git.jd.com:xxx/yyy.git</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<h2 id="Existing-Git-repository"><a href="#Existing-Git-repository" class="headerlink" title="Existing Git repository"></a>Existing Git repository</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd existing_repo</span><br><span class="line">git remote add origin git@git.jd.com:xxx/yyy.git</span><br><span class="line">git push -u origin --all</span><br><span class="line">git push -u origin --tags</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题解决方案"><a href="#问题解决方案" class="headerlink" title="问题解决方案"></a>问题解决方案</h2><h3 id="fatal-refusing-to-merge-unrelated-histories-解决方案"><a href="#fatal-refusing-to-merge-unrelated-histories-解决方案" class="headerlink" title="fatal: refusing to merge unrelated histories 解决方案"></a>fatal: refusing to merge unrelated histories 解决方案</h3><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>可以使用 rebase 的方式来进行合并。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase origin master</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">mkdir rebaseTmp</span><br><span class="line">cd rebaseTmp</span><br><span class="line">echo &quot;hello a line&quot; &gt; tmp.txt</span><br><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;Local first commit&quot;</span><br><span class="line">git remote add origin  https://github.com/HustLion/java_console_log4j.git</span><br><span class="line">git pull --rebase origin master</span><br><span class="line"></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/%E6%B7%BB%E5%8A%A0%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/%E6%B7%BB%E5%8A%A0%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">git gitignore的设置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="在项目中添加-gitignore文件"><a href="#在项目中添加-gitignore文件" class="headerlink" title="在项目中添加.gitignore文件"></a>在项目中添加.gitignore文件</h3><blockquote>
+<p>.gitignore文件可以直接从 <a target="_blank" rel="noopener" href="https://github.com/github/gitignore">https://github.com/github/gitignore</a> 上面下载，里面包含了各个语言对应的.gitignore文件</p>
 </blockquote>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/colorapp/article/details/51059645">JavaScriptCore学习之JavaScriptCore</a></li>
-<li><a target="_blank" rel="noopener" href="http://blog.iderzheng.com/introduction-to-ios7-javascriptcore-framework/">iOS7新JavaScriptCore框架入门介绍</a></li>
-</ul>
-<p><a target="_blank" rel="noopener" href="http://liuyanwei.jumppo.com/2016/04/03/iOS-JavaScriptCore.html">出自</a>  </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/" class="post-title-link" itemprop="url">iOS linkmap统计ipa包</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>iOS APP编译后，除了一些<strong>资源文件</strong>，剩下的就是一个<strong>可执行文件</strong>，有时候项目大了，<strong>引入的库多了，可执行文件很大</strong>，想知道这个可执行文件的构成是怎样，里面的内容都是些什么，哪些库占用空间较高，可以用以下方法勘察：  </p>
-<p>**1.**XCode开启编译选项<code>Write Link Map File</code><br><code>XCode -&gt; Project -&gt; Build Settings -&gt;</code> 搜<code>map -&gt; 把Write Link Map File</code>选项设为<code>yes</code>，并指定好<code>linkMap</code>的存储位置</p>
-<p>**2.**编译后，到编译目录里找到该txt文件，文件名和路径就是上述的<code>Path to Link Map File</code><br>位于<code>~/Library/Developer/Xcode/DerivedData/XXX-eumsvrzbvgfofvbfsoqokmjprvuh/Build/Intermediates/XXX.build/Debug-iphoneos/XXX.build/</code><br>这个<code>LinkMap</code>里展示了整个可执行文件的全貌，列出了编译后的每一个.o目标文件的信息（包括静态链接库.a里的），以及每一个目标文件的代码段，数据段存储详情。</p>
-<h3 id="在LinkMap里首先列出来的是目标文件列表："><a href="#在LinkMap里首先列出来的是目标文件列表：" class="headerlink" title="在LinkMap里首先列出来的是目标文件列表："></a>在LinkMap里首先列出来的是目标文件列表：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Object files:</span><br><span class="line">[ 0] linker synthesized</span><br><span class="line">[ 1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o</span><br><span class="line">[ 2] /Users/bang/Library/Developer/Xcode/DerivedData/yishu-eyzgphknrrzpevagadjtwpzzeqag/Build/Intermediates/yishu.build/Debug-iphonesimulator/yishu.build/Objects-normal/i386/TKPFileInfo.o</span><br><span class="line">...</span><br><span class="line">[280] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANJob.o)</span><br><span class="line">[281] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANWorker.o)</span><br><span class="line">[282] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(MobClick.o)</span><br><span class="line">[283] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANLaunch.o)</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>前面中括号里的是这个文件的编号，后面会用到，像项目里引用到静态链接库libMobClickLibrary.a里的目标文件都会在这里列出来。</p>
-<h3 id="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）"><a href="#接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）" class="headerlink" title="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）"></a>接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Sections:</span><br><span class="line"># Address   Size     Segment   Section</span><br><span class="line">0x00002740 0x00273890 __TEXT __text</span><br><span class="line">0x00275FD0 0x00000ADA __TEXT __symbol_stub</span><br><span class="line">0x00276AAC 0x00001222 __TEXT __stub_helper</span><br><span class="line">0x00277CCE 0x00019D9E __TEXT __objc_methname</span><br><span class="line">0x00291A70 0x00012847 __TEXT __cstring</span><br><span class="line">0x002A42B7 0x00001FC1 __TEXT __objc_classname</span><br><span class="line">0x002A6278 0x000046A7 __TEXT __objc_methtype</span><br><span class="line">0x002AA920 0x000061CE __TEXT __ustring</span><br><span class="line">0x002B0AF0 0x00000764 __TEXT __const</span><br><span class="line">0x002B1254 0x000028B8 __TEXT __gcc_except_tab</span><br><span class="line">0x002B3B0C 0x00004EBC __TEXT __unwind_info</span><br><span class="line">0x002B89C8 0x0003662C __TEXT __eh_frame</span><br><span class="line">0x002EF000 0x00000014 __DATA __program_vars</span><br><span class="line">0x002EF014 0x00000284 __DATA __nl_symbol_ptr</span><br><span class="line">0x002EF298 0x0000073C __DATA __la_symbol_ptr</span><br><span class="line">0x002EF9E0 0x000030A4 __DATA __const</span><br><span class="line">0x002F2A84 0x00000590 __DATA __objc_classlist</span><br><span class="line">0x002F3014 0x0000000C __DATA __objc_nlclslist</span><br><span class="line">0x002F3020 0x0000006C __DATA __objc_catlist</span><br><span class="line">0x002F308C 0x000000D8 __DATA __objc_protolist</span><br><span class="line">0x002F3164 0x00000008 __DATA __objc_imageinfo</span><br><span class="line">0x002F3170 0x0002BC80 __DATA __objc_const</span><br><span class="line">0x0031EDF0 0x00003A30 __DATA __objc_selrefs</span><br><span class="line">0x00322820 0x00000014 __DATA __objc_protorefs</span><br><span class="line">0x00322834 0x000006B8 __DATA __objc_classrefs</span><br><span class="line">0x00322EEC 0x00000394 __DATA __objc_superrefs</span><br><span class="line">0x00323280 0x000037C8 __DATA __objc_data</span><br><span class="line">0x00326A48 0x000096D0 __DATA __cfstring</span><br><span class="line">0x00330118 0x00001424 __DATA __objc_ivar</span><br><span class="line">0x00331540 0x00006080 __DATA __data</span><br><span class="line">0x003375C0 0x0000001C __DATA __common</span><br><span class="line">0x003375E0 0x000018E8 __DATA __bss</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>首列是数据在文件的偏移位置，第二列是这一段占用大小，第三列是段类型，代码段和数据段，第四列是段名称。<br>每一行的数据都紧跟在上一行后面，如第二行<code>__symbol_stub</code>的地址<code>0x00275FD0</code>就是第一行<code>__text</code>的地址<code>0x00002740</code>加上大小<code>0x00273890</code>，整个可执行文件大致数据分布就是这样。<br>这里可以清楚看到各种类型的数据在最终可执行文件里占的比例，例如<code>__text</code>表示编译后的程序执行语句，<code>__data</code>表示已初始化的全局变量和局部静态变量，<code>__bss</code>表示未初始化的全局变量和局部静态变量，<code>__cstring</code>表示代码里的字符串常量，等等。</p>
-<h3 id="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"><a href="#接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间" class="headerlink" title="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"></a>接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Address Size File Name</span><br><span class="line">0x00002740 0x0000003E [ 1] start</span><br><span class="line">0x00002780 0x00000400 [ 2] +[TKPFileInfo parseWithDictionary:]</span><br><span class="line">0x00002B80 0x00000030 [ 2] -[TKPFileInfo fileID]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>同样首列是数据在文件的偏移地址，第二列是占用大小，第三列是所属文件序号，对应上述Object files列表，最后是名字。<br>例如第二行代表了文件序号为2（反查上面就是TKPFileInfo.o）的parseWithDictionary方法占用了1000byte大小。</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>这个文件可以让你了解整个APP编译后的情况，也许从中可以发现一些异常，还可以用这个文件计算静态链接库在项目里占的大小，有时候我们在项目里链了很多第三方库，导致APP体积变大很多，我们想确切知道每个库占用了多大空间，可以给我们优化提供方向。LinkMap里有了每个目标文件每个方法每个数据的占用大小数据，所以只要写个脚本，就可以统计出每个.o最后的大小，属于一个.a静态链接库的.o加起来，就是这个库在APP里占用的空间大小。</p>
-<h3 id="生成的linkmap文件path"><a href="#生成的linkmap文件path" class="headerlink" title="生成的linkmap文件path"></a>生成的linkmap文件path</h3><p>/Users/wenyongjun/Library/Developer/Xcode/DerivedData/JDViewKitProduct-cvqwuevthaoawvbqwonrghbfhnuz/Build/Intermediates.noindex/JDViewKitProduct.build/Debug-iphonesimulator/JDViewKitProduct.build/JDViewKitProduct-LinkMap-normal-x86_64.txt </p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zgzczzw/article/details/79855660">基于LinkMap分析iOSAPP各模块体积</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.cnbang.net/tech/2296/">iOS APP可执行文件的组成</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%8A%A8%E6%80%81%E5%BA%93/" class="post-title-link" itemprop="url">iOS 静态库和动态库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="静态库和动态库的存在的形式"><a href="#静态库和动态库的存在的形式" class="headerlink" title="静态库和动态库的存在的形式"></a>静态库和动态库的存在的形式</h3><ul>
-<li><p>静态库：以.a 和 .framework为文件后缀名。</p>
-</li>
-<li><p>动态库：以.tbd(之前叫.dylib) 和 .framework 为文件后缀名。（系统直接提供给我们的framework都是动态库！）</p>
-</li>
-</ul>
-<p>理解：.a 是一个纯二进制文件，.framework 中除了有二进制文件之外还有资源文件。 .a ，要有 .h 文件以及资源文件配合， .framework 文件可以直接使用。总的来说，.a + .h + sourceFile = .framework。所以创建静态库最好还是用.framework的形式</p>
-<h3 id="静态库和动态库的区别"><a href="#静态库和动态库的区别" class="headerlink" title="静态库和动态库的区别"></a>静态库和动态库的区别</h3><p>　<strong>不同点：</strong> </p>
-<ul>
-<li><p>静态库在链接时，会被完整的复制到可执行文件中，如果多个App都使用了同一个静态库，那么每个App都会拷贝一份，缺点是浪费内存。类似于定义一个基本变量，使用该基本变量是是新复制了一份数据，而不是原来定义的；</p>
-</li>
-<li><p>动态库不会复制，只有一份，程序运行时动态加载到内存中，系统只会加载一次，多个程序共用一份，节约了内存。类似于使用变量的内存地址一样，使用的是同一个变量；</p>
-</li>
-<li><p><em>共同点：</em>*</p>
-</li>
-<li><p>静态库和动态库都是闭源库，只能拿来满足某个功能的使用，不会暴露内部具体的代码信息</p>
-<h3 id="从源代码到app"><a href="#从源代码到app" class="headerlink" title="从源代码到app"></a>从源代码到app</h3></li>
-</ul>
-<blockquote>
-<p>当我们点击了 build 之后，做了什么事情呢？</p>
+<h3 id="配置添加所需要忽略的文件或者文件类型"><a href="#配置添加所需要忽略的文件或者文件类型" class="headerlink" title="配置添加所需要忽略的文件或者文件类型"></a>配置添加所需要忽略的文件或者文件类型</h3><blockquote>
+<p>使用命令vim .gitignore打开.gitignore文件，回车后 添加和修改要忽略的文件</p>
 </blockquote>
-<ul>
-<li>预处理（Pre-process）：把宏替换，删除注释，展开头文件，产生 .i 文件。</li>
-<li>编译（Compliling）：把之前的 .i 文件转换成汇编语言，产生 .s文件。</li>
-<li>汇编（Asembly）：把汇编语言文件转换为机器码文件，产生 .o 文件。</li>
-<li>链接（Link）：对.o文件中的对于其他的库的引用的地方进行引用，生成最后的可执行文件（同时也包括多个 .o 文件进行 link）。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/junhuawang/p/7598236.html">引用</a></p>
+<h3 id="将-gitignore文件提交到仓库"><a href="#将-gitignore文件提交到仓库" class="headerlink" title="将.gitignore文件提交到仓库"></a>将.gitignore文件提交到仓库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .gitignore</span><br><span class="line">git commit -m &quot;添加项目忽略文件&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提交.gitignore文件的目的主要是保证其他开发者提交的时候也会自动筛选掉不需要的文件，因为已提交到仓库的文件再设置.gitignore文件中忽略是无效的，需要先将其移除版本控制后，.gitignore文件才会生效。具体方法见下文。</p>
+</blockquote>
+<h3 id="关于-git-将文件或文件夹移除版本控制"><a href="#关于-git-将文件或文件夹移除版本控制" class="headerlink" title="关于 git 将文件或文件夹移除版本控制"></a>关于 git 将文件或文件夹移除版本控制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git rm -r -n --cached &quot;bin/&quot; //-n：加上这个参数，执行命令时，是不会删除任何文件，而是展示此命令要删除的文件列表预览。</span><br><span class="line">git rm -r --cached  &quot;bin/&quot;      //最终执行命令. </span><br><span class="line">git commit -m&quot; remove bin folder all file out of control&quot;    //提交</span><br><span class="line">git push    //提交到远程服务器</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果是要忽略一种类型的文件（如.DS_Store文件），将bin/换成*.DS_Store即可。</p>
+</blockquote>
+<h3 id="设置Git全局忽略文件方法"><a href="#设置Git全局忽略文件方法" class="headerlink" title="设置Git全局忽略文件方法"></a>设置Git全局忽略文件方法</h3><p>配置全局忽略文件的我们就不必给每一个项目添加单独的忽略文件<br>1、 进入用户目录下，将第一步中配置好的.gitignore文件拷贝到用户目录下，将这个文件改个名字，名字随意，自己好认就行<br>2、 执行命令git config –global core.excludesfile ~/.gitignore_globalxxxx</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>命令git config –global core.excludesfile ~/.gitignore_globalaaaa的效果其实就是修改了在用户目录下的.gitconfig文件</p>
 
       
     </div>
@@ -514,7 +531,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20compile%20+%20%E8%AE%BF%E9%97%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -528,7 +545,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">iOS 加载http的方法</a>
+            <a href="/2018/06/11/vue%20&%20weex/weex%20compile%20+%20%E8%AE%BF%E9%97%AE/" class="post-title-link" itemprop="url">weex compile + 访问</a>
         </h2>
 
         <div class="post-meta">
@@ -553,7 +570,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
                 </span>
             </span>
 
@@ -568,14 +585,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在iOS 9的时候,默认非HTTS的网络是被禁止的,我们可以在info.plist文件中添加NSAppTransportSecurity字典,将NSAllowsArbitraryLoads设置为YES来禁用ATS</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bee253cb4825">简书地址</a></p>
-<p>解决方案一：</p>
-<p>开启 NSAllowsArbitraryLoads 为 YES，然后提交时进行说明</p>
-<p>解决方案二：</p>
-<p>设置 NSExceptionDomains 属性来访问指定域名，然后提交时进行说明</p>
-<p>解决方案三：</p>
-<p>只针对网页浏览和视频播放的行为且为iOS 10及以上，设置NSAllowsArbitraryLoadsInWebContent为Yes。</p>
+          <h2 id="本地启的服务测试（访问地址）："><a href="#本地启的服务测试（访问地址）：" class="headerlink" title="本地启的服务测试（访问地址）："></a>本地启的服务测试（访问地址）：</h2><p><a target="_blank" rel="noopener" href="http://xxxx/jsTest/PromotionHome.js">http://xxxx/jsTest/PromotionHome.js</a></p>
+<blockquote>
+<p>xxxx/jsTest 本地服务地址 + 存放js的目录</p>
+</blockquote>
+<h2 id="vue到js文件编译拷贝两步骤："><a href="#vue到js文件编译拷贝两步骤：" class="headerlink" title="vue到js文件编译拷贝两步骤："></a>vue到js文件编译拷贝两步骤：</h2><p>weex compile PromotionHome.vue PromotionHome.js<br>cp PromotionHome.js /Library/WebServer/Documents/jsTest</p>
 
       
     </div>
@@ -595,7 +609,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B8%AD%20const,static,extern%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20%E5%8E%9F%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -609,7 +623,172 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B8%AD%20const,static,extern%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">iOS开发中 const,static,extern用法总结</a>
+            <a href="/2018/06/11/vue%20&%20weex/weex%20%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">weex 工作原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="weex-工作原理"><a href="#weex-工作原理" class="headerlink" title="weex 工作原理"></a>weex 工作原理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transformer 会把 template, style, script 都转换成一段段 json 或者 js，</span><br><span class="line">这样客户端只接收并运行js，不必同时解析html/css这些语法，并且这些js还会继续进行</span><br><span class="line">数据监听和绑定，然后生成最终的virtual dom 再发送给 native端进行渲染。</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/yongbolv/images/master/weexframework.png"></p>
+<h2 id="weex-主要就是做了三件事"><a href="#weex-主要就是做了三件事" class="headerlink" title="weex 主要就是做了三件事"></a>weex 主要就是做了三件事</h2><ol>
+<li>在服务端用 Transformer 工具把 Vue 代码转换成 Js Bundle。</li>
+<li>在客户端运行Js Framework 的 JavaScript 引擎，解释执行Js Bundle生成Virtual DOM。</li>
+<li>在客户端设计一套 JS Bridge，能使IOS端（或者Android端）的Object-C语言（或Java语言）与Javascript语言相互调用，把Virtual Dom转换为DOM，渲染到页面。H5端直接和Js Framework 通讯，不需要Js Bridge。<br>如下为Virtual DOM 渲染为Dom的过程：<br><img src="https://raw.githubusercontent.com/yongbolv/images/master/virtualdom.png"></li>
+</ol>
+<h2 id="相关概念："><a href="#相关概念：" class="headerlink" title="相关概念："></a>相关概念：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ECMAScript：定义了JavaScript语言的标准</span><br><span class="line">JavaScriptCore：应用在在wekit内核内的js引擎，浏览器有Safari。</span><br><span class="line">V8: 应用在chromium内的js引擎，浏览器有Chrome。</span><br><span class="line">JS引擎的作用都是解释和执行JavaScript代码。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>有关JavaScript引擎解析的内容请查看  <a target="_blank" rel="noopener" href="http://www.uml.org.cn/codeNorms/201306063.asp">JavaScriptCore解析</a></p>
+<p>有关JavaScriptCore和V8的内容请查看：<a target="_blank" rel="noopener" href="http://blog.csdn.net/milado_nju/article/details/22101681">JavaScript引擎</a></p>
+<h2 id="怎么开始搭建个weex项目"><a href="#怎么开始搭建个weex项目" class="headerlink" title="怎么开始搭建个weex项目"></a>怎么开始搭建个weex项目</h2><p>相对比较简单看官方吧。<br>weex相关工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node.js</span><br><span class="line">weex-toolkit</span><br><span class="line">Weex Playground App</span><br></pre></td></tr></table></figure>
+
+<h2 id="相关论坛"><a href="#相关论坛" class="headerlink" title="相关论坛"></a>相关论坛</h2><p><a target="_blank" rel="noopener" href="https://github.com/weexteam/article/issues">weex 文章</a><br><a target="_blank" rel="noopener" href="https://github.com/weexteam/article/issues/50">weex 调试</a><br><a target="_blank" rel="noopener" href="http://alibaba.github.io/weex/doc/">weex 文档：</a><br><a target="_blank" rel="noopener" href="http://www.kmhaoshuai.com/#!/articles/use-vuex-in-weex">weex中使用数据流工具Vuex实践</a><br><a target="_blank" rel="noopener" href="http://lvyongbo.net/2016/09/27/weex%E6%8A%80%E6%9C%AF%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%C2%A0https://gitter.im/weexteam/cn?utm_source=share-link&utm_medium=link&utm_campaign=share-link">weex交流室</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20%E5%9D%91%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/vue%20&%20weex/weex%20%E5%9D%91%E7%82%B9/" class="post-title-link" itemprop="url">weex 开发坑点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">0、div 执行v-for循环的时候 要设置动态宽 自动撑满在iOS上有问题</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">&quot;(itemProduct,index) in productList&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;&#123;height:sliderHeight,width:brandItemBgWidth&#125;&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">style</span>=<span class="string">&quot;align-items: center;justify-content: center;&quot;</span>&gt;</span></span><br><span class="line">1、<span class="tag">&lt;<span class="name">text</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">text</span>&gt;</span>  该标签一定要写在一行否则native展示不对</span><br><span class="line">2、作为子组件里面的数据源一定要 这样写</span><br><span class="line">data: function () &#123; &#125;   必须加上function 不能做省略</span><br><span class="line">3、引入组件或者工具类</span><br><span class="line">  import PromotionWishLampItemView from &#x27;./PromotionWishLampItemView.vue’</span><br><span class="line"> import Util from &#x27;./PromotionUtil.js&#x27;</span><br><span class="line">4、引入的子组件要注册</span><br><span class="line">export default &#123;</span><br><span class="line">    components: &#123;</span><br><span class="line">        PromotionWishLampItemView</span><br><span class="line">    &#125;,&#125;</span><br><span class="line">5、控件属性进行双向绑定用v-bind 缩写是冒号 :</span><br><span class="line">6、例如生命周期函数created、mounted和methods是并列的函数体，methods存放自定义函数</span><br><span class="line">7、 foreach不支持直接break</span><br><span class="line">//                                _wishLamps.forEach(function (item, index) &#123;</span><br><span class="line">//////                                    foreach不支持直接break</span><br><span class="line">//                                &#125;);</span><br><span class="line">8、给某个对象添加属性并赋值的方式</span><br><span class="line">    if (typeof item.itemStyle == &#x27;undefined&#x27;) &#123;</span><br><span class="line">        console.log(&#x27;注册中 =====&#x27;);</span><br><span class="line">        //全局注册</span><br><span class="line">        Vue.set(item, &quot;itemStyle&quot;, &quot;1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">9、数组剪切前四个（n个）的方案</span><br><span class="line">    _proList.slice(0, 4);</span><br><span class="line">10、数组添加对象的方式</span><br><span class="line">     _this.productList.push(wishLampDict);</span><br><span class="line">11、css style双向绑定要用花括号</span><br><span class="line">    :style=&quot;&#123;height:brandItemCurveHeight,width:brandItemWidth&#125;”</span><br><span class="line">12、json转化成能打印的字符串</span><br><span class="line">var str = JSON.stringify(result);</span><br><span class="line">console.log(&#x27;qryExclusiveDiscount-backData:&#x27; + str);</span><br><span class="line">13、通过某个比例scale计算字体大小 如果不是整形在android上显示有问题 </span><br><span class="line">this.contentFontSize = Math.round(26 * scale);</span><br><span class="line">14、通过某个比例scale计算字体大小 如果不是整形在android上显示有问题   通过向上取整显示个别有问题</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过向下取整 Math.floor </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/" class="post-title-link" itemprop="url">如何判断代码运行在DEBUG还是RELEASE模式下？</a>
         </h2>
 
         <div class="post-meta">
@@ -650,137 +829,18 @@
 
       
           <blockquote>
-<p>iOS开发中怎么使用const,static,extern3个关键字.</p>
 </blockquote>
-<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>const的作用: const 是一个左结合的类型修饰符，它与其左侧的类型修饰符一起为一个类型修饰符,表示该类型只读.</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">修饰基本变量</span><br><span class="line"><span class="comment">// 这两种写法是一样的，const只修饰右边的基本变量b</span></span><br><span class="line">   <span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">20</span>; <span class="comment">// b:只读变量</span></span><br><span class="line">   <span class="keyword">int</span> <span class="keyword">const</span> b = <span class="number">20</span>; <span class="comment">// b:只读变量</span></span><br><span class="line"></span><br><span class="line">修饰指针变量</span><br><span class="line"><span class="comment">// 两种方式一样</span></span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> *p1; <span class="comment">// *p1：只读 p1:只读</span></span><br><span class="line"> <span class="keyword">int</span> <span class="keyword">const</span> *p1; <span class="comment">// *p1：只读 p1:只读</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">// const修饰指针变量p1</span></span><br><span class="line"> <span class="keyword">int</span> * <span class="keyword">const</span> p1; <span class="comment">// *p1:变量 p1:常量</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 第一个const修饰*p1 第二个const修饰 p1</span></span><br><span class="line"> <span class="comment">// 两种方式一样</span></span><br><span class="line"> <span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> p1; <span class="comment">// *p1：常量 p1：常量</span></span><br><span class="line"> <span class="keyword">int</span> <span class="keyword">const</span> * <span class="keyword">const</span> p1;  <span class="comment">// *p1：常量 p1：常量</span></span><br></pre></td></tr></table></figure>
-
-<p>简言之:沿着<em>号划一条线，如果const位于</em>的左侧，则const就是用来修饰指针所指向的变量，即指针指向为常量；如果const位于*的右侧，const就是修饰指针本身，即指针本身是常量。</p>
-<h3 id="static"><a href="#static" class="headerlink" title="static"></a>static</h3><p>static的作用:</p>
-<p>修饰局部变量：<br>延长局部变量的生命周期。<br>局部变量只会生成一份内存,只会初始化一次。<br>修饰全局变量:<br>使其只能在本文件中访问。</p>
-<h3 id="extern"><a href="#extern" class="headerlink" title="extern"></a>extern</h3><p>extern的作用: 声明和捕捉外部全局变量。<br>联合使用<br>static与const:声明一个静态的全局只读变量,(仅当前文件可访问且只读).</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span>  <span class="built_in">NSString</span> * <span class="keyword">const</span> key = <span class="string">@&quot;name&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>extern与const组合:定义全局只读变量，多个文件共享。</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.h文件</span><br><span class="line"><span class="keyword">extern</span>  <span class="built_in">NSString</span> * <span class="keyword">const</span> king;</span><br><span class="line">.m文件</span><br><span class="line"><span class="built_in">NSString</span>  * <span class="keyword">const</span> king = <span class="string">@&quot;king&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://jatstar.cn/2016/01/10/const-static-extern/">来源const-static-extern</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B9%8B%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%8C%89%E4%BD%8D%E6%88%96%E6%8C%89%E4%BD%8D%E4%B8%8E%E8%BF%90%E7%AE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%E5%BC%80%E5%8F%91%E4%B9%8B%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%8C%89%E4%BD%8D%E6%88%96%E6%8C%89%E4%BD%8D%E4%B8%8E%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">iOS开发之位移枚举和按位或按位与运算</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>位移枚举(可复选的枚举) 使用位移实现选项变量</p>
+<p>首先确定下项目的 Build Settings 是否已经设置过宏定义 DEBUG，如何看呢？<br>点击 Build Settings ，然后在搜索框里输入‘macros’</p>
+<p><img src="/images/debug.png"></p>
+<blockquote>
+<p>如果已经设置过，在 Preprocessor Macros 的 Debug 后面会有 DEBUG=1，如果没有，就手动设置下。<br>接下来就可以这样做了</p>
 </blockquote>
-<h3 id="Autoresizing-的系统枚举UIViewAutoresizing-讲述"><a href="#Autoresizing-的系统枚举UIViewAutoresizing-讲述" class="headerlink" title="Autoresizing 的系统枚举UIViewAutoresizing 讲述"></a>Autoresizing 的系统枚举UIViewAutoresizing 讲述</h3><p>以下位移已经计算提前计算出来了二进制与十进制值为了方便下文使用</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>,<span class="built_in">UIViewAutoresizing</span>)&#123;    二进制值    十进制</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingNone</span>                 =<span class="number">0</span>,         <span class="number">00000000</span>  <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>   =<span class="number">1</span>&lt;&lt;<span class="number">0</span>,    <span class="number">00000001</span>  <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleWidth</span>        =<span class="number">1</span>&lt;&lt;<span class="number">1</span>,    <span class="number">00000010</span>  <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>  =<span class="number">1</span>&lt;&lt;<span class="number">2</span>,    <span class="number">00000100</span>  <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>    =<span class="number">1</span>&lt;&lt;<span class="number">3</span>,    <span class="number">00001000</span>  <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleHeight</span>       =<span class="number">1</span>&lt;&lt;<span class="number">4</span>,    <span class="number">00010000</span>  <span class="number">16</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>=<span class="number">1</span>&lt;&lt;<span class="number">5</span>     <span class="number">00100000</span>  <span class="number">32</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>使用枚举定义选项,每个选项均可启用或禁用，使用上述方式来定义枚举值,每个枚举值所对应的二进制表示中，只有1个二进制位的值是1。用“按位或操作符”可组合多个选项</p>
-<p>用 | 来隔开</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aView.autoresizingMask=<span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>|</span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|  </span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>|  </span><br><span class="line">  <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>;  </span><br></pre></td></tr></table></figure>
-
-<p>而且每一个枚举对应的逻辑都会覆盖到</p>
-<p>实例</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)todo:(<span class="built_in">UIViewAutoresizing</span>)type&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type==<span class="number">0</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingNone&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//更严谨的写法</span></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span> ==   </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleLeftMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleWidth</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleWidth&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleRightMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleTopMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleTopMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleHeight</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleHeight&quot;</span>);</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(type&amp;<span class="built_in">UIViewAutoresizingFlexibleBottomMargin</span>)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleBottomMargin&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">void</span>)viewDidLoad&#123;</span><br><span class="line"></span><br><span class="line">    [superviewDidLoad];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span> todo:<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|  </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|  </span><br><span class="line">    <span class="built_in">UIViewAutoresizingFlexibleHeight</span>];  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span>  </span><br></pre></td></tr></table></figure>
-
-<h3 id="二进制转十进制"><a href="#二进制转十进制" class="headerlink" title="二进制转十进制"></a>二进制转十进制</h3><p><code>1101（2）=1*2^0+0*2^1+1*2^2+1*2^3=1+0+4+8=13</code>转化成十进制要从右到左用二进制的每个数去乘以2的相应次方不过次方要从0开始</p>
-<h4 id="位移位运算"><a href="#位移位运算" class="headerlink" title="位移位运算"></a>位移位运算</h4><p>如 <code>UIViewAutoresizingFlexibleHeight  = 1 &lt;&lt; 4</code>,</p>
-<p>1.左移运算 1 &lt;&lt; 4<br>将一个运算对象的各二进制位全部左移若干位（左边的二进制位丢弃，右边补0）。</p>
-<p>1 转化为二进制为 :0000 0001</p>
-<p>左移四位就为     :0001 0000</p>
-<p>0001 0000 转化为十进制等于16</p>
-<p>2.右移运算 90&gt;&gt;4<br>将一个数的各二进制位全部右移若干位，正数左补0，负数左补1，右边丢弃。操作数每右移一位，相当于该数除以2。</p>
-<p>90转化为二进制为 :01011010</p>
-<p>右移4位就是          :00000101</p>
-<p>00000101  转化为十进制等于5</p>
-<h4 id="按位或运算符（-）"><a href="#按位或运算符（-）" class="headerlink" title="按位或运算符（|）"></a>按位或运算符（|）</h4><p>运算规则：0|0=0；   0|1=1；   1|0=1；    1|1=1；即 ：参加运算的两个二进制对应数位只要有一个为1，其值为1。</p>
-<p>例如</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span> todo:<span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|  </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span>];</span><br></pre></td></tr></table></figure>
-
-<p>1.十进制1|4|16 转为二进制0000 0001 | 0000 0100 | 0001 0000  =  0001 0101,因此，1|4|16的十进制值得21</p>
-<h4 id="按位与运算符（-amp-）"><a href="#按位与运算符（-amp-）" class="headerlink" title="按位与运算符（&amp;）"></a>按位与运算符（&amp;）</h4><p>参加运算的两个数据，按二进制位进行“与”运算。运算规则：0&amp;0=0;   0&amp;1=0;    1&amp;0=0;     1&amp;1=1;即：两对应数位同时为“1”，结果才为“1”，否则为0</p>
-<p>1.十进制3&amp;5  转为二进制 0000 0011 &amp; 0000 0101 = 0000 0001   因此，3&amp;5的值得1</p>
-<p>2.iOS在方法中的应用</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)todo:(<span class="built_in">UIViewAutoresizing</span>)type&#123;<span class="keyword">if</span> (type &amp; </span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span> )</span><br><span class="line"> &#123;<span class="built_in">NSLog</span>(<span class="string">@&quot;UIViewAutoresizingFlexibleLeftMargin&quot;</span>);&#125;&#125;</span><br><span class="line"></span><br><span class="line">入参数type 为 <span class="built_in">UIViewAutoresizingFlexibleLeftMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleRightMargin</span>|</span><br><span class="line"><span class="built_in">UIViewAutoresizingFlexibleHeight</span></span><br></pre></td></tr></table></figure>
-
-<p>上文知道结果是 0001 0101,十进制值得21 <code>UIViewAutoresizingFlexibleRightMargin为4</code></p>
-<p>0001 0101 &amp;  <code>UIViewAutoresizingFlexibleRightMargin</code> =  0001 0101 &amp; 0000 0100  =21&amp;4 = 4 根据计算结果还是<code>UIViewAutoresizingFlexibleRightMargin</code>这个枚举</p>
-<h3 id="在iOS中的总结"><a href="#在iOS中的总结" class="headerlink" title="在iOS中的总结"></a>在iOS中的总结</h3><p>如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将其组合起来。</p>
-<p>用<code>NS_ENUM</code>与<code>NS_OPTIONS</code>宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。</p>
-<p>在处理枚举类型的<code>switch</code>语句中不要实现<code>default</code>分支。这样的话，加入新枚举之后，编译器就会提示开发者：<code>switch</code>语句并未处理所有枚举。</p>
-
+ <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/a/9063682">http://stackoverflow.com/a/9063682</a></p>
+<p>一般Apple已经为我们设置好了 DEBUG 的宏定义，所以，我们只要让 NSLog 在 DEBUG 模式下失效就好了，这样能让我们的程序运行起来更加稳定，同时我们也可以继续使用正规的 NSLog。</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//put this in prefix.pch</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> DEBUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> NSLog</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLog(args, ...)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -799,7 +859,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%E6%89%93%E5%8C%85Framework%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%85%BC%E5%AE%B9%E5%90%88%E5%B9%B6%E7%89%88%E6%9C%AC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -813,7 +873,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/iOS%E6%89%93%E5%8C%85Framework%E7%9C%9F%E6%9C%BA%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%85%BC%E5%AE%B9%E5%90%88%E5%B9%B6%E7%89%88%E6%9C%AC/" class="post-title-link" itemprop="url">iOS打包Framework真机和模拟器兼容合并版本</a>
+            <a href="/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" class="post-title-link" itemprop="url">Category中的方法为什么会覆盖原来类中的方法？</a>
         </h2>
 
         <div class="post-meta">
@@ -853,9 +913,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="查询framework支持哪些架构，命令为："><a href="#查询framework支持哪些架构，命令为：" class="headerlink" title="查询framework支持哪些架构，命令为："></a>查询framework支持哪些架构，命令为：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info XXXX.framework/XXXX</span><br></pre></td></tr></table></figure>
-<h3 id="合并包"><a href="#合并包" class="headerlink" title="合并包"></a>合并包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> lipo -create XXXX.framework/XXXX-armv7 XXXX.framework/XXXX-arm64 -output XXXX.framework/XXXX</span><br><span class="line"></span><br><span class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</span><br></pre></td></tr></table></figure>
-<h3 id="一键打包shell脚本"><a href="#一键打包shell脚本" class="headerlink" title="一键打包shell脚本"></a>一键打包shell脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 使用方法 ###</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># bash get_framework.sh</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">###</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 填写要生成的包的名字</span></span><br><span class="line">FrameWorkName=<span class="string">&quot;JDViewKit&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置输出包的文件路径</span></span><br><span class="line">OutputDir=<span class="variable">$&#123;SRCROOT&#125;</span>/VKOutput</span><br><span class="line"><span class="comment"># Working dir will be deleted after the framework creation.</span></span><br><span class="line">buildDir=build</span><br><span class="line">DEVICE_DIR=<span class="variable">$&#123;buildDir&#125;</span>/Release-iphoneos</span><br><span class="line">SIMULATOR_DIR=<span class="variable">$&#123;buildDir&#125;</span>/Release-iphonesimulator/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译真机和模拟器的两种架构</span></span><br><span class="line"><span class="comment"># -configuration $&#123;CONFIGURATION&#125;</span></span><br><span class="line"><span class="comment"># Clean and Building both architectures.</span></span><br><span class="line"></span><br><span class="line">xcodebuild -configuration <span class="string">&quot;Release&quot;</span> -target <span class="string">&quot;<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -sdk iphoneos clean build</span><br><span class="line">xcodebuild -configuration <span class="string">&quot;Release&quot;</span> -target <span class="string">&quot;<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -sdk iphonesimulator clean build</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把旧的输出文件包删除掉</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">sudo rm -rf <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建输出包</span></span><br><span class="line">sudo mkdir -p <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br><span class="line">sudo cp -R <span class="string">&quot;<span class="variable">$&#123;DEVICE_DIR&#125;</span>/&quot;</span> <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 lipo工具合并通用包（(i386 + armv6/armv7)）</span></span><br><span class="line">sudo lipo -create <span class="string">&quot;<span class="variable">$&#123;DEVICE_DIR&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;SIMULATOR_DIR&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span> -output <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>/<span class="variable">$&#123;FrameWorkName&#125;</span>.framework/<span class="variable">$&#123;FrameWorkName&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除build包  打开输出包文件夹</span></span><br><span class="line">sudo rm -r <span class="string">&quot;<span class="variable">$&#123;buildDir&#125;</span>&quot;</span></span><br><span class="line">open <span class="string">&quot;<span class="variable">$&#123;OutputDir&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+          <h3 id="深入了解Category"><a href="#深入了解Category" class="headerlink" title="深入了解Category"></a>深入了解<code>Category</code></h3><p>我们都知道<code>OC</code>代码执行时会先转成<code>C\C++</code>代码，<code>OC</code>对象转成对应的结构体；<br><code>Category</code>对应的结构体我们可以通过将分类的<code>.m文件转成c++</code>文件查看：<br><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc xxxxx.m</code><br>即可生成对应的<code>.cpp</code>文件；<br>在<code>.cpp</code>文件中搜索<code>Category_t</code>可以看到<code>Category</code>对应的结构体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct _category_t &#123;</span><br><span class="line">const char *name;</span><br><span class="line">struct _class_t *cls;</span><br><span class="line">const struct _method_list_t *instance_methods;</span><br><span class="line">const struct _method_list_t *class_methods;</span><br><span class="line">const struct _protocol_list_t *protocols;</span><br><span class="line">const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过观察结构体我们可以发现分类对应的结构体中有存储实例方法的列表、存储类方法的列表、存储协议的和属性的列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过源码分析可知：系统是在运行时将分类中对应的实例方法、类方法等插入到了原来类或元类的方法列表中，且是在列表的前 </span><br><span class="line">边！所以，方法调用时通过isa去对应的类或元类的列表中查找对应的方法时先查到的是分类中的方法！查到后就直接调用不在继</span><br><span class="line">续查找。这即是’覆盖’的本质！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="存在多个分类，调用谁？"><a href="#存在多个分类，调用谁？" class="headerlink" title="存在多个分类，调用谁？"></a>存在多个分类，调用谁？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当有多个分类时，会调用哪个分类中的方法呢？</span><br><span class="line"></span><br><span class="line">这个是与编译顺序有关，最后编译的分类中对应的信息会在整合在类或元类对应列表的最前边。所以是调用最后编译的分类中的</span><br><span class="line">方法！可以查看Build Phases -&gt;Complie Source 中的编译顺序！</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dd57c39a5e4c">Category中的方法为什么会覆盖原来类中的方法？</a></p>
+
       
     </div>
 
@@ -874,7 +941,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/runtime%E7%9B%B8%E5%85%B3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -888,7 +955,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/runtime%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">iOS runtime</a>
+            <a href="/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">NSRunloop工作原理和相关应用</a>
         </h2>
 
         <div class="post-meta">
@@ -928,232 +995,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="class-结构（方法步骤）"><a href="#class-结构（方法步骤）" class="headerlink" title="class 结构（方法步骤）"></a>class 结构（方法步骤）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    //类本身</span><br><span class="line">    Class _Nonnull isa ;</span><br><span class="line">    //父类</span><br><span class="line">    Class _Nullable super_class</span><br><span class="line">    //类名                             </span><br><span class="line">    const char * _Nonnull name                              </span><br><span class="line">    long version                                            </span><br><span class="line">    long info</span><br><span class="line">    //类大小                                               </span><br><span class="line">    long instance_size      </span><br><span class="line">    //类中的变量                                </span><br><span class="line">    struct objc_ivar_list * _Nullable ivars                 </span><br><span class="line">    //类中的变量 </span><br><span class="line">    struct objc_method_list * _Nullable * _Nullable methodLists</span><br><span class="line">    //缓存，便于下次查找                   </span><br><span class="line">    struct objc_cache * _Nonnull cache</span><br><span class="line">    //类中的协议                       </span><br><span class="line">    struct objc_protocol_list * _Nullable protocols         </span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+          <h3 id="NSRunloop与程序运行"><a href="#NSRunloop与程序运行" class="headerlink" title="NSRunloop与程序运行"></a>NSRunloop与程序运行</h3><p>　　　那么具体什么是NSRunLoop呢?其实NSRunLoop的本质是一个消息机制的处理模式。让我们首先来看一下程序的入口——main.m文件，一个ios程序启动后，只有短短的十行代码居然能保持整个应用程序一直运行而没有退出，是不是有点意思？程序之所以没有直接退出是因为UIApplicationMain这个函数内部默认启动了一个跟主线程相关的NSRunloop对象，而UIApplicationMain这个函数一直执行没有返回就保存程序一直运行的状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">#import &quot;AppDelegate.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　文章之初我们暂且将NSRunloop理解为实现这样功能的一段代码 , 这可以帮助我们更好的理解NSRunloop处理事件的过程(实际上远比这复杂的多：）)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">  BOOL runnning =YES;</span><br><span class="line">   do&#123;</span><br><span class="line">        ...</span><br><span class="line">       //处理各种操作 各种事件</span><br><span class="line">       ...</span><br><span class="line">      &#125;while(running);</span><br><span class="line">  </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="NSObject-alloc-init-初始化步骤"><a href="#NSObject-alloc-init-初始化步骤" class="headerlink" title="[[NSObject alloc] init]初始化步骤"></a>[[NSObject alloc] init]初始化步骤</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">   https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100</span><br><span class="line">     </span><br><span class="line">     struct objc_class &#123;</span><br><span class="line">     Class isa // 类本身 --&gt; &#123;isa; methodLists(alloc)(类方法)&#125;</span><br><span class="line">     </span><br><span class="line">     Class super_class                                        ;</span><br><span class="line">     const char *name                                         ;</span><br><span class="line">     long version                                             ;</span><br><span class="line">     long info                                                ;</span><br><span class="line">     long instance_size                                       ;</span><br><span class="line">     struct objc_ivar_list *ivars                             ;</span><br><span class="line">     struct objc_method_list **methodLists  // 实例方法                  ;</span><br><span class="line">     struct objc_cache *cache                                 ;</span><br><span class="line">     struct objc_protocol_list *protocols                     ;</span><br><span class="line">     &#125;</span><br><span class="line">     最终指向自己，形成了一个闭环， NSObject的isa 不是指向一个nil</span><br><span class="line">     1 [EOCObject alloc] 先执行，因为EOCObject检测，没有alloc方法， 就去父类里面去查找。</span><br><span class="line">     2 检测父类是否响应 alloc， 如果有，那么执行， 开始分配内存空间大小（成员变量）。// 方法（类有关系）</span><br><span class="line">     3 init 方法，检测是否响应，如果没有去父类查找。</span><br><span class="line">     4 方法执行完，会存缓存（所以一般第二次操作，会更快）</span><br><span class="line">     */</span><br><span class="line">    MyObject * objc  = [[MyObject alloc] init];</span><br></pre></td></tr></table></figure>
-
-<h3 id="main-之前的过程有哪些？"><a href="#main-之前的过程有哪些？" class="headerlink" title="main()之前的过程有哪些？"></a>main()之前的过程有哪些？</h3><p>1<code>main</code>之前的加载过程<br>1）<code>dyld</code> 开始将程序二进制文件初始化<br>2）交由<code>ImageLoader</code> 读取 <code>image</code>，其中包含了我们的类，方法等各种符号<code>（Class、Protocol 、Selector、 IMP）</code><br>3）由于<code>runtime</code> 向<code>dyld</code> 绑定了回调，当<code>image</code>加载到内存后，<code>dyld</code>会通知<code>runtime</code>进行处理<br>4）<code>runtime</code> 接手后调用<code>map_images</code>做解析和处理<br>5）接下来<code>load_images</code> 中调用<code>call_load_methods</code>方法，遍历所有加载进来的<code>Class</code>，按继承层次依次调用Class的<code>+load</code>和其他Category的<code>+load</code>方法<br>6）至此 所有的信息都被加载到内存中<br>7）最后<code>dyld</code>调用真正的<code>main</code>函数  </p>
-<ul>
-<li>对象的<code>isa</code>指针指向所属的类  </li>
-<li>类的<code>isa</code>指针指向了所属的元类  </li>
-<li>元类的<code>isa</code>指向了根元类，根元类指向了自己。</li>
-<li>类的<code>superClass</code> 指向父类最终到根类</li>
-<li>根类的<code>superclass</code>指向<code>nil</code></li>
-<li>元类的<code>superclass</code> 指向父元类，最终到根元类</li>
-<li>根元类的<code>superclass</code> 指向根类</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/1682758-675c67c6868038d1?imageMogr2/auto-orient/"></p>
-<p>class_isMetaClass用于判断Class对象是否为元类，object_getClass用于获取对象的isa指针指向的对象。</p>
-<h3 id="仓库地址"><a href="#仓库地址" class="headerlink" title="仓库地址"></a>仓库地址</h3><p><a target="_blank" rel="noopener" href="https://coding.net/u/dream001/p/iOS_runtime/git/tree/master">dream001 demo仓库地址</a><br><a target="_blank" rel="noopener" href="https://opensource.apple.com/source/objc4/">苹果官网开源代码</a><br><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/objectivec/objective_c_runtime#//apple_ref/doc/uid/TP40001418-CH1g-126286">官方api</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5ac0a6116fb9a028de44d717">掘金runtime实战总结</a><br><a target="_blank" rel="noopener" href="https://maxwellqi.github.io/ios-primary-main/">IOS程序在main函数前所做的事情</a>  <a target="_blank" rel="noopener" href="http://blog.sunnyxx.com/2014/08/30/objc-pre-main/">main</a><br><a target="_blank" rel="noopener" href="http://blog.devtang.com/2014/09/09/ios-weekly-24/">devtang</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.csdn.net/article/2015-07-06/2825133-objective-c-runtime/1">深入理解Objective-C的Runtime机制</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/ios-ARC%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/ios-ARC%E5%92%8C%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">iOS-ARC和垃圾回收机制的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在<code>java</code>中有个垃圾回收器，什么是垃圾回收器，就是在程序运行的期间，垃圾回收器会不断的去扫描堆中的对象是否无人使用。如果无人使用就会回收了。</p>
-<p><code>ARC</code>在编译的时候就会在合适的地方插入<code>retain,release,autorelease</code>,在运行的时候没有东西去进行实时检查，它插入的代码可以在对象没有人用的时候，引用计数器就会变为0.一旦变为0就会被销毁了。</p>
-<p>如果在java中有一段代码是<code>Person * p=[Person new]; p=nil</code>，这个对象什么时候被回收？不一定，因为这要看垃圾回收器有没有扫描到这里。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/" class="post-title-link" itemprop="url">iOS总结的点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="UIImage中-imageNamed-和-imageWithContentsOfFile的区别"><a href="#UIImage中-imageNamed-和-imageWithContentsOfFile的区别" class="headerlink" title="UIImage中 imageNamed 和 imageWithContentsOfFile的区别"></a>UIImage中 imageNamed 和 imageWithContentsOfFile的区别</h3><p><code>[UIImage imageNamed:]</code>只适合与UI界面中小的贴图的读取，而一些比较大的资源文件应该尽量避免使用这个接口。<br>直接读取文件路径<code>[UIImage imageWithContentsOfFile]</code>来解决图片的读取问题<br>这两种方式的主要区别在于：<br><code>imageName</code>的方式会在使用的时候系统会cache，程序员是无法处理cache的，这是由系统自动处理的，对于重复加载的图像，速度会提升很多，这样反而用户体验好。所以如果某张图片需要在应用中使用多次，或者重复引用，使用<code>imageName</code>的方式会更好<br><code>imageWithContentsOfFile</code>的方式，在使用完成之后系统会释放，不会缓存下来，所以也就没有这样的问题。一般也不会把所有的图片都会缓存。有些图片在应用中只使用一两次的，就可以用这样的方式，比如新手引导界面的图片等等，就适合这样的方式。没有明显的界限。</p>
-<h3 id="CALayer-和-UIView的区别"><a href="#CALayer-和-UIView的区别" class="headerlink" title="CALayer 和 UIView的区别"></a>CALayer 和 UIView的区别</h3><p><code>CALayer</code>属于<code>Core Animation</code>部分的内容，比较重要而不太好理解。以下是园子中看到的一篇文章的摘录：</p>
-<ol>
-<li><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自它。它本身完全是由   <code>CoreAnimation</code>来实现的。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame，bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</li>
-<li><code>UIView</code>有个重要属性<code>layer</code>，可以返回它的主<code>CALayer</code>实例。</li>
-</ol>
-<h3 id="如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"><a href="#如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）" class="headerlink" title="如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"></a>如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）</h3><p>  在<code>iOS</code>中通常使用<code>hit-testing</code>去找到那个被触摸的视图。这个视图叫<code>hit-test view</code>，当<code>iOS</code>找到<code>hit-test view</code>后就把<code>touch event</code>交个那个视图来处理。</p>
-<h3 id="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"><a href="#用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性" class="headerlink" title="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"></a>用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性</h3><h3 id="NSRunloop的使用"><a href="#NSRunloop的使用" class="headerlink" title="NSRunloop的使用"></a>NSRunloop的使用</h3><p> 那么具体什么是<code>NSRunLoop</code>呢？其实<code>NSRunLoop</code>的本质是一个消息机制的处理模式。<br> <code>NSRunLoop</code>是一种更加高明的消息处理模式<br> <a target="_blank" rel="noopener" href="http://blog.csdn.net/cwq9944/article/details/8555104">http://blog.csdn.net/cwq9944/article/details/8555104</a></p>
-<h3 id="CoreAnimation-与-UIViewAnimation分别何时会使用"><a href="#CoreAnimation-与-UIViewAnimation分别何时会使用" class="headerlink" title="CoreAnimation 与 UIViewAnimation分别何时会使用"></a>CoreAnimation 与 UIViewAnimation分别何时会使用</h3><h3 id="arc-和-gc-理解"><a href="#arc-和-gc-理解" class="headerlink" title="arc 和 gc 理解"></a>arc 和 gc 理解</h3><p> ARC是iOS 5推出的新功能，全称叫 ARC(Automatic Reference Counting)。简单地说，就是代码中自动加入了retain/release，原先需要手动添加的用来处理内存管理的引用计数的代码可以自动地由编译器完成了。<br> ARC基本规则</p>
-<p>retain, release, autorelease, dealloc由编译器自动插入，不能在代码中调用<br>dealloc虽然可以被重载，但是不能调用[super dealloc]</p>
-<h3 id="如何在ARC代码中混编非ARC代码"><a href="#如何在ARC代码中混编非ARC代码" class="headerlink" title="如何在ARC代码中混编非ARC代码"></a>如何在ARC代码中混编非ARC代码</h3><p> “ios中如果arc和非arc文件混编，可以在build parses中指定compile flags，如果arc文件设为”-fobjc-arc”,非arc文件设为”-fno-objc-arc””  </p>
-<p> 使用了ARC之后如果你想复用以前写过的使用MRC的类， 就会出报错。这时候怎么办？方法比较简单， 只需要做下面的一个步骤就可以解决：<br> 在targets的build phases选项下Compile Sources下选择要不使用arc编译的文件，双击它，输入 -fno-objc-arc 即可</p>
-<p> MRC工程中也可以使用ARC的类。方法如下：<br> 在targets的build phases选项下Compile Sources下选择要使用arc编译的文件，双击它，输入 -fobjc-arc 即可</p>
-<h3 id="NSAutoreleasepool理解"><a href="#NSAutoreleasepool理解" class="headerlink" title="NSAutoreleasepool理解"></a>NSAutoreleasepool理解</h3><p>  iOS的运行时是由一个一个runloop组成的</p>
-<p> 每个runloop中都创建一个Autorelease Pool，并在runloop的末尾进行释放，<br> 所以，一般情况下，每个接受autorelease消息的对象，都会在下个runloop开始前被释放。也就是说，在一段同步的代码中执行过程中，生成的对象接受autorelease消息后，一般是不会在代码段执行完成前释放的。</p>
-<p> 当然也有让autorelease提前生效的办法：自己创建Pool并进行释放</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSAutoreleasePool</span> * pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="built_in">NSArray</span> * array = [[[<span class="built_in">NSArray</span> alloc] init] autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
-
-<h3 id="weak-block"><a href="#weak-block" class="headerlink" title="__weak,__block"></a>__weak,__block</h3><p>   __weak不增加引用，__block增加引用<br>   举例哦，某对象self，self的strong成员变量有blockA，blockA内部引用了self，如果self不经过__weak处理，就会变成：</p>
-<p> self强引用blockA，blockA强引用self。这不就循环引用了嘛</p>
-<h3 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h3><p>由于runtime是更底层的语言，我们编写的OC代码在运行时，编译器内部会先转为C和C++的代码，然后再执行，因而运用runtime机制，程 序的性能也会更好。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *age;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> no;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-
-<p>复制代码<br>  然后，我们在其它文件中使用这个类，注意在使用之前，要包含 #import &lt;objc/message.h&gt;</p>
-<p> 下面通过一小段代码来获取到上面这个类中所有的成员变量</p>
-<p>复制代码</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> outCount = <span class="number">0</span>;</span><br><span class="line">    Ivar *vars = class_copyIvarList([Lender <span class="keyword">class</span>], &amp;outCount); </span><br><span class="line">    <span class="comment">// 获取到所有的成员变量列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历所有的成员变量</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; outCount; i++) &#123;</span><br><span class="line">        Ivar ivar = vars[i]; <span class="comment">// 取出第i个位置的成员变量</span></span><br><span class="line">       </span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyName = ivar_getName(ivar); <span class="comment">// 获取变量名</span></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyType = ivar_getTypeEncoding(ivar); <span class="comment">// 获取变量编码类型</span></span><br><span class="line">        printf(<span class="string">&quot;---%s--%s\n&quot;</span>, propertyName, propertyType);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="什么是GCD？"><a href="#什么是GCD？" class="headerlink" title="什么是GCD？"></a>什么是GCD？</h3><p> Grand Central Dispatch或者GCD，是一套低层API，提供了一种新的方法来进行并发程序编写。从基本功能上讲，<br> GCD有点像NSOperationQueue，他们都允许程序将任务切分为多个单一任务然后提交至工作队列来并发地或者串行地执行。GCD比之NSOpertionQueue更底层更高效，并且它不是Cocoa框架的一部分。<br> GCD的基本概念就是dispatch queue。dispatch queue是一个对象，它可以接受任务，并将任务以先到先执行的顺序来执行。dispatch queue可以是并发的或串行的。并发任务会像NSOperationQueue那样基于系统负载来合适地并发进行，串行队列同一时间只执行单一任务。<br> GCD中有三种队列类型：<br> The main queue: 与主线程功能相同。实际上，提交至main queue的任务会在主线程中执行。main queue可以调用dispatch_get_main_queue()来获得。因为main queue是与主线程相关的，所以这是一个串行队列。<br> Global queues: 全局队列是并发队列，并由整个进程共享。进程中存在三个全局队列：高、中（默认）、低三个优先级队列。可以调用dispatch_get_global_queue函数传入优先级来访问队列。<br> 用户队列: 用户队列 (GCD并不这样称呼这种队列, 但是没有一个特定的名字来形容这种队列，所以我们称其为用户队列) 是用函数 dispatch_queue_create 创建的队列. 这些队列是串行的。正因为如此，它们可以用来完成同步机制, 有点像传统线程中的mutex。  </p>
-<p> 首先，我们要明确NSOperationQueue与GCD之间的关系</p>
-<p> NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。</p>
-<p> 其次，我们要区别两者的不同</p>
-<p> GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整</p>
-<p>   <a target="_blank" rel="noopener" href="http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html">http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html</a></p>
-<h3 id="xcode：关于Other-Linker-Flags"><a href="#xcode：关于Other-Linker-Flags" class="headerlink" title="xcode：关于Other Linker Flags"></a>xcode：关于Other Linker Flags</h3><p> 关于Other Linker Flags</p>
-<p> xcode中，在“Targets”选项下有Other Linker Flags选项，在这里可以填写xcode链接器的参数，如：-ObjC、-all_load、-force_load等。<br> 主要参数</p>
-<p> 这里要说的主要参数是ld工具的参数，也是在Other Linker Flags里常用到的参数。</p>
-<p> 1.-ObjC</p>
-<p> 当使用ObjC写的静态类别库（Objective-C static library that contains categories），在程序编译链接时，如果不在Other Linker Flags中填写-ObjC，往往会报错，出现”selector not recognized”。博主无力，原因看不太懂。具体原因请查阅xcode帮助文档。</p>
-<p> -ObjC的作用是加载用ObjC实现的类、类别等所有成员。</p>
-<p> 2.-all_load</p>
-<p> 强制链接器加载所有包含非ObjC的目标文档。</p>
-<ol start="3">
-<li>-force_load</li>
-</ol>
-<p> 加载指定的目标文档。-force_load后面需要文档路径</p>
-<h3 id="strong：会retain（强引用）"><a href="#strong：会retain（强引用）" class="headerlink" title="__strong：会retain（强引用）"></a>__strong：会retain（强引用）</h3><p>__weak NSObject *obj;和assign类似，多一个功能：对象销毁后置为nil</p>
-<p>__autoreleasing：使对象延迟释放</p>
-<p>__bridge:忽略所有的内存管理细节</p>
-<p>Core Foundation需要使用桥接，    </p>
-<h3 id="Objective-C运行时定义了几种重要的类型。"><a href="#Objective-C运行时定义了几种重要的类型。" class="headerlink" title="Objective-C运行时定义了几种重要的类型。"></a>Objective-C运行时定义了几种重要的类型。</h3><p> Class：定义Objective-C类<br> Ivar：定义对象的实例变量，包括类型和名字。<br> Protocol：定义正式协议。<br> objc_property_t：定义属性。叫这个名字可能是为了防止和Objective-C 1.0中的用户类型冲突，那时候还没有属性。<br> Method：定义对象方法或类方法。这个类型提供了方法的名字（就是<strong>选择器</strong>）、参数数量和类型，以及返回值（这些信息合起来称为方法的<strong>签名</strong>），还有一个指向代码的函数指针（也就是方法的<strong>实现</strong>）。<br> SEL：定义选择器。选择器是方法名的唯一标识符。<br> IMP：定义方法实现。这只是一个指向某个函数的指针，该函数接受一个对象、一个选择器和一个可变长参数列表（varargs），返回一个对象  </p>
-<h3 id="Objective-C-Method-Swizzling-IOS-中方法重组"><a href="#Objective-C-Method-Swizzling-IOS-中方法重组" class="headerlink" title="Objective-C Method Swizzling IOS 中方法重组"></a>Objective-C Method Swizzling IOS 中方法重组</h3><p>相关常用方法，都在包内：</p>
-<p>//向类中添加Method<br><code>BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
-<p>//修改类的Method IMP<br><code>class_replaceMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
-<p>//交换2个方法中的IMP<br><code>void method_exchangeImplementations(Method m1, Method m2)</code></p>
-<p>//获取类的某个实例方法<br><code>Method class_getInstanceMethod(Class aClass, SEL aSelector);</code><br>底层原理</p>
-<p>在运行时，<code>oc</code> 的方法被称为一种叫 <code>Method</code> 的结构体，这种 <code>objc_method</code> 类型的结构体定义为：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_method &#123;</span><br><span class="line">   SEL method_name         OBJC2_UNAVAILABLE;</span><br><span class="line">   <span class="keyword">char</span> *method_types      OBJC2_UNAVAILABLE;</span><br><span class="line">   IMP method_imp          OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面用官方提供的一幅非常经典的图片，来认识NSRunloop循环处理时间的流程。</p>
+<p><img src="http://www.cocoachina.com/cms/uploads/allimg/120703/4064_120703135151_1.png"><br>通过所有的“消息”都被添加到了<code>NSRunLoop</code>中去，而在这里这些消息并分为<code>input source</code>和<code>Timer source</code> 并在循环中检查是不是有事件需要发生，如果需要那么就调用相应的函数处理。由此形成了运行-&gt;检测-&gt;休眠 -&gt;运行 的循环状态。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ruihaha/p/5813819.html">NSRunloop工作原理和相关应用</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/05/18/runloop/">深入理解RunLoop</a></p>
 
       
     </div>

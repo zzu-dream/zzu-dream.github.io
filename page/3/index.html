@@ -655,6 +655,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/ReactNative%E8%AE%B0%E5%BD%95%E9%97%AE%E9%A2%98%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/15/%E5%89%8D%E7%AB%AF/ReactNative%E8%AE%B0%E5%BD%95%E9%97%AE%E9%A2%98%E7%82%B9/" class="post-title-link" itemprop="url">ReactNative记录问题点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-15 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-15T16:17:22+08:00">2018-06-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="错误打印log的方法因为多了一个逗号："><a href="#错误打印log的方法因为多了一个逗号：" class="headerlink" title="错误打印log的方法因为多了一个逗号："></a>错误打印log的方法因为多了一个逗号：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;*************ZSDiscountHomeBrandCardView**str***************&#x27;</span>, +<span class="built_in">this</span>.props.info)</span><br><span class="line"></span><br><span class="line">要删掉逗号就可以了 </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;*************ZSDiscountHomeBrandCardView**str***************&#x27;</span> +<span class="built_in">this</span>.props.info)</span><br></pre></td></tr></table></figure>
+
+<h2 id="注意：此种方式是异步操作不能立马打印出log"><a href="#注意：此种方式是异步操作不能立马打印出log" class="headerlink" title="注意：此种方式是异步操作不能立马打印出log"></a>注意：此种方式是异步操作不能立马打印出log</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.setState(&#123;</span><br><span class="line">  <span class="attr">cardList</span>: tmpBrands</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;this.state.cardList=&#x27;</span> + <span class="built_in">this</span>.state.cardList)</span><br><span class="line"></span><br><span class="line"><span class="comment">//此种方式可以打印出log</span></span><br><span class="line"><span class="built_in">this</span>.setState(</span><br><span class="line">  &#123;<span class="attr">cardList</span>: tmpBrands&#125;, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;=》this.state.cardList=&#x27;</span> + <span class="built_in">this</span>.state.cardList)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="RN中this所引起的undefined-is-not-an-object错误"><a href="#RN中this所引起的undefined-is-not-an-object错误" class="headerlink" title="RN中this所引起的undefined is not an object错误"></a>RN中this所引起的undefined is not an object错误</h2><p>在我们编写RN代码的时候经常会出现一个错误，undefined is not an object(evaluating ‘this.refs’ ).<br>undefined is not an object错误，提示我们未知的对象，该句话的含义就是我们没有定义该对象。但是this就是当前对象，为什么还会出现如此问题？只有一种可能，就是当前引用的this和this.setState的this不是指向同一个对象，这样才会出想“undefined is not an object”这样的错误。<br>那么，今天我们来谈谈RN里的this，介绍几个特殊的case。<br><Dialog ref="dialog" callback={this.refuseCallback.bind(this)}/><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/codetomylaw/article/details/52215787">http://blog.csdn.net/codetomylaw/article/details/52215787</a></p>
+<h2 id="rn中Image不要用嵌套"><a href="#rn中Image不要用嵌套" class="headerlink" title="rn中Image不要用嵌套"></a>rn中Image不要用嵌套</h2><p>莫名在android上有很多问题  例如：设置边角弧度的时候在android上显示异常、加入jdrouter 页面布局错乱</p>
+<h2 id="hasOwnProperty-是否具有某个属性的使用"><a href="#hasOwnProperty-是否具有某个属性的使用" class="headerlink" title="hasOwnProperty  是否具有某个属性的使用"></a>hasOwnProperty  是否具有某个属性的使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是否具有某个属性的使用</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="组件里-一定不能加分号"><a href="#组件里-一定不能加分号" class="headerlink" title="组件里 一定不能加分号"></a>组件里 一定不能加分号</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_renderErrorView () &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">NavigationBar</span> <span class="attr">Title</span>=<span class="string">&quot;专属优惠&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">JDNetworkErrorView</span> <span class="attr">onRetry</span>=<span class="string">&#123;this._fetchData&#125;/</span>&gt;</span>    ；//此处加分号就是错误的</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导入react和JDReact方式"><a href="#导入react和JDReact方式" class="headerlink" title="导入react和JDReact方式"></a>导入react和JDReact方式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  StyleSheet,</span><br><span class="line">  Text,</span><br><span class="line">  View,</span><br><span class="line">  Platform</span><br><span class="line">&#125;<span class="keyword">from</span> <span class="string">&#x27;react-native&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  JDText,</span><br><span class="line">  JDDevice,</span><br><span class="line">  JDImage,</span><br><span class="line">  JDTouchable,</span><br><span class="line">  JDNativeToast</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@jdreact/jdreact-core-lib&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/React%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -723,91 +808,6 @@
 <p>react用于web应用开发，rn采用React方式进行移动应用开发。<br>rn采用React语法，用于进行JavaScript跨终端应用开发，即拥有原生native的交互体验，又能够保留React自由的开发效率，使用灵活的的html和css布局，使用React语法结构组件，然后同时运行在ios和android平台上。</p>
 </blockquote>
 <h2 id="React官网推荐JavaScript教程"><a href="#React官网推荐JavaScript教程" class="headerlink" title="React官网推荐JavaScript教程"></a>React官网推荐JavaScript教程</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript">React官网推荐JavaScript教程</a> </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/ReactNative%E8%AE%B0%E5%BD%95%E9%97%AE%E9%A2%98%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/15/%E5%89%8D%E7%AB%AF/ReactNative%E8%AE%B0%E5%BD%95%E9%97%AE%E9%A2%98%E7%82%B9/" class="post-title-link" itemprop="url">ReactNative记录问题点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-15 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-15T16:17:22+08:00">2018-06-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ReactNative/" itemprop="url" rel="index"><span itemprop="name">ReactNative</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="错误打印log的方法因为多了一个逗号："><a href="#错误打印log的方法因为多了一个逗号：" class="headerlink" title="错误打印log的方法因为多了一个逗号："></a>错误打印log的方法因为多了一个逗号：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;*************ZSDiscountHomeBrandCardView**str***************&#x27;</span>, +<span class="built_in">this</span>.props.info)</span><br><span class="line"></span><br><span class="line">要删掉逗号就可以了 </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;*************ZSDiscountHomeBrandCardView**str***************&#x27;</span> +<span class="built_in">this</span>.props.info)</span><br></pre></td></tr></table></figure>
-
-<h2 id="注意：此种方式是异步操作不能立马打印出log"><a href="#注意：此种方式是异步操作不能立马打印出log" class="headerlink" title="注意：此种方式是异步操作不能立马打印出log"></a>注意：此种方式是异步操作不能立马打印出log</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.setState(&#123;</span><br><span class="line">  <span class="attr">cardList</span>: tmpBrands</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;this.state.cardList=&#x27;</span> + <span class="built_in">this</span>.state.cardList)</span><br><span class="line"></span><br><span class="line"><span class="comment">//此种方式可以打印出log</span></span><br><span class="line"><span class="built_in">this</span>.setState(</span><br><span class="line">  &#123;<span class="attr">cardList</span>: tmpBrands&#125;, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;=》this.state.cardList=&#x27;</span> + <span class="built_in">this</span>.state.cardList)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<h2 id="RN中this所引起的undefined-is-not-an-object错误"><a href="#RN中this所引起的undefined-is-not-an-object错误" class="headerlink" title="RN中this所引起的undefined is not an object错误"></a>RN中this所引起的undefined is not an object错误</h2><p>在我们编写RN代码的时候经常会出现一个错误，undefined is not an object(evaluating ‘this.refs’ ).<br>undefined is not an object错误，提示我们未知的对象，该句话的含义就是我们没有定义该对象。但是this就是当前对象，为什么还会出现如此问题？只有一种可能，就是当前引用的this和this.setState的this不是指向同一个对象，这样才会出想“undefined is not an object”这样的错误。<br>那么，今天我们来谈谈RN里的this，介绍几个特殊的case。<br><Dialog ref="dialog" callback={this.refuseCallback.bind(this)}/><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/codetomylaw/article/details/52215787">http://blog.csdn.net/codetomylaw/article/details/52215787</a></p>
-<h2 id="rn中Image不要用嵌套"><a href="#rn中Image不要用嵌套" class="headerlink" title="rn中Image不要用嵌套"></a>rn中Image不要用嵌套</h2><p>莫名在android上有很多问题  例如：设置边角弧度的时候在android上显示异常、加入jdrouter 页面布局错乱</p>
-<h2 id="hasOwnProperty-是否具有某个属性的使用"><a href="#hasOwnProperty-是否具有某个属性的使用" class="headerlink" title="hasOwnProperty  是否具有某个属性的使用"></a>hasOwnProperty  是否具有某个属性的使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是否具有某个属性的使用</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="组件里-一定不能加分号"><a href="#组件里-一定不能加分号" class="headerlink" title="组件里 一定不能加分号"></a>组件里 一定不能加分号</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_renderErrorView () &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">NavigationBar</span> <span class="attr">Title</span>=<span class="string">&quot;专属优惠&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">JDNetworkErrorView</span> <span class="attr">onRetry</span>=<span class="string">&#123;this._fetchData&#125;/</span>&gt;</span>    ；//此处加分号就是错误的</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="导入react和JDReact方式"><a href="#导入react和JDReact方式" class="headerlink" title="导入react和JDReact方式"></a>导入react和JDReact方式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PropTypes &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  StyleSheet,</span><br><span class="line">  Text,</span><br><span class="line">  View,</span><br><span class="line">  Platform</span><br><span class="line">&#125;<span class="keyword">from</span> <span class="string">&#x27;react-native&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  JDText,</span><br><span class="line">  JDDevice,</span><br><span class="line">  JDImage,</span><br><span class="line">  JDTouchable,</span><br><span class="line">  JDNativeToast</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;@jdreact/jdreact-core-lib&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
