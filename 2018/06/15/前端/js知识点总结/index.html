@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="js中的||和&amp;&amp; 逻辑与&amp;&amp;和逻辑或||操作符可以应用于任何类型的操作数，而不仅仅是布尔值。  几乎所有语言中||和&amp;&amp;都遵循“短路”原理， 如&amp;&amp;中第一个表达式为假就不会去处理第二个表达式，而||正好相反。js同样也遵循上述原则：  　　  当逻辑或||时，找到为true的分项就停止处理，并返回该分项的值，否则执行完，并返回最后分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发前端react项目 知识点总结">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/js%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="追梦机器人的博客">
+<meta property="og:description" content="js中的||和&amp;&amp; 逻辑与&amp;&amp;和逻辑或||操作符可以应用于任何类型的操作数，而不仅仅是布尔值。  几乎所有语言中||和&amp;&amp;都遵循“短路”原理， 如&amp;&amp;中第一个表达式为假就不会去处理第二个表达式，而||正好相反。js同样也遵循上述原则：  　　  当逻辑或||时，找到为true的分项就停止处理，并返回该分项的值，否则执行完，并返回最后分">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-15T08:17:22.000Z">
+<meta property="article:modified_time" content="2021-12-06T15:43:53.350Z">
+<meta property="article:author" content="追梦机器人">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/js%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>开发前端react项目 知识点总结 | 追梦机器人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">追梦机器人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">世界和平</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/%E5%89%8D%E7%AB%AF/js%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          开发前端react项目 知识点总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-15 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-15T16:17:22+08:00">2018-06-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="js中的-和-amp-amp"><a href="#js中的-和-amp-amp" class="headerlink" title="js中的||和&amp;&amp;"></a>js中的||和&amp;&amp;</h4><ul>
+<li><p>逻辑与&amp;&amp;和逻辑或||操作符可以应用于任何类型的操作数，而不仅仅是布尔值。</p>
+</li>
+<li><p>几乎所有语言中||和&amp;&amp;都遵循“短路”原理， 如&amp;&amp;中第一个表达式为假就不会去处理第二个表达式，而||正好相反。js同样也遵循上述原则： 
+　　</p>
+</li>
+<li><p>当逻辑或||时，找到为true的分项就停止处理，并返回该分项的值，否则执行完，并返回最后分项的值。</p>
+</li>
+<li><p>当逻辑与&amp;&amp;时，找到为false的分项就停止处理，并返回该分项的值。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">&quot;&quot;</span> || <span class="literal">null</span> || <span class="number">3</span> || <span class="number">4</span>;<span class="comment">//3</span></span><br><span class="line">alert(a);</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">4</span> &amp;&amp; <span class="number">5</span> &amp;&amp; <span class="literal">null</span> &amp;&amp; <span class="string">&quot;0&quot;</span>;<span class="comment">//null</span></span><br><span class="line">alert(b);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="扩展运算符-…-的使用"><a href="#扩展运算符-…-的使用" class="headerlink" title="扩展运算符  … 的使用"></a>扩展运算符  … 的使用</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chrischjh/p/4848934.html">妙用ES6解构和扩展运算符让你的代码更优雅</a></p>
+<h4 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/snandy/p/4403111.html">ES6箭头函数（Arrow Functions）</a></p>
+<h4 id="字典合并-利用扩展运算符"><a href="#字典合并-利用扩展运算符" class="headerlink" title="字典合并 利用扩展运算符"></a>字典合并 利用扩展运算符</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const obj1 = &#123;&#x27;name&#x27;: &#x27;张三&#x27;, &#x27;age&#x27;: &#x27;12&#x27;, &#x27;salary&#x27;: &#x27;2332&#x27;&#125;;</span><br><span class="line">const obj2 = &#123;&#x27;fat&#x27;: &#x27;true&#x27;, &#x27;name&#x27;: &#x27;李四&#x27;&#125;;</span><br><span class="line"></span><br><span class="line">const obj3 = &#123;...obj1,...obj2&#125;;</span><br><span class="line">console.log(&#x27;obj3=====&#x27;, obj3);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="原生JS实现深拷贝"><a href="#原生JS实现深拷贝" class="headerlink" title="原生JS实现深拷贝"></a>原生JS实现深拷贝</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wang839305939/article/details/80819132">原生JS实现深拷贝</a><br><a target="_blank" rel="noopener" href="https://www.css88.com/archives/8319">JavaScript 中的对象拷贝</a></p>
+<ul>
+<li>使用 <code>Object.assign()</code> 方法用于将从一个或多个源对象中的所有可枚举的属性值复制到目标对象</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: 1,</span><br><span class="line">  b: 2,</span><br><span class="line">&#125;;</span><br><span class="line">let objCopy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(objCopy);</span><br><span class="line">// Result - &#123; a: 1, b: 2 &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>JSON.parse(JSON.stringify(object))</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123; </span><br><span class="line">  a: 1,</span><br><span class="line">  b: &#123; </span><br><span class="line">    c: 2,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">let newObj = JSON.parse(JSON.stringify(obj));</span><br><span class="line"> </span><br><span class="line">obj.b.c = 20;</span><br><span class="line">console.log(obj); // &#123; a: 1, b: &#123; c: 20 &#125; &#125;</span><br><span class="line">console.log(newObj); // &#123; a: 1, b: &#123; c: 2 &#125; &#125; (一个新的对象)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Chrome-react调试插件"><a href="#Chrome-react调试插件" class="headerlink" title="Chrome react调试插件"></a>Chrome react调试插件</h4><p><a target="_blank" rel="noopener" href="http://www.cnplugins.com/zhuanti/how-to-use-react-tools.html">React - React Developer Tools开发者工具的安装与使用（Chrome调试插件）</a></p>
+<h4 id="从React15-5起，React-PropTypes被移入到单独的package中"><a href="#从React15-5起，React-PropTypes被移入到单独的package中" class="headerlink" title="从React15.5起，React.PropTypes被移入到单独的package中"></a>从React15.5起，React.PropTypes被移入到单独的package中</h4><p><a target="_blank" rel="noopener" href="https://react.docschina.org/docs/typechecking-with-proptypes.html">使用 PropTypes 进行类型检查</a></p>
+<p><strong>需要我们安装软件包prop-types 安装方法为：</strong></p>
+<ul>
+<li><p>安装prop-types <code>npm install prop-types --save</code>      </p>
+</li>
+<li><p>导入  <code>import &#123; PropTypes&#125; from &#39;prop-types&#39;;</code></p>
+</li>
+<li><p>使用</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  static defaultProps = &#123;</span><br><span class="line">    name: &#x27;stranger&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">static propTypes = &#123;</span><br><span class="line">        autoPlay: PropTypes.bool.isRequired,</span><br><span class="line">        maxLoops: PropTypes.number.isRequired,</span><br><span class="line">        posterFrameSrc:PropTypes.string.isRequired,</span><br><span class="line">        videoSrc: PropTypes.string.isRequired,</span><br><span class="line">        nameString: PropTypes.string.isRequired,</span><br><span class="line">    &#125;;  </span><br><span class="line">     </span><br></pre></td></tr></table></figure>
+
+<h4 id="CSS3的calc-使用"><a href="#CSS3的calc-使用" class="headerlink" title="CSS3的calc()使用"></a>CSS3的calc()使用</h4><p>calc()从字面我们可以把他理解为一个函数function。其实calc是英文单词calculate(计算)的缩写，是css3的一个新增的功能，用来指定元素的长度。比如说，你可以使用calc()给元素的border、margin、pading、font-size和width等属性设置动态值。为何说是动态值呢?因为我们使用的表达式来得到的值。不过calc()最大的好处就是用在流体布局上，可以通过calc()计算得到元素的宽度。</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css3/how-to-use-css3-calc-function.html">CSS3的calc()使用</a></p>
+<h4 id="如果变量名与属性名不一致，必须写成下面这样。"><a href="#如果变量名与属性名不一致，必须写成下面这样。" class="headerlink" title="如果变量名与属性名不一致，必须写成下面这样。"></a>如果变量名与属性名不一致，必须写成下面这样。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let &#123; foo: baz &#125; = &#123; foo: &#x27;aaa&#x27;, bar: &#x27;bbb&#x27; &#125;;</span><br><span class="line">baz // &quot;aaa&quot;</span><br><span class="line"></span><br><span class="line">let obj = &#123; first: &#x27;hello&#x27;, last: &#x27;world&#x27; &#125;;</span><br><span class="line">let &#123; first: f, last: l &#125; = obj;</span><br><span class="line">f // &#x27;hello&#x27;</span><br><span class="line">l // &#x27;world&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ES6-引入了一种新的原始数据类型Symbol"><a href="#ES6-引入了一种新的原始数据类型Symbol" class="headerlink" title="ES6 引入了一种新的原始数据类型Symbol"></a>ES6 引入了一种新的原始数据类型Symbol</h4><p>ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/06/15/%E5%89%8D%E7%AB%AF/%E7%AB%AF%E5%8F%A3%E6%9F%A5%E7%9C%8B%E5%92%8C%E5%85%B3%E9%97%AD/" rel="prev" title="如果某个端口已被占用 如何查看和关闭">
+      <i class="fa fa-chevron-left"></i> 如果某个端口已被占用 如何查看和关闭
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/15/%E5%89%8D%E7%AB%AF/ReactNative%E8%AE%B0%E5%BD%95%E9%97%AE%E9%A2%98%E7%82%B9/" rel="next" title="ReactNative记录问题点">
+      ReactNative记录问题点 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#js%E4%B8%AD%E7%9A%84-%E5%92%8C-amp-amp"><span class="nav-number">1.</span> <span class="nav-text">js中的||和&amp;&amp;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6-%E2%80%A6-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">扩展运算符  … 的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">箭头函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E5%90%88%E5%B9%B6-%E5%88%A9%E7%94%A8%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">4.</span> <span class="nav-text">字典合并 利用扩展运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%94%9FJS%E5%AE%9E%E7%8E%B0%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.</span> <span class="nav-text">原生JS实现深拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chrome-react%E8%B0%83%E8%AF%95%E6%8F%92%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">Chrome react调试插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8EReact15-5%E8%B5%B7%EF%BC%8CReact-PropTypes%E8%A2%AB%E7%A7%BB%E5%85%A5%E5%88%B0%E5%8D%95%E7%8B%AC%E7%9A%84package%E4%B8%AD"><span class="nav-number">7.</span> <span class="nav-text">从React15.5起，React.PropTypes被移入到单独的package中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS3%E7%9A%84calc-%E4%BD%BF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">CSS3的calc()使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%8F%98%E9%87%8F%E5%90%8D%E4%B8%8E%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E5%BF%85%E9%A1%BB%E5%86%99%E6%88%90%E4%B8%8B%E9%9D%A2%E8%BF%99%E6%A0%B7%E3%80%82"><span class="nav-number">9.</span> <span class="nav-text">如果变量名与属性名不一致，必须写成下面这样。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6-%E5%BC%95%E5%85%A5%E4%BA%86%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8BSymbol"><span class="nav-number">10.</span> <span class="nav-text">ES6 引入了一种新的原始数据类型Symbol</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">追梦机器人</p>
+  <div class="site-description" itemprop="description">为了明天而努力</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">追梦机器人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

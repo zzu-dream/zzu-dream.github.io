@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="元字符   描述     \   将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&amp;ldquo;\\n&amp;rdquo;匹配\n。&amp;ldquo;\n&amp;rdquo;匹配换行符。序列&amp;ldquo;\\&amp;rdquo;匹配&amp;ldquo;\&amp;rdquo;而&amp;ldquo;\(&amp;rdquo;则匹配&amp;ldquo;(&amp;rdquo;。     ^   匹配输入字符串的开始位置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则">
+<meta property="og:url" content="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/index.html">
+<meta property="og:site_name" content="追梦机器人的博客">
+<meta property="og:description" content="元字符   描述     \   将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&amp;ldquo;\\n&amp;rdquo;匹配\n。&amp;ldquo;\n&amp;rdquo;匹配换行符。序列&amp;ldquo;\\&amp;rdquo;匹配&amp;ldquo;\&amp;rdquo;而&amp;ldquo;\(&amp;rdquo;则匹配&amp;ldquo;(&amp;rdquo;。     ^   匹配输入字符串的开始位置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-11T08:17:22.000Z">
+<meta property="article:modified_time" content="2021-12-06T15:43:53.339Z">
+<meta property="article:author" content="追梦机器人">
+<meta property="article:tag" content="iOS-WIKI">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>正则 | 追梦机器人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">追梦机器人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">世界和平</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          正则
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <table log-set-param="table_view" data-sort="sortDisabled" valign="top"><tbody><tr><td align="left" width="75">
+<div class="para"><strong>元字符</strong></div>
+</td>
+<td align="left" valign="top" width="658">
+<div class="para"><strong>描述</strong></div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&ldquo;\\n&rdquo;匹配\n。&ldquo;\n&rdquo;匹配换行符。序列&ldquo;\\&rdquo;匹配&ldquo;\&rdquo;而&ldquo;\(&rdquo;则匹配&ldquo;(&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">^</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之后的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">$</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之前的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">*</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或多次(大于等于0次)。例如，zo*能匹配&ldquo;z&rdquo;，&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;。*等价于{0,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">+</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式一次或多次(大于等于1次）。例如，&ldquo;zo+&rdquo;能匹配&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;，但不能匹配&ldquo;z&rdquo;。+等价于{1,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或一次。例如，&ldquo;do(es)?&rdquo;可以匹配&ldquo;do&rdquo;或&ldquo;does&rdquo;中的&ldquo;do&rdquo;。?等价于{0,1}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。匹配确定的n次。例如，&ldquo;o{2}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但是能匹配&ldquo;food&rdquo;中的两个o。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。至少匹配n次。例如，&ldquo;o{2,}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但能匹配&ldquo;foooood&rdquo;中的所有o。&ldquo;o{1,}&rdquo;等价于&ldquo;o+&rdquo;。&ldquo;o{0,}&rdquo;则等价于&ldquo;o*&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,m}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，&ldquo;o{1,3}&rdquo;将匹配&ldquo;fooooood&rdquo;中的前三个o。&ldquo;o{0,1}&rdquo;等价于&ldquo;o?&rdquo;。请注意在逗号和两个数之间不能有空格。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串&ldquo;oooo&rdquo;，&ldquo;o+?&rdquo;将匹配单个&ldquo;o&rdquo;，而&ldquo;o+&rdquo;将匹配所有&ldquo;o&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">.点</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配除&ldquo;\r\n&rdquo;之外的任何单个字符。要匹配包括&ldquo;\r\n&rdquo;在内的任何字符，请使用像&ldquo;[\s\S]&rdquo;的模式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0&hellip;$9属性。要匹配圆括号字符，请使用&ldquo;\(&rdquo;或&ldquo;\)&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?:pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符&ldquo;(|)&rdquo;来组合一个模式的各个部分是很有用。例如&ldquo;industr(?:y|ies)&rdquo;就是一个比&ldquo;industry|industries&rdquo;更简略的表达式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，&ldquo;Windows(?=95|98|NT|2000)&rdquo;能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如&ldquo;Windows(?!95|98|NT|2000)&rdquo;能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向肯定预查，与正向肯定预查类似，只是方向相反。例如，&ldquo;(?&lt;=95|98|NT|2000)Windows&rdquo;能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向否定预查，与正向否定预查类似，只是方向相反。例如&ldquo;(?&lt;!95|98|NT|2000)Windows&rdquo;能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">x|y</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配x或y。例如，&ldquo;z|food&rdquo;能匹配&ldquo;z&rdquo;或&ldquo;food&rdquo;。&ldquo;(z|f)ood&rdquo;则匹配&ldquo;zood&rdquo;或&ldquo;food&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符集合。匹配所包含的任意一个字符。例如，&ldquo;[abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;a&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符集合。匹配未包含的任意字符。例如，&ldquo;[^abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;plin&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符范围。匹配指定范围内的任意字符。例如，&ldquo;[a-z]&rdquo;可以匹配&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意小写字母字符。</div>
+<div class="para">注意:只有连字符在字符组内部时,并且出现在两个字符之间时,才能表示字符的范围; 如果出字符组的开头,则只能表示连字符本身.</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符范围。匹配任何不在指定范围内的任意字符。例如，&ldquo;[^a-z]&rdquo;可以匹配任何不在&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\b</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个单词边界，也就是指单词和空格间的位置。例如，&ldquo;er\b&rdquo;可以匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\B</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配非单词边界。&ldquo;er\B&rdquo;能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\cx</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的&ldquo;c&rdquo;字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\d</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个数字字符。等价于[0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\D</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个非数字字符。等价于[^0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\f</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换页符。等价于\x0c和\cL。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换行符。等价于\x0a和\cJ。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\r</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个回车符。等价于\x0d和\cM。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\s</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\S</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\t</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个制表符。等价于\x09和\cI。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\v</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个垂直制表符。等价于\x0b和\cK。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\w</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配包括下划线的任何单词字符。等价于&ldquo;[A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\W</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非单词字符。等价于&ldquo;[^A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\xn</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，&ldquo;\x41&rdquo;匹配&ldquo;A&rdquo;。&ldquo;\x041&rdquo;则等价于&ldquo;\x04&amp;1&rdquo;。正则表达式中可以使用ASCII编码。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\num</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配num，其中num是一个正整数。对所获取的匹配的引用。例如，&ldquo;(.)\1&rdquo;匹配两个连续的相同字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nm</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nml</div>
+</td>
+<td align="left" valign="center">
+<div class="para">如果n为八进制数字（0-7），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\un</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&amp;copy;）。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">\&lt; \&gt;</td>
+<td align="left" valign="center">匹配词（word）的开始（\&lt;）和结束（\&gt;）。例如正则表达式\&lt;the\&gt;能够匹配字符串"for the wise"中的"the"，但是不能匹配字符串"otherwise"中的"the"。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">\( \)</td>
+<td align="left" valign="center">将 \( 和 \) 之间的表达式定义为&ldquo;组&rdquo;（group），并且将匹配这个表达式的字符保存到一个临时区域（一个正则表达式中最多可以保存9个），它们可以用 \1 到\9 的符号来引用。</td>
+</tr>
+<tr>
+<td align="left" valign="center">|</td>
+<td align="left" valign="center">将两个匹配条件进行逻辑&ldquo;或&rdquo;（Or）运算。例如正则表达式(him|her) 匹配"it belongs to him"和"it belongs to her"，但是不能匹配"it belongs to them."。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">+</td>
+<td align="left" valign="center">匹配1或多个正好在它之前的那个字符。例如正则表达式9+匹配9、99、999等。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">?</td>
+<td align="left" valign="center">匹配0或1个正好在它之前的那个字符。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">{i} {i,j}</td>
+<td align="left" valign="center">匹配指定数目的字符，这些字符是在它之前的表达式定义的。例如正则表达式A[0-9]{3} 能够匹配字符"A"后面跟着正好3个数字字符的串，例如A123、A348等，但是不匹配A1234。而正则表达式[0-9]{4,6} 匹配连续的任意4个、5个或者6个数字</td>
+</tr>
+</tbody>
+</table>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS-WIKI/" rel="tag"># iOS-WIKI</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="prev" title="深入理解iOS App的启动过程">
+      <i class="fa fa-chevron-left"></i> 深入理解iOS App的启动过程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/" rel="next" title="iOS总结的点">
+      iOS总结的点 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">追梦机器人</p>
+  <div class="site-description" itemprop="description">为了明天而努力</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">追梦机器人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

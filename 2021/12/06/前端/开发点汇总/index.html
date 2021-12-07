@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="学习网址标签地址css地址ES6CSS 调试方式 debugger console.log(data); alert(‘HelloWorld’); 效果弹出弹窗  Position(定位)Position(定位)    static  静态定位的元素不会受到 top, bottom, left, right影响。 relative 相对定位元素的定位是相对其正常位置。 fixed 元素的位置相对于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端开发点汇总">
+<meta property="og:url" content="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="追梦机器人的博客">
+<meta property="og:description" content="学习网址标签地址css地址ES6CSS 调试方式 debugger console.log(data); alert(‘HelloWorld’); 效果弹出弹窗  Position(定位)Position(定位)    static  静态定位的元素不会受到 top, bottom, left, right影响。 relative 相对定位元素的定位是相对其正常位置。 fixed 元素的位置相对于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5121882-30e290f0b1f0fd0a.png">
+<meta property="article:published_time" content="2021-12-06T15:43:53.352Z">
+<meta property="article:modified_time" content="2021-12-06T15:43:53.352Z">
+<meta property="article:author" content="追梦机器人">
+<meta property="article:tag" content="前端开发点汇总">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5121882-30e290f0b1f0fd0a.png">
+
+<link rel="canonical" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端开发点汇总 | 追梦机器人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">追梦机器人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">世界和平</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端开发点汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="学习网址"><a href="#学习网址" class="headerlink" title="学习网址"></a>学习网址</h4><p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/tags/index.asp">标签地址</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/css/css-tutorial.html">css地址</a><br><a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">ES6</a><br><a target="_blank" rel="noopener" href="https://css-tricks.com/almanac/">CSS</a></p>
+<h4 id="调试方式"><a href="#调试方式" class="headerlink" title="调试方式"></a>调试方式</h4><ul>
+<li>debugger</li>
+<li>console.log(data);</li>
+<li>alert(‘HelloWorld’); 效果弹出弹窗</li>
+</ul>
+<h4 id="Position-定位"><a href="#Position-定位" class="headerlink" title="Position(定位)"></a>Position(定位)</h4><p><a target="_blank" rel="noopener" href="https://www.runoob.com/css/css-positioning.html#position-fixed">Position(定位)</a>  </p>
+<ul>
+<li><strong>static</strong>  静态定位的元素不会受到 top, bottom, left, right影响。</li>
+<li><strong>relative</strong> 相对定位元素的定位是相对其正常位置。</li>
+<li><strong>fixed</strong> 元素的位置相对于浏览器窗口是固定位置。即使窗口是滚动的它也不会移动：</li>
+<li><strong>absolute</strong>  绝对定位的元素的位置相对于最近的已定位父元素，如果元素没有已定位的父元素，那么它的位置相对于<html>:</li>
+<li><strong>sticky</strong> sticky 英文字面意思是粘，粘贴，所以可以把它称之为粘性定位。</li>
+<li></li>
+</ul>
+<h4 id="float-浮动"><a href="#float-浮动" class="headerlink" title="float(浮动)"></a>float(浮动)</h4><p>创造的初衷：为了解决文字环绕效果。<br>元素的水平方向浮动，意味着元素只能左右移动而不能上下移动。</p>
+<h4 id="Overflow"><a href="#Overflow" class="headerlink" title="Overflow"></a>Overflow</h4><p>CSS overflow 属性用于控制内容溢出元素框时显示的方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">值	描述</span><br><span class="line">visible	默认值。内容不会被修剪，会呈现在元素框之外。</span><br><span class="line">hidden	内容会被修剪，并且其余内容是不可见的。</span><br><span class="line">scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。</span><br><span class="line">auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。</span><br><span class="line">inherit	规定应该从父元素继承 overflow 属性的值。</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="margin-amp-amp-padding"><a href="#margin-amp-amp-padding" class="headerlink" title="margin &amp;&amp; padding"></a>margin &amp;&amp; padding</h4><p><strong>margin</strong>属性可以为给定元素设置所有四个（上下左右）方向的外边距属性。四个外边距属性设置分别是： margin-top， margin-right， margin-bottom 和 margin-left 。指定的外边距允许为负数。</p>
+<p><strong>padding</strong>属性设置一个元素的内边距，padding 区域指一个元素的内容和其边界之间的空间，该属性不能为负值。四个外边距属性设置分别是： padding-top， padding-right， padding-bottom 和 padding-left</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5121882-30e290f0b1f0fd0a.png"></p>
+<h4 id="SCSS-讲解"><a href="#SCSS-讲解" class="headerlink" title="SCSS 讲解"></a>SCSS 讲解</h4><p><a target="_blank" rel="noopener" href="http://www.softwhy.com/article-3989-1.html">SCSS</a></p>
+<h4 id="display-的-block，inline，inline-block"><a href="#display-的-block，inline，inline-block" class="headerlink" title="display 的 block，inline，inline-block"></a>display 的 block，inline，inline-block</h4><p><strong>block</strong>和<strong>inline</strong>这两个概念是简略的说法，完整确切的说应该是 <strong>block-level elements (块级元素)</strong> 和 **inline elements (内联元素)**。</p>
+<h4 id="margin-bottom-和-bottom-区别"><a href="#margin-bottom-和-bottom-区别" class="headerlink" title="margin-bottom  和  bottom 区别"></a>margin-bottom  和  bottom 区别</h4><p>1、margin-bottom是设置外下边距的 而bottom是和pisition属性一起使用的 表示偏移量<br>2、margin是相对于块来移动 position是相对父即元素来移动</p>
+<h4 id="Visual-Studio-Code-装饰器提示“experimentalDecorators”的解决办法"><a href="#Visual-Studio-Code-装饰器提示“experimentalDecorators”的解决办法" class="headerlink" title="Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法"></a>Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法</h4><p>表现形式：老是有文件夹、字段打红出现，虽然能编译通过但是看着不得劲啊。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/yiifaa/article/details/78862507">Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法</a></p>
+<h4 id="CSS中的BFC详解"><a href="#CSS中的BFC详解" class="headerlink" title="CSS中的BFC详解"></a>CSS中的BFC详解</h4><p><strong>何为BFC</strong></p>
+<p>BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。  </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chen-cong/p/7862832.html">CSS中的BFC</a></p>
+<p>碰到的真实问题：内容是float：left浮动布局 但是外面div高度确没有撑起来。<br>解决方案：外面的div 需要设置overflow：hidden。  </p>
+<h4 id="react在html中调用方法"><a href="#react在html中调用方法" class="headerlink" title="react在html中调用方法"></a>react在html中调用方法</h4><p>直接 { this.eventName() }</p>
+<h4 id="字符串和变量的拼装方法"><a href="#字符串和变量的拼装方法" class="headerlink" title="字符串和变量的拼装方法"></a>字符串和变量的拼装方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let arrayLength = this.storeSecKillAreaOffsetTopArray.length;</span><br><span class="line"></span><br><span class="line">let secKillAreaId = `SecKill$&#123;arrayLength&#125;` </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="JS基础篇–JS获取元素的宽高以及offsetTop-offsetLeft等的属性值"><a href="#JS基础篇–JS获取元素的宽高以及offsetTop-offsetLeft等的属性值" class="headerlink" title="JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值"></a>JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值</h4><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002879406">JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值</a></p>
+<h4 id="获取当前页面滚动条纵坐标的位置"><a href="#获取当前页面滚动条纵坐标的位置" class="headerlink" title="获取当前页面滚动条纵坐标的位置"></a>获取当前页面滚动条纵坐标的位置</h4><p>获取当前页面滚动条纵坐标的位置：document.body.scrollTop与document.documentElement.scrollTop<br>获取当前页面滚动条横坐标的位置：document.body.scrollLeft与document.documentElement.scrollLeft</p>
+<p>各浏览器下获取scrollTop的差异</p>
+<ul>
+<li>IE6/7/8：可以使用 document.documentElement.scrollTop；</li>
+<li>IE9及以上：可以使用window.pageYOffset或者document.documentElement.scrollTop</li>
+<li>Safari：window.pageYOffset 与document.body.scrollTop都可以；</li>
+<li>Firefox:：火狐等等相对标准些的浏览器就省心多了，直接用window.pageYOffset或者  document.documentElement.scrollTop；</li>
+<li>Chrome：谷歌浏览器只认识document.body.scrollTop;</li>
+</ul>
+<h4 id="display属性"><a href="#display属性" class="headerlink" title="display属性"></a>display属性</h4><p>display属性设置一个元素应如何显示，是我们在前端开发中常常使用的一个属性，其中，最常见的有：display:none;表示此元素将不被显示。display：block;将元素显示为块元素。（又叫块级元素）display:inline;将元素显示为内联元素。（又叫行内元素）display:inline-block;将元素显示为内联块元素</p>
+<h4 id="display-inline-block元素之间空隙的产生原因和解决办法"><a href="#display-inline-block元素之间空隙的产生原因和解决办法" class="headerlink" title="display:inline-block元素之间空隙的产生原因和解决办法"></a>display:inline-block元素之间空隙的产生原因和解决办法</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32614411/article/details/82223624">display:inline-block元素之间空隙的产生原因和解决办法</a></p>
+<h4 id="文本一行截断-和-省略号"><a href="#文本一行截断-和-省略号" class="headerlink" title="文本一行截断 和 省略号"></a>文本一行截断 和 省略号</h4><p>一行截断： <code>height: 28px; line-height: 28px; overflow: hidden;</code><br>省略号：  <code>overflow: hidden;text-overflow: ellipsis; white-space: nowrap;</code>  </p>
+<h4 id="ES6之对象解构"><a href="#ES6之对象解构" class="headerlink" title="ES6之对象解构"></a>ES6之对象解构</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/YU_M_K/article/details/80451024">ES6之对象解构</a><br>最基本的解构<br>在对象中提取某个字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;</span><br><span class="line">  id: 123,</span><br><span class="line">  name: &#x27;hehe&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">const &#123;name&#125; = user;</span><br><span class="line">console.log(name); //prints: hehe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>解构并使用别名<br>有时接口定义的字段往往带有下划线，但我们的前端更便好于驼峰式命名，那么可以使用别名(rename)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;</span><br><span class="line">  id: 123,</span><br><span class="line">  nick_name: &#x27;hehe&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">const &#123;nick_name: nickName&#125; = user;</span><br><span class="line">console.log(nickName); //prints: hehe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="let-和-const-命令"><a href="#let-和-const-命令" class="headerlink" title="let 和 const 命令"></a>let 和 const 命令</h4><p><code>let</code>在let命令所在的代码块内有效.<br><code>const</code>声明一个只读的常量。一旦声明，常量的值就不能改变。</p>
+<h4 id="微信缓存问题"><a href="#微信缓存问题" class="headerlink" title="微信缓存问题"></a>微信缓存问题</h4><p><code>index.tpl.html 文件里 &lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot; /&gt;</code><br> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/cyy-13/p/7402458.html">path</a></p>
+<h4 id="forEach和map的区别"><a href="#forEach和map的区别" class="headerlink" title="forEach和map的区别"></a>forEach和map的区别</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">相同之处</span><br><span class="line">var arr = [&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;];</span><br><span class="line"></span><br><span class="line">arr.forEach(function(item,index,arr)&#123;　　　　//item表示数组中的每一项，index标识当前项的下标，arr表示当前数组</span><br><span class="line">    console.log(item);</span><br><span class="line">    console.log(index);</span><br><span class="line">    console.log(arr);</span><br><span class="line">    console.log(this);</span><br><span class="line">&#125;,123);　　　　　　//这里的123参数，表示函数中的this指向，可写可不写，如果不写，则this指向window</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr.map(function(item,index,arr)&#123;   //参数含义同forEach</span><br><span class="line">    console.log(item);</span><br><span class="line">    console.log(index);</span><br><span class="line">    console.log(arr);</span><br><span class="line">    console.log(this);</span><br><span class="line">&#125;,123);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">不同之处</span><br><span class="line"></span><br><span class="line">var a = arr.forEach(function(item,index,arr)&#123;　</span><br><span class="line">    return 123</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var b = arr.map(function(item,index,arr)&#123;</span><br><span class="line">    return 123</span><br><span class="line">&#125;);　</span><br><span class="line"></span><br><span class="line">console.log(a);    //undefined</span><br><span class="line">console.log(b);    //[123,123,123,123]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/" rel="tag"># 前端开发点汇总</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/react%20%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%BF%AE%E6%94%B9/" rel="prev" title="react 默认端口修改">
+      <i class="fa fa-chevron-left"></i> react 默认端口修改
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/07/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%BD%91%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">学习网址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">调试方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Position-%E5%AE%9A%E4%BD%8D"><span class="nav-number">3.</span> <span class="nav-text">Position(定位)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#float-%E6%B5%AE%E5%8A%A8"><span class="nav-number">4.</span> <span class="nav-text">float(浮动)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Overflow"><span class="nav-number">5.</span> <span class="nav-text">Overflow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#margin-amp-amp-padding"><span class="nav-number">6.</span> <span class="nav-text">margin &amp;&amp; padding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SCSS-%E8%AE%B2%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">SCSS 讲解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#display-%E7%9A%84-block%EF%BC%8Cinline%EF%BC%8Cinline-block"><span class="nav-number">8.</span> <span class="nav-text">display 的 block，inline，inline-block</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#margin-bottom-%E5%92%8C-bottom-%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">margin-bottom  和  bottom 区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Visual-Studio-Code-%E8%A3%85%E9%A5%B0%E5%99%A8%E6%8F%90%E7%A4%BA%E2%80%9CexperimentalDecorators%E2%80%9D%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSS%E4%B8%AD%E7%9A%84BFC%E8%AF%A6%E8%A7%A3"><span class="nav-number">11.</span> <span class="nav-text">CSS中的BFC详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#react%E5%9C%A8html%E4%B8%AD%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">12.</span> <span class="nav-text">react在html中调用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%8F%98%E9%87%8F%E7%9A%84%E6%8B%BC%E8%A3%85%E6%96%B9%E6%B3%95"><span class="nav-number">13.</span> <span class="nav-text">字符串和变量的拼装方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JS%E5%9F%BA%E7%A1%80%E7%AF%87%E2%80%93JS%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%BD%E9%AB%98%E4%BB%A5%E5%8F%8AoffsetTop-offsetLeft%E7%AD%89%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="nav-number">14.</span> <span class="nav-text">JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%BA%B5%E5%9D%90%E6%A0%87%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">15.</span> <span class="nav-text">获取当前页面滚动条纵坐标的位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#display%E5%B1%9E%E6%80%A7"><span class="nav-number">16.</span> <span class="nav-text">display属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#display-inline-block%E5%85%83%E7%B4%A0%E4%B9%8B%E9%97%B4%E7%A9%BA%E9%9A%99%E7%9A%84%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E5%92%8C%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">17.</span> <span class="nav-text">display:inline-block元素之间空隙的产生原因和解决办法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E4%B8%80%E8%A1%8C%E6%88%AA%E6%96%AD-%E5%92%8C-%E7%9C%81%E7%95%A5%E5%8F%B7"><span class="nav-number">18.</span> <span class="nav-text">文本一行截断 和 省略号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6%E4%B9%8B%E5%AF%B9%E8%B1%A1%E8%A7%A3%E6%9E%84"><span class="nav-number">19.</span> <span class="nav-text">ES6之对象解构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#let-%E5%92%8C-const-%E5%91%BD%E4%BB%A4"><span class="nav-number">20.</span> <span class="nav-text">let 和 const 命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98"><span class="nav-number">21.</span> <span class="nav-text">微信缓存问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#forEach%E5%92%8Cmap%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">22.</span> <span class="nav-text">forEach和map的区别</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">追梦机器人</p>
+  <div class="site-description" itemprop="description">为了明天而努力</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">追梦机器人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

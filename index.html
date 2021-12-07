@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="为了明天而努力">
+<meta property="og:type" content="website">
+<meta property="og:title" content="追梦机器人的博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="追梦机器人的博客">
+<meta property="og:description" content="为了明天而努力">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="追梦机器人">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>追梦机器人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">追梦机器人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">世界和平</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/07/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/07/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-07 11:14:28" itemprop="dateCreated datePublished" datetime="2021-12-07T11:14:28+08:00">2021-12-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%BC%80%E5%8F%91%E7%82%B9%E6%B1%87%E6%80%BB/" class="post-title-link" itemprop="url">前端开发点汇总</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="学习网址"><a href="#学习网址" class="headerlink" title="学习网址"></a>学习网址</h4><p><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/tags/index.asp">标签地址</a><br><a target="_blank" rel="noopener" href="https://www.runoob.com/css/css-tutorial.html">css地址</a><br><a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/">ES6</a><br><a target="_blank" rel="noopener" href="https://css-tricks.com/almanac/">CSS</a></p>
+<h4 id="调试方式"><a href="#调试方式" class="headerlink" title="调试方式"></a>调试方式</h4><ul>
+<li>debugger</li>
+<li>console.log(data);</li>
+<li>alert(‘HelloWorld’); 效果弹出弹窗</li>
+</ul>
+<h4 id="Position-定位"><a href="#Position-定位" class="headerlink" title="Position(定位)"></a>Position(定位)</h4><p><a target="_blank" rel="noopener" href="https://www.runoob.com/css/css-positioning.html#position-fixed">Position(定位)</a>  </p>
+<ul>
+<li><strong>static</strong>  静态定位的元素不会受到 top, bottom, left, right影响。</li>
+<li><strong>relative</strong> 相对定位元素的定位是相对其正常位置。</li>
+<li><strong>fixed</strong> 元素的位置相对于浏览器窗口是固定位置。即使窗口是滚动的它也不会移动：</li>
+<li><strong>absolute</strong>  绝对定位的元素的位置相对于最近的已定位父元素，如果元素没有已定位的父元素，那么它的位置相对于<html>:</li>
+<li><strong>sticky</strong> sticky 英文字面意思是粘，粘贴，所以可以把它称之为粘性定位。</li>
+<li></li>
+</ul>
+<h4 id="float-浮动"><a href="#float-浮动" class="headerlink" title="float(浮动)"></a>float(浮动)</h4><p>创造的初衷：为了解决文字环绕效果。<br>元素的水平方向浮动，意味着元素只能左右移动而不能上下移动。</p>
+<h4 id="Overflow"><a href="#Overflow" class="headerlink" title="Overflow"></a>Overflow</h4><p>CSS overflow 属性用于控制内容溢出元素框时显示的方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">值	描述</span><br><span class="line">visible	默认值。内容不会被修剪，会呈现在元素框之外。</span><br><span class="line">hidden	内容会被修剪，并且其余内容是不可见的。</span><br><span class="line">scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。</span><br><span class="line">auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。</span><br><span class="line">inherit	规定应该从父元素继承 overflow 属性的值。</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="margin-amp-amp-padding"><a href="#margin-amp-amp-padding" class="headerlink" title="margin &amp;&amp; padding"></a>margin &amp;&amp; padding</h4><p><strong>margin</strong>属性可以为给定元素设置所有四个（上下左右）方向的外边距属性。四个外边距属性设置分别是： margin-top， margin-right， margin-bottom 和 margin-left 。指定的外边距允许为负数。</p>
+<p><strong>padding</strong>属性设置一个元素的内边距，padding 区域指一个元素的内容和其边界之间的空间，该属性不能为负值。四个外边距属性设置分别是： padding-top， padding-right， padding-bottom 和 padding-left</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5121882-30e290f0b1f0fd0a.png"></p>
+<h4 id="SCSS-讲解"><a href="#SCSS-讲解" class="headerlink" title="SCSS 讲解"></a>SCSS 讲解</h4><p><a target="_blank" rel="noopener" href="http://www.softwhy.com/article-3989-1.html">SCSS</a></p>
+<h4 id="display-的-block，inline，inline-block"><a href="#display-的-block，inline，inline-block" class="headerlink" title="display 的 block，inline，inline-block"></a>display 的 block，inline，inline-block</h4><p><strong>block</strong>和<strong>inline</strong>这两个概念是简略的说法，完整确切的说应该是 <strong>block-level elements (块级元素)</strong> 和 **inline elements (内联元素)**。</p>
+<h4 id="margin-bottom-和-bottom-区别"><a href="#margin-bottom-和-bottom-区别" class="headerlink" title="margin-bottom  和  bottom 区别"></a>margin-bottom  和  bottom 区别</h4><p>1、margin-bottom是设置外下边距的 而bottom是和pisition属性一起使用的 表示偏移量<br>2、margin是相对于块来移动 position是相对父即元素来移动</p>
+<h4 id="Visual-Studio-Code-装饰器提示“experimentalDecorators”的解决办法"><a href="#Visual-Studio-Code-装饰器提示“experimentalDecorators”的解决办法" class="headerlink" title="Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法"></a>Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法</h4><p>表现形式：老是有文件夹、字段打红出现，虽然能编译通过但是看着不得劲啊。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/yiifaa/article/details/78862507">Visual Studio Code 装饰器提示“experimentalDecorators”的解决办法</a></p>
+<h4 id="CSS中的BFC详解"><a href="#CSS中的BFC详解" class="headerlink" title="CSS中的BFC详解"></a>CSS中的BFC详解</h4><p><strong>何为BFC</strong></p>
+<p>BFC（Block Formatting Context）格式化上下文，是Web页面中盒模型布局的CSS渲染模式，指一个独立的渲染区域或者说是一个隔离的独立容器。  </p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chen-cong/p/7862832.html">CSS中的BFC</a></p>
+<p>碰到的真实问题：内容是float：left浮动布局 但是外面div高度确没有撑起来。<br>解决方案：外面的div 需要设置overflow：hidden。  </p>
+<h4 id="react在html中调用方法"><a href="#react在html中调用方法" class="headerlink" title="react在html中调用方法"></a>react在html中调用方法</h4><p>直接 { this.eventName() }</p>
+<h4 id="字符串和变量的拼装方法"><a href="#字符串和变量的拼装方法" class="headerlink" title="字符串和变量的拼装方法"></a>字符串和变量的拼装方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">let arrayLength = this.storeSecKillAreaOffsetTopArray.length;</span><br><span class="line"></span><br><span class="line">let secKillAreaId = `SecKill$&#123;arrayLength&#125;` </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="JS基础篇–JS获取元素的宽高以及offsetTop-offsetLeft等的属性值"><a href="#JS基础篇–JS获取元素的宽高以及offsetTop-offsetLeft等的属性值" class="headerlink" title="JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值"></a>JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值</h4><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002879406">JS基础篇–JS获取元素的宽高以及offsetTop,offsetLeft等的属性值</a></p>
+<h4 id="获取当前页面滚动条纵坐标的位置"><a href="#获取当前页面滚动条纵坐标的位置" class="headerlink" title="获取当前页面滚动条纵坐标的位置"></a>获取当前页面滚动条纵坐标的位置</h4><p>获取当前页面滚动条纵坐标的位置：document.body.scrollTop与document.documentElement.scrollTop<br>获取当前页面滚动条横坐标的位置：document.body.scrollLeft与document.documentElement.scrollLeft</p>
+<p>各浏览器下获取scrollTop的差异</p>
+<ul>
+<li>IE6/7/8：可以使用 document.documentElement.scrollTop；</li>
+<li>IE9及以上：可以使用window.pageYOffset或者document.documentElement.scrollTop</li>
+<li>Safari：window.pageYOffset 与document.body.scrollTop都可以；</li>
+<li>Firefox:：火狐等等相对标准些的浏览器就省心多了，直接用window.pageYOffset或者  document.documentElement.scrollTop；</li>
+<li>Chrome：谷歌浏览器只认识document.body.scrollTop;</li>
+</ul>
+<h4 id="display属性"><a href="#display属性" class="headerlink" title="display属性"></a>display属性</h4><p>display属性设置一个元素应如何显示，是我们在前端开发中常常使用的一个属性，其中，最常见的有：display:none;表示此元素将不被显示。display：block;将元素显示为块元素。（又叫块级元素）display:inline;将元素显示为内联元素。（又叫行内元素）display:inline-block;将元素显示为内联块元素</p>
+<h4 id="display-inline-block元素之间空隙的产生原因和解决办法"><a href="#display-inline-block元素之间空隙的产生原因和解决办法" class="headerlink" title="display:inline-block元素之间空隙的产生原因和解决办法"></a>display:inline-block元素之间空隙的产生原因和解决办法</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32614411/article/details/82223624">display:inline-block元素之间空隙的产生原因和解决办法</a></p>
+<h4 id="文本一行截断-和-省略号"><a href="#文本一行截断-和-省略号" class="headerlink" title="文本一行截断 和 省略号"></a>文本一行截断 和 省略号</h4><p>一行截断： <code>height: 28px; line-height: 28px; overflow: hidden;</code><br>省略号：  <code>overflow: hidden;text-overflow: ellipsis; white-space: nowrap;</code>  </p>
+<h4 id="ES6之对象解构"><a href="#ES6之对象解构" class="headerlink" title="ES6之对象解构"></a>ES6之对象解构</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/YU_M_K/article/details/80451024">ES6之对象解构</a><br>最基本的解构<br>在对象中提取某个字段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;</span><br><span class="line">  id: 123,</span><br><span class="line">  name: &#x27;hehe&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">const &#123;name&#125; = user;</span><br><span class="line">console.log(name); //prints: hehe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>解构并使用别名<br>有时接口定义的字段往往带有下划线，但我们的前端更便好于驼峰式命名，那么可以使用别名(rename)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;</span><br><span class="line">  id: 123,</span><br><span class="line">  nick_name: &#x27;hehe&#x27;</span><br><span class="line">&#125;;</span><br><span class="line">const &#123;nick_name: nickName&#125; = user;</span><br><span class="line">console.log(nickName); //prints: hehe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="let-和-const-命令"><a href="#let-和-const-命令" class="headerlink" title="let 和 const 命令"></a>let 和 const 命令</h4><p><code>let</code>在let命令所在的代码块内有效.<br><code>const</code>声明一个只读的常量。一旦声明，常量的值就不能改变。</p>
+<h4 id="微信缓存问题"><a href="#微信缓存问题" class="headerlink" title="微信缓存问题"></a>微信缓存问题</h4><p><code>index.tpl.html 文件里 &lt;meta http-equiv=&quot;Pragma&quot; content=&quot;no-cache&quot; /&gt;</code><br> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/cyy-13/p/7402458.html">path</a></p>
+<h4 id="forEach和map的区别"><a href="#forEach和map的区别" class="headerlink" title="forEach和map的区别"></a>forEach和map的区别</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">相同之处</span><br><span class="line">var arr = [&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;,&#x27;d&#x27;];</span><br><span class="line"></span><br><span class="line">arr.forEach(function(item,index,arr)&#123;　　　　//item表示数组中的每一项，index标识当前项的下标，arr表示当前数组</span><br><span class="line">    console.log(item);</span><br><span class="line">    console.log(index);</span><br><span class="line">    console.log(arr);</span><br><span class="line">    console.log(this);</span><br><span class="line">&#125;,123);　　　　　　//这里的123参数，表示函数中的this指向，可写可不写，如果不写，则this指向window</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">arr.map(function(item,index,arr)&#123;   //参数含义同forEach</span><br><span class="line">    console.log(item);</span><br><span class="line">    console.log(index);</span><br><span class="line">    console.log(arr);</span><br><span class="line">    console.log(this);</span><br><span class="line">&#125;,123);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">不同之处</span><br><span class="line"></span><br><span class="line">var a = arr.forEach(function(item,index,arr)&#123;　</span><br><span class="line">    return 123</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var b = arr.map(function(item,index,arr)&#123;</span><br><span class="line">    return 123</span><br><span class="line">&#125;);　</span><br><span class="line"></span><br><span class="line">console.log(a);    //undefined</span><br><span class="line">console.log(b);    //[123,123,123,123]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/react%20%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%BF%AE%E6%94%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/react%20%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3%E4%BF%AE%E6%94%B9/" class="post-title-link" itemprop="url">react 默认端口修改</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="修改react-port的方法"><a href="#修改react-port的方法" class="headerlink" title="修改react port的方法"></a>修改react port的方法</h4><p>执行npm start便可启动项目，所以不管是react怎么升级，找修改端口的位置，我们首先都应该想到看一下package.json里面的配置信息。如果你是先前创建的项目，端口的修改是在scripts文件夹的start.js文件里。但是现在创建的项目里没有了scripts文件夹了，但看package.json会发现它放到了依赖里面，在node_modules文件夹里的可以看到react-scripts文件夹，在start.js里可以找到修改端口的代码。</p>
+<h4 id="依赖的模块放在哪"><a href="#依赖的模块放在哪" class="headerlink" title="依赖的模块放在哪"></a>依赖的模块放在哪</h4><ul>
+<li><p>dependencies: 指定项目运行所依赖的模块，即：开发版和发布版都需要的依赖。</p>
+</li>
+<li><p>devDependencies:指定项目开发所需要的模块，即：开发版需要但发布版不需要，例如关于测试的、文档类的。</p>
+</li>
+</ul>
+<p>npm install <package_name> –save 表示将这个包名及对应的版本添加到 package.json的 dependencies<br>npm install <package_name> –save-dev 表示将这个包名及对应的版本添加到 package.json的 devDependencies</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_37242696/article/details/80654508">react 默认端口修改</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%9B%BE%E6%A0%87echart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%9B%BE%E6%A0%87echart/" class="post-title-link" itemprop="url">echarts 图标</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">&lt;meta content=&quot;width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no&quot; name=&quot;viewport&quot; /&gt;</span><br><span class="line">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;div id=&quot;main&quot; style=&quot;position: absolute; left: 0; top: 0;&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">let myChart=echarts.init(main)</span><br><span class="line">; (onresize=_=&gt;&#123;</span><br><span class="line">  main.style.width=innerWidth+&#x27;px&#x27;</span><br><span class="line">  main.style.height=innerHeight+&#x27;px&#x27;</span><br><span class="line">  myChart.resize()</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line">const getopt=(title, inited, data)=&gt;(&#123;</span><br><span class="line">  backgroundColor: &#x27;#fff&#x27;,</span><br><span class="line">    title: &#123;</span><br><span class="line">        text: title,</span><br><span class="line">        left: &#x27;33%&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip: &#123;</span><br><span class="line">        trigger: &#x27;axis&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">    legend: Object.assign(&#123;</span><br><span class="line">        data: Object.keys(data[0]).filter(a=&gt;a!==&#x27;日期&#x27;),</span><br><span class="line">        top: &#x27;12%&#x27;,</span><br><span class="line">    &#125;, inited? &#123;&#125;: &#123;</span><br><span class="line">        selected: &#123;heapTotal: false, external: false, rss: false&#125;</span><br><span class="line">    &#125;),</span><br><span class="line">    grid: &#123;</span><br><span class="line">        left: &#x27;3%&#x27;,</span><br><span class="line">        right: &#x27;4%&#x27;,</span><br><span class="line">        bottom: &#x27;3%&#x27;,</span><br><span class="line">        top: &#x27;22%&#x27;,</span><br><span class="line">        containLabel: true</span><br><span class="line">    &#125;,</span><br><span class="line">    xAxis: &#123;</span><br><span class="line">        type: &#x27;category&#x27;,</span><br><span class="line">        boundaryGap: false,</span><br><span class="line">        data: data.map(a=&gt;a[&#x27;日期&#x27;])</span><br><span class="line">    &#125;,</span><br><span class="line">    yAxis: &#123;</span><br><span class="line">        type: &#x27;value&#x27;,</span><br><span class="line">        axisLabel:&#123;formatter: &#x27;&#123;value&#125; 毫秒&#x27;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    series: Object.keys(data[0]).filter(a=&gt;a!==&#x27;日期&#x27;).map(k=&gt;(&#123;</span><br><span class="line">      name: k,</span><br><span class="line">      type: &#x27;line&#x27;,</span><br><span class="line">      stack: k,</span><br><span class="line">      data: data.map(a=&gt;a[k]),</span><br><span class="line">    &#125;)),</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const data=[</span><br><span class="line">&#123;</span><br><span class="line">  &quot;日期&quot;: &quot;11-16&quot;,</span><br><span class="line">  &quot;Android&quot;: &quot;758.03&quot;,</span><br><span class="line">  &quot;iOS&quot;: &quot;872.21&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-17&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;761.54&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;878.91&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-18&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;763.22&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;871.78&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-19&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;771.16&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;888.15&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-20&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;741.59&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;847.57&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-21&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;734.98&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;832.24&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    &quot;日期&quot;: &quot;11-22&quot;,</span><br><span class="line">    &quot;Android&quot;: &quot;749.53&quot;,</span><br><span class="line">    &quot;iOS&quot;: &quot;821.18&quot;</span><br><span class="line">&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">myChart.setOption(getopt(&#x27;H5加载耗时概览(来源烛龙平台)&#x27;, &#123;&#125;, data))</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/react-redux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/react-redux/" class="post-title-link" itemprop="url">redux</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h4><p>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括服务器响应、缓存数据、本地生成尚未持久化到服务器的数据，也包括 UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器等等。</p>
+<p><a target="_blank" rel="noopener" href="https://www.redux.org.cn/">Redux 中文文档</a></p>
+<h3 id="几个关键库"><a href="#几个关键库" class="headerlink" title="几个关键库"></a>几个关键库</h3><pre><code>   &quot;react-redux&quot;: &quot;^5.1.0&quot;,
+    &quot;redux&quot;: &quot;^4.0.1&quot;,
+    &quot;redux-logger&quot;: &quot;^3.0.6&quot;,
+    &quot;redux-thunk&quot;: &quot;^2.3.0&quot;
+</code></pre>
+<h3 id="action内的type取名一定需要唯一的-如果多出添加重名的type-多处reducer都会收到该type的事件"><a href="#action内的type取名一定需要唯一的-如果多出添加重名的type-多处reducer都会收到该type的事件" class="headerlink" title="action内的type取名一定需要唯一的 如果多出添加重名的type 多处reducer都会收到该type的事件"></a>action内的type取名一定需要唯一的 如果多出添加重名的type 多处reducer都会收到该type的事件</h3><p>所有的 reducer 都会收到 action。<br>reducer 通过 action.type 来进行判定处理。<br>如果某个 reducer 不处理某个动作，也就是没有处理这个 action.type 的 case， 就会走 default 分支，把 state 原样返回。</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000012086401/a-1020000012111603">react-redux中多个action和reducer是如何关联的</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%9B%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%9B%BE%E8%A1%A8/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<div id="main" style="position: absolute; left: 0; top: 0;"></div>
+
+<script type="text/javascript">
+let myChart=echarts.init(main)
+; (onresize=_=>{
+  main.style.width=innerWidth+'px'
+  main.style.height=innerHeight+'px'
+  myChart.resize()
+})()
+
+const getopt=(title, inited, data)=>({
+  backgroundColor: '#fff',
+    title: {
+        text: title,
+        left: '33%',
+    },
+    tooltip: {
+        trigger: 'axis',
+    },
+    legend: Object.assign({
+        data: Object.keys(data[0]).filter(a=>a!=='日期'),
+        top: '12%',
+    }, inited? {}: {
+        selected: {heapTotal: false, external: false, rss: false}
+    }),
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        top: '22%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: data.map(a=>a['日期'])
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel:{formatter: '{value} 毫秒'}
+    },
+    series: Object.keys(data[0]).filter(a=>a!=='日期').map(k=>({
+      name: k,
+      type: 'line',
+      stack: k,
+      data: data.map(a=>a[k]),
+    })),
+})
+
+const data=[
+{
+  "日期": "11-16",
+  "Android": "758.03",
+  "iOS": "872.21"
+},
+{
+    "日期": "11-17",
+    "Android": "761.54",
+    "iOS": "878.91"
+},
+{
+    "日期": "11-18",
+    "Android": "763.22",
+    "iOS": "871.78"
+},
+{
+    "日期": "11-19",
+    "Android": "771.16",
+    "iOS": "888.15"
+},
+{
+    "日期": "11-20",
+    "Android": "741.59",
+    "iOS": "847.57"
+},
+{
+    "日期": "11-21",
+    "Android": "734.98",
+    "iOS": "832.24"
+},
+{
+    "日期": "11-22",
+    "Android": "749.53",
+    "iOS": "821.18"
+},
+]
+
+
+
+myChart.setOption(getopt('H5加载耗时概览(来源烛龙平台)', {}, data))
+
+</script>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/ajax%E4%B8%AD%E7%9A%84withCredentials%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/ajax%E4%B8%AD%E7%9A%84withCredentials%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">ajax中的withCredentials使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="XMLHttpRequest-withCredentials-有什么用"><a href="#XMLHttpRequest-withCredentials-有什么用" class="headerlink" title="XMLHttpRequest.withCredentials 有什么用?"></a>XMLHttpRequest.withCredentials 有什么用?</h4><p>跨域请求是否提供凭据信息(cookie、HTTP认证及客户端SSL证明等)<br>也可以简单的理解为，当前请求为跨域类型时是否在请求中协带cookie。<br>XMLHttpRequest.withCredentials 怎么用?<br>withCredentials属于XMLHttpRequest对象下的属性，可以对其进行查看或配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.open(&#x27;GET&#x27;, &#x27;http://172.19.0.215:1314/learnLinkManager/getLearnLinkList&#x27;, true); </span><br><span class="line">xhr.withCredentials = true; //关键设置</span><br><span class="line">xhr.onreadystatechange = function() &#123;</span><br><span class="line">  console.log(&#x27;withCredentials=&gt;&#x27;, xhr.withCredentials);</span><br><span class="line">&#125;;</span><br><span class="line">xhr.send(null);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/af1fc0fab4c5">ajax中的withCredentials使用效果</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangcybb/p/6594991.html">跨域请求设置withCredentials</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/sysuzjz/article/details/51566713">跨域请求带cookie的解决方案</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/npm%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/npm%E6%9B%B4%E6%8D%A2%E9%95%9C%E5%83%8F/" class="post-title-link" itemprop="url">npm更换镜像</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="由于不可说原因，npm-install时，速度总是不尽如人意，解决办法是修改npm的数据源"><a href="#由于不可说原因，npm-install时，速度总是不尽如人意，解决办法是修改npm的数据源" class="headerlink" title="由于不可说原因，npm install时，速度总是不尽如人意，解决办法是修改npm的数据源"></a>由于不可说原因，npm install时，速度总是不尽如人意，解决办法是修改npm的数据源</h4><p><code>npm config set registry https://registry.npm.taobao.org</code></p>
+<h4 id="开发ReactNative项目，搭建环境时通过如下代码将npm设置成淘宝镜像"><a href="#开发ReactNative项目，搭建环境时通过如下代码将npm设置成淘宝镜像" class="headerlink" title="开发ReactNative项目，搭建环境时通过如下代码将npm设置成淘宝镜像"></a>开发ReactNative项目，搭建环境时通过如下代码将npm设置成淘宝镜像</h4><p>终端直接设置 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org --global</span><br><span class="line">npm config set disturl https://npm.taobao.org/dist --global</span><br></pre></td></tr></table></figure>
+
+<p>或者 编辑 ~/.npmrc 加入下面内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">registry = http://registry.cnpmjs.org</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改后可以通过这个进行测试"><a href="#修改后可以通过这个进行测试" class="headerlink" title="修改后可以通过这个进行测试"></a>修改后可以通过这个进行测试</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry</span><br><span class="line"></span><br><span class="line">npm config get registry </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002589144">npm配置镜像、设置代理</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/CSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/CSS/" class="post-title-link" itemprop="url">CSS基础必学列表</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="CSS基础必学列表"><a href="#CSS基础必学列表" class="headerlink" title="CSS基础必学列表"></a>CSS基础必学列表</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">CSS width宽度</span><br><span class="line">CSS height高度</span><br><span class="line">CSS border边框</span><br><span class="line">CSS background背景</span><br><span class="line">CSS sprites背景拼合</span><br><span class="line">CSS float浮动</span><br><span class="line">CSS margin外边距</span><br><span class="line">CSS padding内边距</span><br><span class="line">CSS color字体颜色</span><br><span class="line">CSS font-size字体大小</span><br><span class="line">CSS font-family字体</span><br><span class="line">CSS font-weight字体加粗</span><br><span class="line">CSS display显示与隐藏</span><br><span class="line">CSS overflow隐藏与滚动条</span><br><span class="line">CSS position定位</span><br><span class="line">CSS text-align内容水平位置</span><br><span class="line">CSS text-indent缩进</span><br><span class="line">CSS text-decoration下划线</span><br><span class="line">CSS clear清除浮动</span><br><span class="line">CSS cursor鼠标手势光标</span><br><span class="line">CSS font文本</span><br><span class="line">CSS font-style文本斜体</span><br><span class="line">CSS font-variant缩小大写字母</span><br><span class="line">CSS id CSS class</span><br><span class="line">left right top bottom</span><br><span class="line">css letter-spacing字间距</span><br><span class="line">CSS line-height行高</span><br><span class="line">css min-width最小宽度</span><br><span class="line">css max-width最大宽度</span><br><span class="line">CSS min-height最小高度</span><br><span class="line">css max-height最大高度</span><br><span class="line">CSS text-transform英文大小写</span><br><span class="line">css text-overflow省略号</span><br><span class="line">CSS white-space不换行</span><br><span class="line">css z-index重叠顺序</span><br><span class="line">CSS 前花括号星号*</span><br><span class="line">CSS 缩写</span><br><span class="line">div与span区别及用法</span><br><span class="line">CSS是什么</span><br><span class="line">DIV+CSS是什么</span><br><span class="line">CSS 注释</span><br><span class="line">CSS 指针</span><br><span class="line">CSS 文本排版</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li><code>DIV CSS left right top bottom</code>定位<br>这四个CSS属性样式用于定位对象盒子，必须定义<code>position</code>属性值为<code>absolute</code>或者<code>relative</code>此取值方可生效。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://www.divcss5.com/rumen/r119.shtml">DIVCSS5</a>  </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/Flex%E5%B8%83%E5%B1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/Flex%E5%B8%83%E5%B1%80/" class="post-title-link" itemprop="url">Flex布局</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Flex布局是什么？"><a href="#Flex布局是什么？" class="headerlink" title="Flex布局是什么？"></a>Flex布局是什么？</h4><p>Flex是Flexible Box的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/3791e575c48b3698be6a94ae1dbff79d.png"></p>
+<p>容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。<br><strong>项目默认沿主轴排列</strong>。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size。</p>
+<h4 id="容器的属性"><a href="#容器的属性" class="headerlink" title="容器的属性"></a>容器的属性</h4><p>以下6个属性设置在容器上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flex-direction</span><br><span class="line">flex-wrap</span><br><span class="line">flex-flow</span><br><span class="line">justify-content</span><br><span class="line">align-items</span><br><span class="line">align-content</span><br></pre></td></tr></table></figure>
+
+<h5 id="flex-direction属性"><a href="#flex-direction属性" class="headerlink" title="flex-direction属性"></a>flex-direction属性</h5><p>flex-direction属性决定主轴的方向（即项目的排列方向）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/0cbe5f8268121114e87d0546e53cda6e.png"></p>
+<p>它可能有4个值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">row（默认值）：主轴为水平方向，起点在左端。</span><br><span class="line">row-reverse：主轴为水平方向，起点在右端。</span><br><span class="line">column：主轴为垂直方向，起点在上沿。</span><br><span class="line">column-reverse：主轴为垂直方向，起点在下沿。</span><br></pre></td></tr></table></figure>
+<h5 id="justify-content属性"><a href="#justify-content属性" class="headerlink" title="justify-content属性"></a>justify-content属性</h5><p>justify-content属性定义了项目在主轴上的对齐方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  justify-content: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/c55dfe8e3422458b50e985552ef13ba5.png"></p>
+<p>5个值，具体对齐方式与轴的方向有关。下面假设主轴为从左到右。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flex-start（默认值）：左对齐</span><br><span class="line">flex-end：右对齐</span><br><span class="line">center： 居中</span><br><span class="line">space-between：两端对齐，项目之间的间隔都相等。</span><br><span class="line">space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</span><br></pre></td></tr></table></figure>
+
+<h5 id="align-items属性"><a href="#align-items属性" class="headerlink" title="align-items属性"></a>align-items属性</h5><p>align-items属性定义项目在交叉轴上如何对齐。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/2b0c39c7e7a80d5a784c8c2ca63cde17.png"></p>
+<p>取5个值。具体的对齐方式与交叉轴的方向有关，下面假设交叉轴从上到下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flex-start：交叉轴的起点对齐。</span><br><span class="line">flex-end：交叉轴的终点对齐。</span><br><span class="line">center：交叉轴的中点对齐。</span><br><span class="line">baseline: 项目的第一行文字的基线对齐。</span><br><span class="line">stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.runoob.com/w3cnote/flex-grammar.html">Flex布局出处</a><br><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css3/flexbox-basics.html">Flexbox——快速布局神器</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">追梦机器人</p>
+  <div class="site-description" itemprop="description">为了明天而努力</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">追梦机器人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

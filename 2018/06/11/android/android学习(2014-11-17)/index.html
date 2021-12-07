@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、http:&#x2F;&#x2F;www.blogjava.net&#x2F;action&#x2F;articles&#x2F;17339.html 快捷键大全2、dp、sp和px的区别看到有很多网友不太理解dp、sp和px的区别：现在这里介绍一下dp和sp。dp也就是dip。这个和sp基本类似。如果设置表示长度、高度等属性时可 以使用dp 或sp。但如果设置字体，需要使用sp。dp是与密度无关，sp除了与密度无关外，还与scale无关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android学习(2014、11、17)">
+<meta property="og:url" content="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/index.html">
+<meta property="og:site_name" content="追梦机器人的博客">
+<meta property="og:description" content="1、http:&#x2F;&#x2F;www.blogjava.net&#x2F;action&#x2F;articles&#x2F;17339.html 快捷键大全2、dp、sp和px的区别看到有很多网友不太理解dp、sp和px的区别：现在这里介绍一下dp和sp。dp也就是dip。这个和sp基本类似。如果设置表示长度、高度等属性时可 以使用dp 或sp。但如果设置字体，需要使用sp。dp是与密度无关，sp除了与密度无关外，还与scale无关">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-11T08:17:22.000Z">
+<meta property="article:modified_time" content="2021-12-06T15:43:53.332Z">
+<meta property="article:author" content="追梦机器人">
+<meta property="article:tag" content="android学习">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>android学习(2014、11、17) | 追梦机器人的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">追梦机器人的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">世界和平</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          android学习(2014、11、17)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!--2014、11、17-->
+
+<p>1、<a target="_blank" rel="noopener" href="http://www.blogjava.net/action/articles/17339.html">http://www.blogjava.net/action/articles/17339.html</a> 快捷键大全<br>2、dp、sp和px的区别<br>看到有很多网友不太理解dp、sp和px的区别：现在这里介绍一下dp和sp。dp也就是dip。这个和sp基本类似。如果设置表示长度、高度等属性时可 以使用dp 或sp。但如果设置字体，需要使用sp。dp是与密度无关，sp除了与密度无关外，还与scale无关。如果屏幕密度为160，这时dp和sp和px是一 样的。1dp=1sp=1px，但如果使用px作单位，如果屏幕大小不变（假设还是3.2寸），而屏幕密度变成了320。那么原来TextView的宽度 设成160px，在密度为320的3.2寸屏幕里看要比在密度为160的3.2寸屏幕上看短了一半。但如果设置成160dp或160sp的话。系统会自动 将width属性值设置成320px的。也就是160 * 320 / 160。其中320 / 160可称为密度比例因子。也就是说，如果使用dp和sp，系统会根据屏幕密度的变化自动进行转换。</p>
+<h3 id="checkBox的使用"><a href="#checkBox的使用" class="headerlink" title="checkBox的使用"></a>checkBox的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CheckBox checkBox1 = (CheckBox)findViewById(R.id.checkBox1);</span><br><span class="line">checkBox1.setOnCheckedChangeListener(<span class="keyword">new</span> CompoundButton.OnCheckedChangeListener() &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        <span class="keyword">if</span>(isChecked)&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你选择了-&quot;</span> + buttonView.getText());</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;CheckBox&quot;</span>,<span class="string">&quot;你取消选择了-&quot;</span>+ buttonView.getText());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="RadioGroup的使用"><a href="#RadioGroup的使用" class="headerlink" title="RadioGroup的使用"></a>RadioGroup的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);</span><br><span class="line">radioGroup.setOnCheckedChangeListener(<span class="keyword">new</span> OnCheckedChangeListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(RadioGroup group, <span class="keyword">int</span> checkedId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> radioButtonId = group.getCheckedRadioButtonId();</span><br><span class="line">        Log.v(<span class="string">&quot;RadioGroup&quot;</span>, <span class="string">&quot;onCheckedChanged==id=&quot;</span> + checkedId</span><br><span class="line">                + radioButtonId);</span><br><span class="line">        <span class="comment">// 根据ID获取RadioButton的实例</span></span><br><span class="line">        RadioButton rb = (RadioButton) SecondActivity.<span class="keyword">this</span></span><br><span class="line">                .findViewById(radioButtonId);</span><br><span class="line">        <span class="comment">// 更新文本内容，以符合选中项</span></span><br><span class="line">        textView1.setText(<span class="string">&quot;您的性别是：&quot;</span> + rb.getText());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bundle的使用"><a href="#Bundle的使用" class="headerlink" title="Bundle的使用"></a>Bundle的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        bundle.putString(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;上海&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;狗子&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;12&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;男&quot;</span>);</span><br><span class="line">        String name = bundle.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        Log.v(<span class="string">&quot;Bundle&quot;</span>,<span class="string">&quot;bundle.string=&quot;</span>+ bundle.toString()+<span class="string">&quot;名字：&quot;</span>+name);</span><br><span class="line"><span class="comment">//bundle.string=Bundle[&#123;gender=男, age=12, city=上海, name=狗子&#125;]名字：狗子</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Android-RelativeLayout-属性"><a href="#Android-RelativeLayout-属性" class="headerlink" title="Android RelativeLayout 属性"></a>Android RelativeLayout 属性</h3><p>// 相对于给定ID控件<br>android:layout_above 将该控件的底部置于给定ID的控件之上;<br>android:layout_below 将该控件的底部置于给定ID的控件之下;<br>android:layout_toLeftOf    将该控件的右边缘与给定ID的控件左边缘对齐;<br>android:layout_toRightOf  将该控件的左边缘与给定ID的控件右边缘对齐;</p>
+<p>android:layout_alignBaseline  将该控件的baseline与给定ID的baseline对齐;<br>android:layout_alignTop        将该控件的顶部边缘与给定ID的顶部边缘对齐;<br>android:layout_alignBottom   将该控件的底部边缘与给定ID的底部边缘对齐;<br>android:layout_alignLeft        将该控件的左边缘与给定ID的左边缘对齐;<br>android:layout_alignRight      将该控件的右边缘与给定ID的右边缘对齐;<br>// 相对于父组件<br>android:layout_alignParentTop      如果为true,将该控件的顶部与其父控件的顶部对齐;<br>android:layout_alignParentBottom 如果为true,将该控件的底部与其父控件的底部对齐;<br>android:layout_alignParentLeft      如果为true,将该控件的左部与其父控件的左部对齐;<br>android:layout_alignParentRight    如果为true,将该控件的右部与其父控件的右部对齐;<br>// 居中<br>android:layout_centerHorizontal 如果为true,将该控件的置于水平居中;<br>android:layout_centerVertical     如果为true,将该控件的置于垂直居中;<br>android:layout_centerInParent   如果为true,将该控件的置于父控件的中央;<br>// 指定移动像素<br>android:layout_marginTop      上偏移的值;<br>android:layout_marginBottom 下偏移的值;<br>android:layout_marginLeft 　　左偏移的值;<br>android:layout_marginRight 　 右偏移的值;</p>
+<!--2014、11、18-->  
+
+<h3 id="下拉列表框-Spinner的使用"><a href="#下拉列表框-Spinner的使用" class="headerlink" title="下拉列表框 Spinner的使用"></a>下拉列表框 Spinner的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">myTextView = (TextView) findViewById(R.id.TextView_city);</span><br><span class="line">        mySpinner = (Spinner) findViewById(R.id.Spinner_city);</span><br><span class="line">        adapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,</span><br><span class="line">                android.R.layout.simple_spinner_item, citys);</span><br><span class="line">        <span class="comment">// 为适配器设置下拉列表下拉时的菜单样式。</span></span><br><span class="line">        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</span><br><span class="line">        <span class="comment">// 将适配器添加到下拉列表上</span></span><br><span class="line">        mySpinner.setAdapter(adapter);</span><br><span class="line">        mySpinner.setOnItemSelectedListener(<span class="keyword">new</span> OnItemSelectedListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                myTextView.setText(<span class="string">&quot;您的选择是：&quot;</span> + adapter.getItem(position));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="comment">// myTextView.setText(&quot;NONE&quot;);</span></span><br><span class="line">                <span class="comment">// parent.setVisibility(View.VISIBLE);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 类名.<span class="keyword">this</span> 的使用</span><br><span class="line"></span><br><span class="line">我们会用到一些内部类和匿名类。当在匿名类中用<span class="keyword">this</span>时，这个<span class="keyword">this</span>则指的是匿名类或内部类本身。这时如果我们要使用外部类的方法和变量的话，则应该加上外部类的类名。</span><br><span class="line"></span><br><span class="line">### GridView 使用方式</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">GridView gridView = (GridView) findViewById(R.id.gridview);</span><br><span class="line">        gridView.setAdapter(<span class="keyword">new</span> ImageAdapter(<span class="keyword">this</span>));</span><br><span class="line">        gridView.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                Toast.makeText(GridViewActivity.<span class="keyword">this</span>, mThumbIds[position], Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 代码法设置背景颜色</span><br><span class="line"></span><br><span class="line">ImageView设置背景颜色</span><br><span class="line">ImageView.setBackgroundColor(android.graphics.Color.parseColor(<span class="string">&quot;#ffffff&quot;</span>));</span><br><span class="line">ImageView.setBackgroundColor(Color.RED);</span><br><span class="line">ImageView.setBackgroundColor(Color.rgb(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">### Android广播机制</span><br><span class="line"></span><br><span class="line">BroadcastReceiver用于接收程序（包括用户开发的程序和系统内建的程序）所发出的Broadcast Intent，与应用程序启动Activity、Service相同的是，程序启动BroadcastReceiver也只需要两步。</span><br><span class="line"><span class="number">1</span>）创建需要启动的BroadcastReceiver的Intent。</span><br><span class="line"><span class="number">2</span>）调用Context的sendBroadcast()或sendOrderedBroadcast()方法来启动指定BroadcastReceiver。</span><br><span class="line">内部类的方式</span><br><span class="line"></span><br><span class="line">#### 注册</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">&#123;</span><br><span class="line">    myBroadCast = <span class="keyword">new</span> MyBroadCast();</span><br><span class="line">        IntentFilter filter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        filter.addAction(ACTION_INTENT_TEST);</span><br><span class="line">        registerReceiver(myBroadCast, filter);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="内部类实现"><a href="#内部类实现" class="headerlink" title="内部类实现"></a>内部类实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBroadCast</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyBroadCast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;myBroadCast&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO 处理接收到得广播</span></span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;onReceive===1111111&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(ThirdActivity.ACTION_INTENT_TEST);</span><br><span class="line">                   sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+
+<h4 id="取消注册"><a href="#取消注册" class="headerlink" title="取消注册"></a>取消注册</h4><p> java<br>    @Override<br>    protected void onDestroy() {<br>        super.onDestroy();<br>        unregisterReceiver(myBroadCast);<br>    }</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/android%E5%AD%A6%E4%B9%A0/" rel="tag"># android学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/" rel="prev" title="android学习">
+      <i class="fa fa-chevron-left"></i> android学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/" rel="next" title="android学习(2014、11、14)">
+      android学习(2014、11、14) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#checkBox%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">checkBox的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RadioGroup%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">RadioGroup的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bundle%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Bundle的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-RelativeLayout-%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">Android RelativeLayout 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E6%8B%89%E5%88%97%E8%A1%A8%E6%A1%86-Spinner%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">下拉列表框 Spinner的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.1.</span> <span class="nav-text">内部类实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E5%B9%BF%E6%92%AD"><span class="nav-number">5.2.</span> <span class="nav-text">发送广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E6%B3%A8%E5%86%8C"><span class="nav-number">5.3.</span> <span class="nav-text">取消注册</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">追梦机器人</p>
+  <div class="site-description" itemprop="description">为了明天而努力</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">追梦机器人</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
