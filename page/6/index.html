@@ -186,6 +186,262 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/spring%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/java/spring%E6%B3%A8%E8%A7%A3/" class="post-title-link" itemprop="url">spring注解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、大量的XML让开发者厌恶,因此Spring提供了许多注解来完成各种功能。</span><br><span class="line">2、大量的注解让开发者厌恶 ,因此Spring提供了组合注解来完成各种功能。</span><br></pre></td></tr></table></figure>
+
+<h2 id="Spring-Boot-注解的意义以及作用"><a href="#Spring-Boot-注解的意义以及作用" class="headerlink" title="Spring Boot 注解的意义以及作用"></a>Spring Boot 注解的意义以及作用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">利用注解：隐式配置，例如：@Autowired、@Bean、@Component等，通过注解来简化xml文件。</span><br><span class="line"></span><br><span class="line">利用Java文件：显示配置，比xml配置的优势是具备类型安全。</span><br><span class="line"></span><br><span class="line">利用传统的xml配置文件。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注解(annotations)列表</p>
+<p>@ResponseBody </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用该注解修饰的函数，会将结果直接填充到HTTP的响应体中，一般用于构建RESTful的api；</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>@Controller</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用于定义控制器类，在spring 项目中由控制器负责将用户发来的URL请求转发到对应的服务接口（service层）。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>@RestController</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ResponseBody和@Controller的合集</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>@RequestMapping</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">提供路由信息，负责URL到Controller中的具体函数的映射。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37995707/article/details/77447764">更多注解详看</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/" class="post-title-link" itemprop="url">如何判断代码运行在DEBUG还是RELEASE模式下？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+</blockquote>
+<p>首先确定下项目的 Build Settings 是否已经设置过宏定义 DEBUG，如何看呢？<br>点击 Build Settings ，然后在搜索框里输入‘macros’</p>
+<p><img src="/images/debug.png"></p>
+<blockquote>
+<p>如果已经设置过，在 Preprocessor Macros 的 Debug 后面会有 DEBUG=1，如果没有，就手动设置下。<br>接下来就可以这样做了</p>
+</blockquote>
+ <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/a/9063682">http://stackoverflow.com/a/9063682</a></p>
+<p>一般Apple已经为我们设置好了 DEBUG 的宏定义，所以，我们只要让 NSLog 在 DEBUG 模式下失效就好了，这样能让我们的程序运行起来更加稳定，同时我们也可以继续使用正规的 NSLog。</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//put this in prefix.pch</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> DEBUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> NSLog</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLog(args, ...)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" class="post-title-link" itemprop="url">Category中的方法为什么会覆盖原来类中的方法？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="深入了解Category"><a href="#深入了解Category" class="headerlink" title="深入了解Category"></a>深入了解<code>Category</code></h3><p>我们都知道<code>OC</code>代码执行时会先转成<code>C\C++</code>代码，<code>OC</code>对象转成对应的结构体；<br><code>Category</code>对应的结构体我们可以通过将分类的<code>.m文件转成c++</code>文件查看：<br><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc xxxxx.m</code><br>即可生成对应的<code>.cpp</code>文件；<br>在<code>.cpp</code>文件中搜索<code>Category_t</code>可以看到<code>Category</code>对应的结构体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct _category_t &#123;</span><br><span class="line">const char *name;</span><br><span class="line">struct _class_t *cls;</span><br><span class="line">const struct _method_list_t *instance_methods;</span><br><span class="line">const struct _method_list_t *class_methods;</span><br><span class="line">const struct _protocol_list_t *protocols;</span><br><span class="line">const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过观察结构体我们可以发现分类对应的结构体中有存储实例方法的列表、存储类方法的列表、存储协议的和属性的列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过源码分析可知：系统是在运行时将分类中对应的实例方法、类方法等插入到了原来类或元类的方法列表中，且是在列表的前 </span><br><span class="line">边！所以，方法调用时通过isa去对应的类或元类的列表中查找对应的方法时先查到的是分类中的方法！查到后就直接调用不在继</span><br><span class="line">续查找。这即是’覆盖’的本质！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="存在多个分类，调用谁？"><a href="#存在多个分类，调用谁？" class="headerlink" title="存在多个分类，调用谁？"></a>存在多个分类，调用谁？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当有多个分类时，会调用哪个分类中的方法呢？</span><br><span class="line"></span><br><span class="line">这个是与编译顺序有关，最后编译的分类中对应的信息会在整合在类或元类对应列表的最前边。所以是调用最后编译的分类中的</span><br><span class="line">方法！可以查看Build Phases -&gt;Complie Source 中的编译顺序！</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dd57c39a5e4c">Category中的方法为什么会覆盖原来类中的方法？</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -807,258 +1063,6 @@
 <li><a target="_blank" rel="noopener" href="http://blog.iderzheng.com/introduction-to-ios7-javascriptcore-framework/">iOS7新JavaScriptCore框架入门介绍</a></li>
 </ul>
 <p><a target="_blank" rel="noopener" href="http://liuyanwei.jumppo.com/2016/04/03/iOS-JavaScriptCore.html">出自</a>  </p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/" class="post-title-link" itemprop="url">iOS linkmap统计ipa包</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>iOS APP编译后，除了一些<strong>资源文件</strong>，剩下的就是一个<strong>可执行文件</strong>，有时候项目大了，<strong>引入的库多了，可执行文件很大</strong>，想知道这个可执行文件的构成是怎样，里面的内容都是些什么，哪些库占用空间较高，可以用以下方法勘察：  </p>
-<p>**1.**XCode开启编译选项<code>Write Link Map File</code><br><code>XCode -&gt; Project -&gt; Build Settings -&gt;</code> 搜<code>map -&gt; 把Write Link Map File</code>选项设为<code>yes</code>，并指定好<code>linkMap</code>的存储位置</p>
-<p>**2.**编译后，到编译目录里找到该txt文件，文件名和路径就是上述的<code>Path to Link Map File</code><br>位于<code>~/Library/Developer/Xcode/DerivedData/XXX-eumsvrzbvgfofvbfsoqokmjprvuh/Build/Intermediates/XXX.build/Debug-iphoneos/XXX.build/</code><br>这个<code>LinkMap</code>里展示了整个可执行文件的全貌，列出了编译后的每一个.o目标文件的信息（包括静态链接库.a里的），以及每一个目标文件的代码段，数据段存储详情。</p>
-<h3 id="在LinkMap里首先列出来的是目标文件列表："><a href="#在LinkMap里首先列出来的是目标文件列表：" class="headerlink" title="在LinkMap里首先列出来的是目标文件列表："></a>在LinkMap里首先列出来的是目标文件列表：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Object files:</span><br><span class="line">[ 0] linker synthesized</span><br><span class="line">[ 1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o</span><br><span class="line">[ 2] /Users/bang/Library/Developer/Xcode/DerivedData/yishu-eyzgphknrrzpevagadjtwpzzeqag/Build/Intermediates/yishu.build/Debug-iphonesimulator/yishu.build/Objects-normal/i386/TKPFileInfo.o</span><br><span class="line">...</span><br><span class="line">[280] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANJob.o)</span><br><span class="line">[281] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANWorker.o)</span><br><span class="line">[282] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(MobClick.o)</span><br><span class="line">[283] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANLaunch.o)</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>前面中括号里的是这个文件的编号，后面会用到，像项目里引用到静态链接库libMobClickLibrary.a里的目标文件都会在这里列出来。</p>
-<h3 id="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）"><a href="#接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）" class="headerlink" title="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）"></a>接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Sections:</span><br><span class="line"># Address   Size     Segment   Section</span><br><span class="line">0x00002740 0x00273890 __TEXT __text</span><br><span class="line">0x00275FD0 0x00000ADA __TEXT __symbol_stub</span><br><span class="line">0x00276AAC 0x00001222 __TEXT __stub_helper</span><br><span class="line">0x00277CCE 0x00019D9E __TEXT __objc_methname</span><br><span class="line">0x00291A70 0x00012847 __TEXT __cstring</span><br><span class="line">0x002A42B7 0x00001FC1 __TEXT __objc_classname</span><br><span class="line">0x002A6278 0x000046A7 __TEXT __objc_methtype</span><br><span class="line">0x002AA920 0x000061CE __TEXT __ustring</span><br><span class="line">0x002B0AF0 0x00000764 __TEXT __const</span><br><span class="line">0x002B1254 0x000028B8 __TEXT __gcc_except_tab</span><br><span class="line">0x002B3B0C 0x00004EBC __TEXT __unwind_info</span><br><span class="line">0x002B89C8 0x0003662C __TEXT __eh_frame</span><br><span class="line">0x002EF000 0x00000014 __DATA __program_vars</span><br><span class="line">0x002EF014 0x00000284 __DATA __nl_symbol_ptr</span><br><span class="line">0x002EF298 0x0000073C __DATA __la_symbol_ptr</span><br><span class="line">0x002EF9E0 0x000030A4 __DATA __const</span><br><span class="line">0x002F2A84 0x00000590 __DATA __objc_classlist</span><br><span class="line">0x002F3014 0x0000000C __DATA __objc_nlclslist</span><br><span class="line">0x002F3020 0x0000006C __DATA __objc_catlist</span><br><span class="line">0x002F308C 0x000000D8 __DATA __objc_protolist</span><br><span class="line">0x002F3164 0x00000008 __DATA __objc_imageinfo</span><br><span class="line">0x002F3170 0x0002BC80 __DATA __objc_const</span><br><span class="line">0x0031EDF0 0x00003A30 __DATA __objc_selrefs</span><br><span class="line">0x00322820 0x00000014 __DATA __objc_protorefs</span><br><span class="line">0x00322834 0x000006B8 __DATA __objc_classrefs</span><br><span class="line">0x00322EEC 0x00000394 __DATA __objc_superrefs</span><br><span class="line">0x00323280 0x000037C8 __DATA __objc_data</span><br><span class="line">0x00326A48 0x000096D0 __DATA __cfstring</span><br><span class="line">0x00330118 0x00001424 __DATA __objc_ivar</span><br><span class="line">0x00331540 0x00006080 __DATA __data</span><br><span class="line">0x003375C0 0x0000001C __DATA __common</span><br><span class="line">0x003375E0 0x000018E8 __DATA __bss</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>首列是数据在文件的偏移位置，第二列是这一段占用大小，第三列是段类型，代码段和数据段，第四列是段名称。<br>每一行的数据都紧跟在上一行后面，如第二行<code>__symbol_stub</code>的地址<code>0x00275FD0</code>就是第一行<code>__text</code>的地址<code>0x00002740</code>加上大小<code>0x00273890</code>，整个可执行文件大致数据分布就是这样。<br>这里可以清楚看到各种类型的数据在最终可执行文件里占的比例，例如<code>__text</code>表示编译后的程序执行语句，<code>__data</code>表示已初始化的全局变量和局部静态变量，<code>__bss</code>表示未初始化的全局变量和局部静态变量，<code>__cstring</code>表示代码里的字符串常量，等等。</p>
-<h3 id="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"><a href="#接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间" class="headerlink" title="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"></a>接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Address Size File Name</span><br><span class="line">0x00002740 0x0000003E [ 1] start</span><br><span class="line">0x00002780 0x00000400 [ 2] +[TKPFileInfo parseWithDictionary:]</span><br><span class="line">0x00002B80 0x00000030 [ 2] -[TKPFileInfo fileID]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>同样首列是数据在文件的偏移地址，第二列是占用大小，第三列是所属文件序号，对应上述Object files列表，最后是名字。<br>例如第二行代表了文件序号为2（反查上面就是TKPFileInfo.o）的parseWithDictionary方法占用了1000byte大小。</p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>这个文件可以让你了解整个APP编译后的情况，也许从中可以发现一些异常，还可以用这个文件计算静态链接库在项目里占的大小，有时候我们在项目里链了很多第三方库，导致APP体积变大很多，我们想确切知道每个库占用了多大空间，可以给我们优化提供方向。LinkMap里有了每个目标文件每个方法每个数据的占用大小数据，所以只要写个脚本，就可以统计出每个.o最后的大小，属于一个.a静态链接库的.o加起来，就是这个库在APP里占用的空间大小。</p>
-<h3 id="生成的linkmap文件path"><a href="#生成的linkmap文件path" class="headerlink" title="生成的linkmap文件path"></a>生成的linkmap文件path</h3><p>/Users/wenyongjun/Library/Developer/Xcode/DerivedData/JDViewKitProduct-cvqwuevthaoawvbqwonrghbfhnuz/Build/Intermediates.noindex/JDViewKitProduct.build/Debug-iphonesimulator/JDViewKitProduct.build/JDViewKitProduct-LinkMap-normal-x86_64.txt </p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zgzczzw/article/details/79855660">基于LinkMap分析iOSAPP各模块体积</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.cnbang.net/tech/2296/">iOS APP可执行文件的组成</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">OS 中的 armv7,armv7s,arm64,i386,x86_64 都是什么</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在做静态库的时候以及引用静态库的时候经常会遇到一些关于真机模拟器不通用的情况，会报错找不到相应库导致编译失败，</p>
-<p>这里简单记录一下各种设备支持的架构。</p>
-<h4 id="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"><a href="#iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器" class="headerlink" title="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"></a>iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器</h4><h5 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h5><p>模拟器32位处理器测试需要i386架构，（iphone5,iphone5s以下的模拟器）</p>
-<p>模拟器64位处理器测试需要x86_64架构，(iphone6以上的模拟器)</p>
-<h5 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h5><p>真机32位处理器需要armv7,或者armv7s架构，（iphone4真机/armv7,      ipnone5,iphone5s真机/armv7s）</p>
-<p>真机64位处理器需要arm64架构。(iphone6,iphone6p以上的真机)</p>
-<p>project -&gt; target -&gt; building setting -&gt; Arhitectures 设置</p>
-<h5 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h5><p>debug属性设置为no的时候，会编译支持所有架构的版本，编译的速度会变慢，设置为yes 的时候，只编译当前的architecture版本，编译速度快。</p>
-<p>一般情况下，debug 设置为yes，release为no，这样发行版本能适应不同设备。</p>
-<h5 id="用到的命令行查看或者合并"><a href="#用到的命令行查看或者合并" class="headerlink" title="用到的命令行查看或者合并"></a>用到的命令行查看或者合并</h5><p>静态库.a支持信息：<br>lipo -info .a文件  </p>
-<p>两个静态库合并：<br> lipo -create 文件1  文件2  -output /Users/sunjianfei/Desktop/libPrint.a</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">iOS 加载http的方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在iOS 9的时候,默认非HTTS的网络是被禁止的,我们可以在info.plist文件中添加NSAppTransportSecurity字典,将NSAllowsArbitraryLoads设置为YES来禁用ATS</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bee253cb4825">简书地址</a></p>
-<p>解决方案一：</p>
-<p>开启 NSAllowsArbitraryLoads 为 YES，然后提交时进行说明</p>
-<p>解决方案二：</p>
-<p>设置 NSExceptionDomains 属性来访问指定域名，然后提交时进行说明</p>
-<p>解决方案三：</p>
-<p>只针对网页浏览和视频播放的行为且为iOS 10及以上，设置NSAllowsArbitraryLoadsInWebContent为Yes。</p>
 
       
     </div>

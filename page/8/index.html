@@ -186,6 +186,137 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/" class="post-title-link" itemprop="url">iOS总结的点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="UIImage中-imageNamed-和-imageWithContentsOfFile的区别"><a href="#UIImage中-imageNamed-和-imageWithContentsOfFile的区别" class="headerlink" title="UIImage中 imageNamed 和 imageWithContentsOfFile的区别"></a>UIImage中 imageNamed 和 imageWithContentsOfFile的区别</h3><p><code>[UIImage imageNamed:]</code>只适合与UI界面中小的贴图的读取，而一些比较大的资源文件应该尽量避免使用这个接口。<br>直接读取文件路径<code>[UIImage imageWithContentsOfFile]</code>来解决图片的读取问题<br>这两种方式的主要区别在于：<br><code>imageName</code>的方式会在使用的时候系统会cache，程序员是无法处理cache的，这是由系统自动处理的，对于重复加载的图像，速度会提升很多，这样反而用户体验好。所以如果某张图片需要在应用中使用多次，或者重复引用，使用<code>imageName</code>的方式会更好<br><code>imageWithContentsOfFile</code>的方式，在使用完成之后系统会释放，不会缓存下来，所以也就没有这样的问题。一般也不会把所有的图片都会缓存。有些图片在应用中只使用一两次的，就可以用这样的方式，比如新手引导界面的图片等等，就适合这样的方式。没有明显的界限。</p>
+<h3 id="CALayer-和-UIView的区别"><a href="#CALayer-和-UIView的区别" class="headerlink" title="CALayer 和 UIView的区别"></a>CALayer 和 UIView的区别</h3><p><code>CALayer</code>属于<code>Core Animation</code>部分的内容，比较重要而不太好理解。以下是园子中看到的一篇文章的摘录：</p>
+<ol>
+<li><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自它。它本身完全是由   <code>CoreAnimation</code>来实现的。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame，bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</li>
+<li><code>UIView</code>有个重要属性<code>layer</code>，可以返回它的主<code>CALayer</code>实例。</li>
+</ol>
+<h3 id="如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"><a href="#如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）" class="headerlink" title="如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"></a>如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）</h3><p>  在<code>iOS</code>中通常使用<code>hit-testing</code>去找到那个被触摸的视图。这个视图叫<code>hit-test view</code>，当<code>iOS</code>找到<code>hit-test view</code>后就把<code>touch event</code>交个那个视图来处理。</p>
+<h3 id="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"><a href="#用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性" class="headerlink" title="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"></a>用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性</h3><h3 id="NSRunloop的使用"><a href="#NSRunloop的使用" class="headerlink" title="NSRunloop的使用"></a>NSRunloop的使用</h3><p> 那么具体什么是<code>NSRunLoop</code>呢？其实<code>NSRunLoop</code>的本质是一个消息机制的处理模式。<br> <code>NSRunLoop</code>是一种更加高明的消息处理模式<br> <a target="_blank" rel="noopener" href="http://blog.csdn.net/cwq9944/article/details/8555104">http://blog.csdn.net/cwq9944/article/details/8555104</a></p>
+<h3 id="CoreAnimation-与-UIViewAnimation分别何时会使用"><a href="#CoreAnimation-与-UIViewAnimation分别何时会使用" class="headerlink" title="CoreAnimation 与 UIViewAnimation分别何时会使用"></a>CoreAnimation 与 UIViewAnimation分别何时会使用</h3><h3 id="arc-和-gc-理解"><a href="#arc-和-gc-理解" class="headerlink" title="arc 和 gc 理解"></a>arc 和 gc 理解</h3><p> ARC是iOS 5推出的新功能，全称叫 ARC(Automatic Reference Counting)。简单地说，就是代码中自动加入了retain/release，原先需要手动添加的用来处理内存管理的引用计数的代码可以自动地由编译器完成了。<br> ARC基本规则</p>
+<p>retain, release, autorelease, dealloc由编译器自动插入，不能在代码中调用<br>dealloc虽然可以被重载，但是不能调用[super dealloc]</p>
+<h3 id="如何在ARC代码中混编非ARC代码"><a href="#如何在ARC代码中混编非ARC代码" class="headerlink" title="如何在ARC代码中混编非ARC代码"></a>如何在ARC代码中混编非ARC代码</h3><p> “ios中如果arc和非arc文件混编，可以在build parses中指定compile flags，如果arc文件设为”-fobjc-arc”,非arc文件设为”-fno-objc-arc””  </p>
+<p> 使用了ARC之后如果你想复用以前写过的使用MRC的类， 就会出报错。这时候怎么办？方法比较简单， 只需要做下面的一个步骤就可以解决：<br> 在targets的build phases选项下Compile Sources下选择要不使用arc编译的文件，双击它，输入 -fno-objc-arc 即可</p>
+<p> MRC工程中也可以使用ARC的类。方法如下：<br> 在targets的build phases选项下Compile Sources下选择要使用arc编译的文件，双击它，输入 -fobjc-arc 即可</p>
+<h3 id="NSAutoreleasepool理解"><a href="#NSAutoreleasepool理解" class="headerlink" title="NSAutoreleasepool理解"></a>NSAutoreleasepool理解</h3><p>  iOS的运行时是由一个一个runloop组成的</p>
+<p> 每个runloop中都创建一个Autorelease Pool，并在runloop的末尾进行释放，<br> 所以，一般情况下，每个接受autorelease消息的对象，都会在下个runloop开始前被释放。也就是说，在一段同步的代码中执行过程中，生成的对象接受autorelease消息后，一般是不会在代码段执行完成前释放的。</p>
+<p> 当然也有让autorelease提前生效的办法：自己创建Pool并进行释放</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSAutoreleasePool</span> * pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="built_in">NSArray</span> * array = [[[<span class="built_in">NSArray</span> alloc] init] autorelease];</span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
+
+<h3 id="weak-block"><a href="#weak-block" class="headerlink" title="__weak,__block"></a>__weak,__block</h3><p>   __weak不增加引用，__block增加引用<br>   举例哦，某对象self，self的strong成员变量有blockA，blockA内部引用了self，如果self不经过__weak处理，就会变成：</p>
+<p> self强引用blockA，blockA强引用self。这不就循环引用了嘛</p>
+<h3 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h3><p>由于runtime是更底层的语言，我们编写的OC代码在运行时，编译器内部会先转为C和C++的代码，然后再执行，因而运用runtime机制，程 序的性能也会更好。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">    <span class="built_in">CGFloat</span> height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSNumber</span> *age;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) <span class="keyword">int</span> no;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<p>复制代码<br>  然后，我们在其它文件中使用这个类，注意在使用之前，要包含 #import &lt;objc/message.h&gt;</p>
+<p> 下面通过一小段代码来获取到上面这个类中所有的成员变量</p>
+<p>复制代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> outCount = <span class="number">0</span>;</span><br><span class="line">    Ivar *vars = class_copyIvarList([Lender <span class="keyword">class</span>], &amp;outCount); </span><br><span class="line">    <span class="comment">// 获取到所有的成员变量列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历所有的成员变量</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; outCount; i++) &#123;</span><br><span class="line">        Ivar ivar = vars[i]; <span class="comment">// 取出第i个位置的成员变量</span></span><br><span class="line">       </span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyName = ivar_getName(ivar); <span class="comment">// 获取变量名</span></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">char</span> *propertyType = ivar_getTypeEncoding(ivar); <span class="comment">// 获取变量编码类型</span></span><br><span class="line">        printf(<span class="string">&quot;---%s--%s\n&quot;</span>, propertyName, propertyType);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="什么是GCD？"><a href="#什么是GCD？" class="headerlink" title="什么是GCD？"></a>什么是GCD？</h3><p> Grand Central Dispatch或者GCD，是一套低层API，提供了一种新的方法来进行并发程序编写。从基本功能上讲，<br> GCD有点像NSOperationQueue，他们都允许程序将任务切分为多个单一任务然后提交至工作队列来并发地或者串行地执行。GCD比之NSOpertionQueue更底层更高效，并且它不是Cocoa框架的一部分。<br> GCD的基本概念就是dispatch queue。dispatch queue是一个对象，它可以接受任务，并将任务以先到先执行的顺序来执行。dispatch queue可以是并发的或串行的。并发任务会像NSOperationQueue那样基于系统负载来合适地并发进行，串行队列同一时间只执行单一任务。<br> GCD中有三种队列类型：<br> The main queue: 与主线程功能相同。实际上，提交至main queue的任务会在主线程中执行。main queue可以调用dispatch_get_main_queue()来获得。因为main queue是与主线程相关的，所以这是一个串行队列。<br> Global queues: 全局队列是并发队列，并由整个进程共享。进程中存在三个全局队列：高、中（默认）、低三个优先级队列。可以调用dispatch_get_global_queue函数传入优先级来访问队列。<br> 用户队列: 用户队列 (GCD并不这样称呼这种队列, 但是没有一个特定的名字来形容这种队列，所以我们称其为用户队列) 是用函数 dispatch_queue_create 创建的队列. 这些队列是串行的。正因为如此，它们可以用来完成同步机制, 有点像传统线程中的mutex。  </p>
+<p> 首先，我们要明确NSOperationQueue与GCD之间的关系</p>
+<p> NSOpertaionQueue用GCD构建封装的，是GCD的高级抽象。</p>
+<p> 其次，我们要区别两者的不同</p>
+<p> GCD仅仅支持FIFO队列，而NSOperationQueue中的队列可以被重新设置优先级，从而实现不同操作的执行顺序调整</p>
+<p>   <a target="_blank" rel="noopener" href="http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html">http://www.dreamingwish.com/frontui/article/default/ios-multithread-program-runloop-the.html</a></p>
+<h3 id="xcode：关于Other-Linker-Flags"><a href="#xcode：关于Other-Linker-Flags" class="headerlink" title="xcode：关于Other Linker Flags"></a>xcode：关于Other Linker Flags</h3><p> 关于Other Linker Flags</p>
+<p> xcode中，在“Targets”选项下有Other Linker Flags选项，在这里可以填写xcode链接器的参数，如：-ObjC、-all_load、-force_load等。<br> 主要参数</p>
+<p> 这里要说的主要参数是ld工具的参数，也是在Other Linker Flags里常用到的参数。</p>
+<p> 1.-ObjC</p>
+<p> 当使用ObjC写的静态类别库（Objective-C static library that contains categories），在程序编译链接时，如果不在Other Linker Flags中填写-ObjC，往往会报错，出现”selector not recognized”。博主无力，原因看不太懂。具体原因请查阅xcode帮助文档。</p>
+<p> -ObjC的作用是加载用ObjC实现的类、类别等所有成员。</p>
+<p> 2.-all_load</p>
+<p> 强制链接器加载所有包含非ObjC的目标文档。</p>
+<ol start="3">
+<li>-force_load</li>
+</ol>
+<p> 加载指定的目标文档。-force_load后面需要文档路径</p>
+<h3 id="strong：会retain（强引用）"><a href="#strong：会retain（强引用）" class="headerlink" title="__strong：会retain（强引用）"></a>__strong：会retain（强引用）</h3><p>__weak NSObject *obj;和assign类似，多一个功能：对象销毁后置为nil</p>
+<p>__autoreleasing：使对象延迟释放</p>
+<p>__bridge:忽略所有的内存管理细节</p>
+<p>Core Foundation需要使用桥接，    </p>
+<h3 id="Objective-C运行时定义了几种重要的类型。"><a href="#Objective-C运行时定义了几种重要的类型。" class="headerlink" title="Objective-C运行时定义了几种重要的类型。"></a>Objective-C运行时定义了几种重要的类型。</h3><p> Class：定义Objective-C类<br> Ivar：定义对象的实例变量，包括类型和名字。<br> Protocol：定义正式协议。<br> objc_property_t：定义属性。叫这个名字可能是为了防止和Objective-C 1.0中的用户类型冲突，那时候还没有属性。<br> Method：定义对象方法或类方法。这个类型提供了方法的名字（就是<strong>选择器</strong>）、参数数量和类型，以及返回值（这些信息合起来称为方法的<strong>签名</strong>），还有一个指向代码的函数指针（也就是方法的<strong>实现</strong>）。<br> SEL：定义选择器。选择器是方法名的唯一标识符。<br> IMP：定义方法实现。这只是一个指向某个函数的指针，该函数接受一个对象、一个选择器和一个可变长参数列表（varargs），返回一个对象  </p>
+<h3 id="Objective-C-Method-Swizzling-IOS-中方法重组"><a href="#Objective-C-Method-Swizzling-IOS-中方法重组" class="headerlink" title="Objective-C Method Swizzling IOS 中方法重组"></a>Objective-C Method Swizzling IOS 中方法重组</h3><p>相关常用方法，都在包内：</p>
+<p>//向类中添加Method<br><code>BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
+<p>//修改类的Method IMP<br><code>class_replaceMethod(Class cls, SEL name, IMP imp, const char *types)</code></p>
+<p>//交换2个方法中的IMP<br><code>void method_exchangeImplementations(Method m1, Method m2)</code></p>
+<p>//获取类的某个实例方法<br><code>Method class_getInstanceMethod(Class aClass, SEL aSelector);</code><br>底层原理</p>
+<p>在运行时，<code>oc</code> 的方法被称为一种叫 <code>Method</code> 的结构体，这种 <code>objc_method</code> 类型的结构体定义为：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> objc_method &#123;</span><br><span class="line">   SEL method_name         OBJC2_UNAVAILABLE;</span><br><span class="line">   <span class="keyword">char</span> *method_types      OBJC2_UNAVAILABLE;</span><br><span class="line">   IMP method_imp          OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -302,6 +433,525 @@
 <p>减少__DATA段中的指针数量。<br>合并Category和功能类似的类。比如：UIView+Frame,UIView+AutoLayout…合并为一个<br>删除无用的方法和类。<br>多用Swift Structs，因为Swfit Structs是静态分发的。感兴趣的同学可以看看我之前这篇文章：《Swift进阶之内存模型和方法调度》</p>
 <h3 id="Initializers-1"><a href="#Initializers-1" class="headerlink" title="Initializers"></a>Initializers</h3><p>通常，我们会在+load方法中进行method-swizzling，这也是Nshipster推荐的方式。</p>
 <p>用initialize替代load。不少同学喜欢用method-swizzling来实现AOP去做日志统计等内容，强烈建议改为在initialize进行初始化。<br>减少__atribute__((constructor))的使用，而是在第一次访问的时候才用dispatch_once等方式初始化。<br>不要创建线程<br>使用Swfit重写代码。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/" class="post-title-link" itemprop="url">正则</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <table log-set-param="table_view" data-sort="sortDisabled" valign="top"><tbody><tr><td align="left" width="75">
+<div class="para"><strong>元字符</strong></div>
+</td>
+<td align="left" valign="top" width="658">
+<div class="para"><strong>描述</strong></div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&ldquo;\\n&rdquo;匹配\n。&ldquo;\n&rdquo;匹配换行符。序列&ldquo;\\&rdquo;匹配&ldquo;\&rdquo;而&ldquo;\(&rdquo;则匹配&ldquo;(&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">^</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之后的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">$</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之前的位置。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">*</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或多次(大于等于0次)。例如，zo*能匹配&ldquo;z&rdquo;，&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;。*等价于{0,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">+</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式一次或多次(大于等于1次）。例如，&ldquo;zo+&rdquo;能匹配&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;，但不能匹配&ldquo;z&rdquo;。+等价于{1,}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配前面的子表达式零次或一次。例如，&ldquo;do(es)?&rdquo;可以匹配&ldquo;do&rdquo;或&ldquo;does&rdquo;中的&ldquo;do&rdquo;。?等价于{0,1}。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。匹配确定的n次。例如，&ldquo;o{2}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但是能匹配&ldquo;food&rdquo;中的两个o。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">n是一个非负整数。至少匹配n次。例如，&ldquo;o{2,}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但能匹配&ldquo;foooood&rdquo;中的所有o。&ldquo;o{1,}&rdquo;等价于&ldquo;o+&rdquo;。&ldquo;o{0,}&rdquo;则等价于&ldquo;o*&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">{n,m}</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，&ldquo;o{1,3}&rdquo;将匹配&ldquo;fooooood&rdquo;中的前三个o。&ldquo;o{0,1}&rdquo;等价于&ldquo;o?&rdquo;。请注意在逗号和两个数之间不能有空格。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">?</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串&ldquo;oooo&rdquo;，&ldquo;o+?&rdquo;将匹配单个&ldquo;o&rdquo;，而&ldquo;o+&rdquo;将匹配所有&ldquo;o&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">.点</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配除&ldquo;\r\n&rdquo;之外的任何单个字符。要匹配包括&ldquo;\r\n&rdquo;在内的任何字符，请使用像&ldquo;[\s\S]&rdquo;的模式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0&hellip;$9属性。要匹配圆括号字符，请使用&ldquo;\(&rdquo;或&ldquo;\)&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?:pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符&ldquo;(|)&rdquo;来组合一个模式的各个部分是很有用。例如&ldquo;industr(?:y|ies)&rdquo;就是一个比&ldquo;industry|industries&rdquo;更简略的表达式。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，&ldquo;Windows(?=95|98|NT|2000)&rdquo;能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如&ldquo;Windows(?!95|98|NT|2000)&rdquo;能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;=pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向肯定预查，与正向肯定预查类似，只是方向相反。例如，&ldquo;(?&lt;=95|98|NT|2000)Windows&rdquo;能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">(?&lt;!pattern)</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">反向否定预查，与正向否定预查类似，只是方向相反。例如&ldquo;(?&lt;!95|98|NT|2000)Windows&rdquo;能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">x|y</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配x或y。例如，&ldquo;z|food&rdquo;能匹配&ldquo;z&rdquo;或&ldquo;food&rdquo;。&ldquo;(z|f)ood&rdquo;则匹配&ldquo;zood&rdquo;或&ldquo;food&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符集合。匹配所包含的任意一个字符。例如，&ldquo;[abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;a&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^xyz]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符集合。匹配未包含的任意字符。例如，&ldquo;[^abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;plin&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">字符范围。匹配指定范围内的任意字符。例如，&ldquo;[a-z]&rdquo;可以匹配&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意小写字母字符。</div>
+<div class="para">注意:只有连字符在字符组内部时,并且出现在两个字符之间时,才能表示字符的范围; 如果出字符组的开头,则只能表示连字符本身.</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">[^a-z]</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">负值字符范围。匹配任何不在指定范围内的任意字符。例如，&ldquo;[^a-z]&rdquo;可以匹配任何不在&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\b</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个单词边界，也就是指单词和空格间的位置。例如，&ldquo;er\b&rdquo;可以匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\B</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配非单词边界。&ldquo;er\B&rdquo;能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\cx</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的&ldquo;c&rdquo;字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center" width="75">
+<div class="para">\d</div>
+</td>
+<td align="left" valign="center" width="658">
+<div class="para">匹配一个数字字符。等价于[0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\D</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个非数字字符。等价于[^0-9]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\f</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换页符。等价于\x0c和\cL。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个换行符。等价于\x0a和\cJ。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\r</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个回车符。等价于\x0d和\cM。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\s</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\S</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\t</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个制表符。等价于\x09和\cI。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\v</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配一个垂直制表符。等价于\x0b和\cK。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\w</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配包括下划线的任何单词字符。等价于&ldquo;[A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\W</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配任何非单词字符。等价于&ldquo;[^A-Za-z0-9_]&rdquo;。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\xn</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，&ldquo;\x41&rdquo;匹配&ldquo;A&rdquo;。&ldquo;\x041&rdquo;则等价于&ldquo;\x04&amp;1&rdquo;。正则表达式中可以使用ASCII编码。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\num</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配num，其中num是一个正整数。对所获取的匹配的引用。例如，&ldquo;(.)\1&rdquo;匹配两个连续的相同字符。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\n</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nm</div>
+</td>
+<td align="left" valign="center">
+<div class="para">标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\nml</div>
+</td>
+<td align="left" valign="center">
+<div class="para">如果n为八进制数字（0-7），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">
+<div class="para">\un</div>
+</td>
+<td align="left" valign="center">
+<div class="para">匹配n，其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&amp;copy;）。</div>
+</td>
+</tr>
+<tr>
+<td align="left" valign="center">\&lt; \&gt;</td>
+<td align="left" valign="center">匹配词（word）的开始（\&lt;）和结束（\&gt;）。例如正则表达式\&lt;the\&gt;能够匹配字符串"for the wise"中的"the"，但是不能匹配字符串"otherwise"中的"the"。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">\( \)</td>
+<td align="left" valign="center">将 \( 和 \) 之间的表达式定义为&ldquo;组&rdquo;（group），并且将匹配这个表达式的字符保存到一个临时区域（一个正则表达式中最多可以保存9个），它们可以用 \1 到\9 的符号来引用。</td>
+</tr>
+<tr>
+<td align="left" valign="center">|</td>
+<td align="left" valign="center">将两个匹配条件进行逻辑&ldquo;或&rdquo;（Or）运算。例如正则表达式(him|her) 匹配"it belongs to him"和"it belongs to her"，但是不能匹配"it belongs to them."。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">+</td>
+<td align="left" valign="center">匹配1或多个正好在它之前的那个字符。例如正则表达式9+匹配9、99、999等。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">?</td>
+<td align="left" valign="center">匹配0或1个正好在它之前的那个字符。注意：这个元字符不是所有的软件都支持的。</td>
+</tr>
+<tr>
+<td align="left" valign="center">{i} {i,j}</td>
+<td align="left" valign="center">匹配指定数目的字符，这些字符是在它之前的表达式定义的。例如正则表达式A[0-9]{3} 能够匹配字符"A"后面跟着正好3个数字字符的串，例如A123、A348等，但是不匹配A1234。而正则表达式[0-9]{4,6} 匹配连续的任意4个、5个或者6个数字</td>
+</tr>
+</tbody>
+</table>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/" class="post-title-link" itemprop="url">UIBezierPath画边角弧度</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="UIBezierPath"><a href="#UIBezierPath" class="headerlink" title="UIBezierPath"></a>UIBezierPath</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIBezierPath</span> *maskPath = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:m_newsIV.bounds</span><br><span class="line">                                                     byRoundingCorners:<span class="built_in">UIRectCornerTopLeft</span> | <span class="built_in">UIRectCornerTopRight</span></span><br><span class="line">                                                           cornerRadii:<span class="built_in">CGSizeMake</span>(<span class="number">10.0</span>, <span class="number">10.0</span>)];</span><br><span class="line">      <span class="comment">// Create the shape layer and set its path</span></span><br><span class="line">      <span class="built_in">CAShapeLayer</span> *maskLayer = [<span class="built_in">CAShapeLayer</span> layer];</span><br><span class="line">      maskLayer.frame = m_newsIV.bounds;</span><br><span class="line">      maskLayer.path = maskPath.CGPath;</span><br><span class="line">      <span class="comment">// Set the newly created shape layer as the mask for the image view&#x27;s layer</span></span><br><span class="line">      m_newsIV.layer.mask = maskLayer;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -527,7 +1177,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E5%89%8D%E7%AB%AF/MVC%EF%BC%8CMVP%20%E5%92%8C%20MVVM%20/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -541,7 +1191,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/%E5%89%8D%E7%AB%AF/MVC%EF%BC%8CMVP%20%E5%92%8C%20MVVM%20/" class="post-title-link" itemprop="url">MVC，MVP 和 MVVM</a>
+            <a href="/2018/06/11/other/Hexo/" class="post-title-link" itemprop="url">Hexo 博客框架</a>
         </h2>
 
         <div class="post-meta">
@@ -566,7 +1216,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
                 </span>
             </span>
 
@@ -581,110 +1231,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>复杂的软件必须有清晰合理的架构，否则无法开发和维护。<br>MVC（Model-View-Controller）是最常见的软件架构之一，业界有着广泛应用。它本身很容易理解，但是要讲清楚，它与衍生的 MVP 和 MVVM 架构的区别就不容易了。<br>昨天晚上，我读了《Scaling Isomorphic Javascript Code》，突然意识到，它们的区别非常简单。我用几段话，就可以说清。</p>
-<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>MVC模式的意思是，软件可以分成三个部分。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020104.png"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 视图（View）：用户界面。</span><br><span class="line">* 控制器（Controller）：业务逻辑</span><br><span class="line">* 模型（Model）：数据保存</span><br></pre></td></tr></table></figure>
-<p>各部分之间的通信方式如下。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020105.png"></p>
-<ol>
-<li>View 传送指令到 Controller</li>
-<li>Controller 完成业务逻辑后，要求 Model 改变状态</li>
-<li>Model 将新的数据发送到 View，用户得到反馈<br>所有通信都是单向的。<h2 id="互动模式"><a href="#互动模式" class="headerlink" title="互动模式"></a>互动模式</h2></li>
-</ol>
-<p>接受用户指令时，MVC 可以分成两种方式。一种是通过 View 接受指令，传递给 Controller。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020106.png"></p>
-<p>另一种是直接通过controller接受指令。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020107.png"></p>
-<h2 id="实例：Backbone"><a href="#实例：Backbone" class="headerlink" title="实例：Backbone"></a>实例：Backbone</h2><p>实际项目往往采用更灵活的方式，以 Backbone.js 为例。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020108.png"></p>
-<ol>
-<li>用户可以向 View 发送指令（DOM 事件），再由 View 直接要求 Model 改变状态。</li>
-<li>用户也可以直接向 Controller 发送指令（改变 URL 触发 hashChange 事件），再由 Controller 发送给 View。</li>
-<li>Controller 非常薄，只起到路由的作用，而 View 非常厚，业务逻辑都部署在 View。所以，Backbone 索性取消了 Controller，只保留一个 Router（路由器） 。<h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2></li>
-</ol>
-<p>MVP 模式将 Controller 改名为 Presenter，同时改变了通信方向。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020109.png"></p>
-<ol>
-<li>各部分之间的通信，都是双向的。</li>
-<li>View 与 Model 不发生联系，都通过 Presenter 传递。</li>
-<li>View 非常薄，不部署任何业务逻辑，称为”被动视图”（Passive View），即没有任何主动性，而 Presenter非常厚，所有逻辑都部署在那里。<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2></li>
-</ol>
-<p>MVVM 模式将 Presenter 改名为 ViewModel，基本上与 MVP 模式完全一致。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015020110.png"></p>
-<p>唯一的区别是，它采用双向绑定（data-binding）：View的变动，自动反映在 ViewModel，反之亦然。<a target="_blank" rel="noopener" href="https://angularjs.org/">Angular</a> 和 <a target="_blank" rel="noopener" href="http://emberjs.com/">Ember</a> 都采用这种模式。<br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html">来自</a></p>
+          <h3 id="什么是-Hexo？"><a href="#什么是-Hexo？" class="headerlink" title="什么是 Hexo？"></a>什么是 Hexo？</h3><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+<h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h3 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
 
-      
-    </div>
+<p>新建完成后，指定文件夹的目录如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>应用程序的信息。EJS, Stylus 和 Markdown renderer 已默认安装，您可以自由移除。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;hexo-site&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.0&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;hexo&quot;: &#123;</span><br><span class="line">    &quot;version&quot;: &quot;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;hexo&quot;: &quot;^3.0.0&quot;,</span><br><span class="line">    &quot;hexo-generator-archive&quot;: &quot;^0.1.0&quot;,</span><br><span class="line">    &quot;hexo-generator-category&quot;: &quot;^0.1.0&quot;,</span><br><span class="line">    &quot;hexo-generator-index&quot;: &quot;^0.1.0&quot;,</span><br><span class="line">    &quot;hexo-generator-tag&quot;: &quot;^0.1.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-ejs&quot;: &quot;^0.1.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-stylus&quot;: &quot;^0.2.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-marked&quot;: &quot;^0.2.4&quot;,</span><br><span class="line">    &quot;hexo-server&quot;: &quot;^0.1.2&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E5%89%8D%E7%AB%AF/%E7%94%A8%E4%BA%8E%E5%9C%A8safari%E8%B7%B3%E8%BD%AC%E5%88%B0APP%E7%9A%84web%E9%A1%B5%E9%9D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/%E5%89%8D%E7%AB%AF/%E7%94%A8%E4%BA%8E%E5%9C%A8safari%E8%B7%B3%E8%BD%AC%E5%88%B0APP%E7%9A%84web%E9%A1%B5%E9%9D%A2/" class="post-title-link" itemprop="url">web页面打开APP</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="在WXApp上设置一个URL-Schemes"><a href="#在WXApp上设置一个URL-Schemes" class="headerlink" title="在WXApp上设置一个URL Schemes"></a>在WXApp上设置一个URL Schemes</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">为了能让别的App(包括我们刚才创建的MyApp)能够打开 OpenTest，</span><br><span class="line">我们需要为app添加一个URL Schemes。</span><br><span class="line">步骤：选中app工程-&gt;Info-&gt;URL Types-&gt;点击“+”-&gt;在URL Schemes栏填上 OpenTest</span><br></pre></td></tr></table></figure>
-
-<h3 id="打开APP-xxx-html"><a href="#打开APP-xxx-html" class="headerlink" title="打开APP  xxx.html"></a>打开APP  xxx.html</h3><blockquote>
-<p>可以保存一下页面为.html 放在本地服务Document目录下 快速启动</p>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>网站的 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration.html">配置</a> 信息，您可以在此配置大部分的参数。</p>
+<h3 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h3><p> 主题 文件夹。Hexo 会根据主题来生成静态页面。</p>
+<h3 id="source"><a href="#source" class="headerlink" title="source"></a>source</h3><p>资源文件夹是存放用户资源的地方。除 _posts 文件夹之外，开头命名为 _ (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去。</p>
+<h3 id="重要的几个指令"><a href="#重要的几个指令" class="headerlink" title="重要的几个指令"></a>重要的几个指令</h3><p>了解更多 详见<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands.html#deploy">指令</a> 信息</p>
+<blockquote>
+<p>初始化新建一个网站。如果没有设置 folder ，Hexo 默认在目前的文件夹建立网站</p>
 </blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=utf-8&quot;</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;HandheldFriendly&quot;</span> <span class="attr">content</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1, user-scalable=no&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">		<span class="function"><span class="keyword">function</span> <span class="title">open_win</span>(<span class="params"></span>) </span></span></span><br><span class="line"><span class="function"><span class="javascript">		</span>&#123;</span></span><br><span class="line"><span class="javascript">		<span class="built_in">window</span>.open(<span class="string">&quot;OpenTest&quot;</span>)</span></span><br><span class="line"><span class="javascript">		<span class="comment">// window.open(&quot;http://www.baidu.com&quot;)</span></span></span><br><span class="line"><span class="javascript">		&#125;</span></span><br><span class="line"><span class="javascript">		</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;width:100%;height: 100%;background: white; position: absolute;&quot;</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- 方法一 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">&quot;margin-top:200px; width:100%;color:#666; font-size:32px; text-align: center ;display:inline-block;&quot;</span></span></span><br><span class="line"><span class="tag">			<span class="attr">href</span>=<span class="string">&quot;OpenTest&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>打开OpenTest App页面<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- OpenTest --&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">&lt;!-- 方法二跳转有点问题 --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- &lt;input type=button </span></span><br><span class="line"><span class="comment">		style=&quot;width:250px; height=200px;&quot;</span></span><br><span class="line"><span class="comment">		size=&quot;60&quot;</span></span><br><span class="line"><span class="comment">		value=&quot;dsl open 打开&quot; onclick=&quot;open_win()&quot; /&gt; --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init [folder]  </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>server 启动服务器。默认情况下，访问网址为： <a target="_blank" rel="noopener" href="http://localhost:4000/%E3%80%82">http://localhost:4000/。</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>generate 生成静态文件。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>deploy 部署网站。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>clean 清除缓存文件 (db.json) 和已生成的静态文件 (public)。<br>在某些情况（尤其是更换主题后），如果发现您对站点的更改无论如何也不生效，您可能需要运行该命令。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+
+<h3 id="资源文件夹"><a href="#资源文件夹" class="headerlink" title="资源文件夹"></a>资源文件夹</h3><blockquote>
+<p>资源（Asset）代表 source 文件夹中除了文章以外的所有文件，例如图片、CSS、JS 文件等。比方说，如果你的Hexo项目中只有少量图片，那最简单的方法就是将它们放在 source/images 文件夹中。然后通过类似于 </p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](/images/image.jpg) </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>的方法访问它们。</p>
+</blockquote>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><blockquote>
+<p>Hexo 提供了快速方便的一键部署功能，让您只需一条命令就能将网站部署到服务器上。详见<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/deployment.html">网站</a> 信息</p>
+</blockquote>
 
       
     </div>
@@ -704,7 +1298,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Hexo%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -718,7 +1312,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">Intellij IDEA 创建Spring-Boot项目</a>
+            <a href="/2018/06/11/other/Hexo%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2/" class="post-title-link" itemprop="url">Hexo 博客框架添加搜索</a>
         </h2>
 
         <div class="post-meta">
@@ -743,7 +1337,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
                 </span>
             </span>
 
@@ -758,19 +1352,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="1-1-SpringBoot简介"><a href="#1-1-SpringBoot简介" class="headerlink" title="1.1 SpringBoot简介"></a>1.1 SpringBoot简介</h3><p>① 为所有Spring 开发提供一个更快更广泛的人门体验。</p>
-<p>② 零配置。无冗余代码生成和XML 强制配置，遵循“约定大于配置” 。</p>
-<p>③ 集成了大量常用的第三方库的配置， Spring Boot 应用为这些第三方库提供了几乎可以零配置的开箱即用的能力。</p>
-<p>④）提供一系列大型项目常用的非功能性特征，如嵌入式服务器、安全性、度量、运行状况检查、外部化配置等。</p>
-<h3 id="1-2-Spring-Boot-不是Spring-的替代者"><a href="#1-2-Spring-Boot-不是Spring-的替代者" class="headerlink" title="1.2 Spring Boot 不是Spring 的替代者"></a>1.2 Spring Boot 不是Spring 的替代者</h3><p>        Spring 框架是通过IOC 机制来管理Bean 的。Spring Boot 依赖Spring 框架来管理对象的依赖。</p>
-<p>        Spring Boot 并不是Spring 的精简版本，而是为使用Spring 做好各种产品级准备。</p>
-<p>        简单的说，平常我们开发一个项目就好比组装一台电脑主机，需要我们自己购买各式各样的配件，最后把它们组装在一起。而Spring Boot 就好比是厂商帮我们组装好的品牌机电脑，各种常用的配件都帮我们封装好了，并且提供了许多的接口，只要我们想增加某个配件，或者修改某个配件的版本，只要跟他讲一下名称，都不需要我们自己去购买，他就会把配件送上门并且帮你装好，用springboot就是这么轻松！</p>
-<h3 id="1-3-Spring-Boot-2-新特性"><a href="#1-3-Spring-Boot-2-新特性" class="headerlink" title="1.3 Spring Boot 2 新特性"></a>1.3 Spring Boot 2 新特性</h3><p>    目前Spring Boot 已经开发到了2.0.2版本 ，而我们之后的项目案例也是基于springboot2来开发的。</p>
-<p>    Spring Boot 2 基于最新的Java 8 和Spring Framework 5 ，这意味着Spring Boot 2 拥有构建现代应用的能力。</p>
-<p>    ( 1 ）基于Java 8 的反射增强， Spring Framework 5.0 中的方法参数可以更加高效地进行访问。<br>    ( 2 ）接口提供基于Java 8 的默认方法构建的选择性声明。<br>    ( 3 ）支持候选组件索引作为类路径扫描的替代方案。<br>    ( 4 ）当然，最为重要的是， 此次Spring Framework 5.0 推出了新的响应式堆钱WEB 框架。  </p>
-<p>相应地， Spring Boot 2 会集成最新的技术枝，包括Spring Data 、Spring Security 、Spring Integration 、Spring  AMQP, Spring Session 、Spring Batch 等都做了更新，其他的第三方依赖也会尝试使用最新的版本。</p>
-<p>毫无疑问，Spring Boot  是一种趋势，同时我们在使用spring boot 的同时也在使用着其它新的技术框架。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014296316/article/details/79382186">Intellij IDEA 创建Spring-Boot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zyhlwzy/article/details/78730587">使用Intellij IDEA创建SpringBoot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xwd718/article/details/80640357">基于SpringBoot开发一套完整的项目</a></p>
+          <p>用Hexo提供的<code>Local Search</code>,原理是通过<code>hexo-generator-search</code>插件在本地生成一个<code>search.xml</code>文件，搜索的时候从这个文件中根据关键字检索出相应的链接。</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><h5 id="安装-hexo-generator-search"><a href="#安装-hexo-generator-search" class="headerlink" title="安装 hexo-generator-search"></a>安装 hexo-generator-search</h5><p>在站点的根目录下执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装-hexo-generator-searchdb"><a href="#安装-hexo-generator-searchdb" class="headerlink" title="安装 hexo-generator-searchdb"></a>安装 hexo-generator-searchdb</h5><p>在站点的根目录下执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+
+<p>启用搜索</p>
+<p>编辑 站点配置文件<code>_config.yml</code>，新增以下内容到任意位置：</p>
+<pre><code>search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+</code></pre>
+<p>修改主题配置文件</p>
+<p>我的路径：<code>/blog/themes/next</code>下的<code>_config.yml</code>文件，进行编辑。</p>
+<pre><code>local_search:
+    enable: true
+</code></pre>
+<p>最后部署到github、coding，打开网页就可以看到搜索功能了。</p>
 
       
     </div>
@@ -790,7 +1392,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Mac%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -804,7 +1406,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">Java Web应用程序的推荐目录结构</a>
+            <a href="/2018/06/11/other/Mac%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">Mac端本地服务搭建</a>
         </h2>
 
         <div class="post-meta">
@@ -829,7 +1431,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
                 </span>
             </span>
 
@@ -844,10 +1446,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Java-Web应用程序的推荐目录结构"><a href="#Java-Web应用程序的推荐目录结构" class="headerlink" title="Java Web应用程序的推荐目录结构"></a>Java Web应用程序的推荐目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   │   └── mygroup</span><br><span class="line">    │   │       ├── controller</span><br><span class="line">    │   │       │   ├── HomeController.java</span><br><span class="line">    │   │       │   └── PersonController.java</span><br><span class="line">    │   │       ├── dao</span><br><span class="line">    │   │       │   └── PersonDao.java</span><br><span class="line">    │   │       └── model</span><br><span class="line">    │   │           └── Person.java</span><br><span class="line">    │   ├── resources</span><br><span class="line">    │   │   ├── db.properties</span><br><span class="line">    │   │   ├── log4j.xml</span><br><span class="line">    │   │   └── META-INF</span><br><span class="line">    │   │       └── persistence.xml</span><br><span class="line">    │   └── webapp</span><br><span class="line">    │       ├── index.html</span><br><span class="line">    │       ├── META-INF</span><br><span class="line">    │       │   ├── context.xml</span><br><span class="line">    │       │   └── MANIFEST.MF</span><br><span class="line">    │       ├── resources</span><br><span class="line">    │       │   └── css</span><br><span class="line">    │       │       └── screen.css</span><br><span class="line">    │       └── WEB-INF</span><br><span class="line">    │           ├── spring</span><br><span class="line">    │           │   ├── app</span><br><span class="line">    │           │   │   ├── controllers.xml</span><br><span class="line">    │           │   │   └── servlet-context.xml</span><br><span class="line">    │           │   ├── db.xml</span><br><span class="line">    │           │   └── root-context.xml</span><br><span class="line">    │           ├── views</span><br><span class="line">    │           │   ├── edit.jsp</span><br><span class="line">    │           │   ├── home.jsp</span><br><span class="line">    │           │   └── list.jsp</span><br><span class="line">    │           └── web.xml</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        │   └── mygroup</span><br><span class="line">        │       ├── controller</span><br><span class="line">        │       │   ├── DataInitializer.java</span><br><span class="line">        │       │   ├── HomeControllerTest.java</span><br><span class="line">        │       │   └── PersonControllerTest.java</span><br><span class="line">        │       └── dao</span><br><span class="line">        │           └── PersonDaoTest.java</span><br><span class="line">        └── resources</span><br><span class="line">            ├── db.properties</span><br><span class="line">            ├── log4j.xml</span><br><span class="line">            ├── test-context.xml</span><br><span class="line">            └── test-db.xml</span><br></pre></td></tr></table></figure>
-
-
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yudy/archive/2012/06/26/2563638.html">Java Web应用程序的推荐目录结构</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/scown/p/5561677.html">Java Web 项目目录规范</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28018283/article/details/79398661">用IntelliJ idea 创建 springMVC 的Maven 项目</a></p>
+          <h3 id="方案名称"><a href="#方案名称" class="headerlink" title="方案名称"></a>方案名称</h3><p>Mac 系统 - 启用 Mac 本地 Web 服务器<br>关键字</p>
+<p>Mac 系统 \ Web 服务器</p>
+<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><ol>
+<li><p>局域网搭建 Web 服务器测试环境<br>参考链接</p>
+</li>
+<li><p>简书 - Mac OS X 启用 Web 服务器(推荐)<br>详细内容 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d006a34a343f">https://www.jianshu.com/p/d006a34a343f</a></p>
+</li>
+</ol>
+<h3 id="启动-Apache"><a href="#启动-Apache" class="headerlink" title="启动 Apache"></a>启动 Apache</h3><p>终端输入<br>$ sudo apachectl start<br>可启动 Apache，打开浏览器，输入 <a target="_blank" rel="noopener" href="http://localhost/">http://localhost/</a> 看到如下页面证明本地 Web 服务器启动成功</p>
+<p>可启动 Apache，默认站点的根目录为系统级根目录<br>/Library/WebServer/Documents<br>更多信息，可参考 简书 - Mac OS X 启用 Web 服务器(推荐)</p>
+<ul>
+<li>创建用户级根目录</li>
+<li>启动 PHP</li>
+<li>安装 MySQL</li>
+<li>开启 HTTPS</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/viktyz/iosnotebook/blob/master/Notes/Note_00222_20170601.md">https://github.com/viktyz/iosnotebook/blob/master/Notes/Note_00222_20170601.md</a></p>
+<h3 id="关闭和重启"><a href="#关闭和重启" class="headerlink" title="关闭和重启"></a>关闭和重启</h3><p>Mac OS 终端起动、关闭、重启apache的方</p>
+<p>Mac OS 终端起动、关闭、重启apache的方法</p>
+<p>打开终端<br>重启apache：sudo /usr/sbin/apachectl restart<br>关闭apache：sudo /usr/sbin/apachectl stop<br>开启apache：sudo /usr/sbin/apachectl start</p>
+<h3 id="Mac下如何修改apache根目录"><a href="#Mac下如何修改apache根目录" class="headerlink" title="Mac下如何修改apache根目录"></a>Mac下如何修改apache根目录</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chuangshaogreat/p/7821407.html">Mac下如何修改apache根目录</a> </p>
 
       
     </div>
@@ -867,7 +1486,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java-spring/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Markdown/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -881,7 +1500,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/java/java-spring/" class="post-title-link" itemprop="url">java-spring</a>
+            <a href="/2018/06/11/other/Markdown/" class="post-title-link" itemprop="url">Markdown 编辑器语法指南</a>
         </h2>
 
         <div class="post-meta">
@@ -906,7 +1525,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
                 </span>
             </span>
 
@@ -921,164 +1540,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="spring框架"><a href="#spring框架" class="headerlink" title="spring框架"></a>spring框架</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Spring是一个开放源代码的设计层面框架，他解决的是业务逻辑层和其他各层的松耦合问题，</span><br><span class="line">因此它将面向接口的编程思想贯穿整个系统应用。</span><br><span class="line">Spring是于2003 年兴起的一个轻量级的Java 开发框架，由Rod Johnson创建。</span><br><span class="line">简单来说，Spring是一个分层的JavaSE/EE full-stack(一站式) 轻量级开源框架。</span><br></pre></td></tr></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://segmentfault.com/markdown/">Markdown 编辑器语法指南</a></p>
+<p><a target="_blank" rel="noopener" href="http://macdown.uranusjr.com/">MacDown</a></p>
+<h2 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h2><p>如果你只想高亮语句中的某个函数名或关键字，可以使用 <code>function_name()</code> 实现<br>通常编辑器根据代码片段适配合适的高亮方法，但你也可以用 以下方式 包裹一段代码，并指定一种语言</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;hello world&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="下载和安装Spring请按如下步骤进行。"><a href="#下载和安装Spring请按如下步骤进行。" class="headerlink" title="下载和安装Spring请按如下步骤进行。"></a>下载和安装Spring请按如下步骤进行。</h2><p>（1）登录站点，下载Spring的最新稳定版本。最新版本为spring-framework-5.0.建议下载spring-framework-spring-framework-4.0.0.M2-dist这个压缩包不仅包含Spring的开发包，而且包含Spring编译和运行所依赖的第三方类库。<br>解压缩下载到的压缩包，解压缩后的文件夹应用如下几个文件夹。<br>dist：该文件夹下放Spring的jar包，通常只需要Spring.jar文件即可。该文件夹下还有一些类似spring－Xxx.jar的压缩包， 这些压缩包是spring.jar压缩包的子模块压缩包。除非确定整个J2EE应用只需要使用Spring的某一方面时，才考虑使用这种分模块压缩包。通常建议使用Spring.jar<br>docs：该文件夹下包含spring的相关文档、开发指南及API参考文档。<br>lib：该文件夹下包含spring编译和运行所依赖的第三方类库，该路径下的类库并不是  spring必需的，但如果需要使用第三方类库的支持，这里的类库就是必需要的。<br>samples：该文件夹下包含Spring的几个简单例子，可作为Spring入门学习的案例。<br>src：该文件夹下包含Spring的全部源文件，如果开发过程中有地方无法把握，可以参考该源文件，了解底层实现。<br>spring<br>spring<br>test：该文件夹下包含Spring的测试示例。<br>tiger：该路径下存放关于JDK的相关内容<br>解压缩后的文件夹下，还包含一些关于Spring的License和项目相关文件<br>（2）将spring.jar复制到项目的CLASSPATH路径下，对于Web应用，将spring.jar文件复制到WEB-INF/lib路径下，该应用即可以利用Spring框架了。<br>（3）通常Spring的框架还依赖于其他一些jar文件，因此还须将lib下对应的包复制到WEB-INF/lib路径下，具体要复制哪些jar文件，取决于应用所需要使用的项目。通常需要复制cglib，dom4j，jakarta-commons，log4j等文件夹下的jar文件。<br>（4）为了编译java文件，可以找到Spring的基础类，将Spring.jar文件的路径添加到环境变量CLASSPATH中。当然，也可以使用ANT工具，但无须添加环境变量。如果使用Eclipse或者NetBeans等IDE时，也不需要设置环境变量。  </p>
-<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><p>传统的web架构的view 表现层使用struts作为表现层。但是如果试用下spring自带的MVC，会发现spring 在一般场合完全可以取代struts。从某些角度来说，spring的mvc设计的更加合理，有兴趣的话不妨尝试下单个的spring的MVC。</p>
-<p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/wkspring/">w3Cschool-spring学习</a></p>
-<h2 id="Spring-Boot-是什么？"><a href="#Spring-Boot-是什么？" class="headerlink" title="Spring Boot 是什么？"></a>Spring Boot 是什么？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Spring Boot 的目的是提供一组工具，以便快速构建容易配置的 Spring 应用程序。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+</blockquote>
+<p>支持的语言：1c, abnf, accesslog, actionscript, ada, apache, applescript, arduino, armasm, asciidoc, aspectj, autohotkey, autoit, avrasm, awk, axapta, bash, basic, bnf, brainfuck, cal, capnproto, ceylon, clean, clojure, clojure-repl, cmake, coffeescript, coq, cos, cpp, crmsh, crystal, cs, csp, css, d, dart, delphi, diff, django, dns, dockerfile, dos, dsconfig, dts, dust, ebnf, elixir, elm, erb, erlang, erlang-repl, excel, fix, flix, fortran, fsharp, gams, gauss, gcode, gherkin, glsl, go, golo, gradle, groovy, haml, handlebars, haskell, haxe, hsp, htmlbars, http, hy, inform7, ini, irpf90, java, javascript, json, julia, kotlin, lasso, ldif, leaf, less, lisp, livecodeserver, livescript, llvm, lsl, lua, makefile, markdown, mathematica, matlab, maxima, mel, mercury, mipsasm, mizar, mojolicious, monkey, moonscript, n1ql, nginx, nimrod, nix, nsis, objectivec, ocaml, openscad, oxygene, parser3, perl, pf, php, pony, powershell, processing, profile, prolog, protobuf, puppet, purebasic, python, q, qml, r, rib, roboconf, rsl, ruby, ruleslanguage, rust, scala, scheme, scilab, scss, smali, smalltalk, sml, sqf, sql, stan, stata, step21, stylus, subunit, swift, taggerscript, tap, tcl, tex, thrift, tp, twig, typescript, vala, vbnet, vbscript, vbscript-html, verilog, vhdl, vim, x86asm, xl, xml, xquery, yaml, zephir</p>
+<h2 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">b</span>&gt;</span></span> Markdown 在此处同样适用，如 <span class="emphasis">*加粗*</span> <span class="xml"><span class="tag">&lt;/<span class="name">b</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 列表文本前使用 [减号+空格]</span><br><span class="line"><span class="bullet">+</span> 列表文本前使用 [加号+空格]</span><br><span class="line"><span class="bullet">*</span> 列表文本前使用 [星号+空格]</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 引用文本前使用 [大于号+空格]</span></span><br><span class="line"><span class="quote">&gt; 折行可以不加，新起一行都要加上哦</span></span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; </span></span><br><span class="line"><span class="quote">&gt; &gt; 最外层引用</span></span><br><span class="line"><span class="quote">&gt; &gt; 多一个 &gt; 嵌套一层引用</span></span><br><span class="line"><span class="quote">&gt; &gt; &gt; 可以嵌套很多层</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![<span class="string">图片名称</span>](<span class="link">http://图片网址</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" class="post-title-link" itemprop="url">java 基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/springboot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/java/springboot/" class="post-title-link" itemprop="url">springboot</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FJ41197rF?p=36">SpringBoot核心技术篇</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、大量的XML让开发者厌恶,因此Spring提供了许多注解来完成各种功能。</span><br><span class="line">2、大量的注解让开发者厌恶 ,因此Spring提供了组合注解来完成各种功能。</span><br></pre></td></tr></table></figure>
-
-<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>Docker是一个开源的应用容器引擎。</p>
-<h2 id="Spring-Boot与数据访问"><a href="#Spring-Boot与数据访问" class="headerlink" title="Spring Boot与数据访问"></a>Spring Boot与数据访问</h2>
+<h2 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h2><hr>
+<p>如果你有写分割线的习惯，可以新起一行输入三个减号-。前后都有段落时，请空出一行：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">前面的段落</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">后面的段落</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
 

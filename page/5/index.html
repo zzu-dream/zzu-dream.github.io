@@ -609,7 +609,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20compile%20+%20%E8%AE%BF%E9%97%AE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -623,7 +623,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/vue%20&%20weex/weex%20compile%20+%20%E8%AE%BF%E9%97%AE/" class="post-title-link" itemprop="url">weex compile + 访问</a>
+            <a href="/2018/06/11/java/Intellij%20IDEA%20%E5%88%9B%E5%BB%BASpring-Boot%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">Intellij IDEA 创建Spring-Boot项目</a>
         </h2>
 
         <div class="post-meta">
@@ -648,7 +648,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
             </span>
 
@@ -663,11 +663,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="本地启的服务测试（访问地址）："><a href="#本地启的服务测试（访问地址）：" class="headerlink" title="本地启的服务测试（访问地址）："></a>本地启的服务测试（访问地址）：</h2><p><a target="_blank" rel="noopener" href="http://xxxx/jsTest/PromotionHome.js">http://xxxx/jsTest/PromotionHome.js</a></p>
-<blockquote>
-<p>xxxx/jsTest 本地服务地址 + 存放js的目录</p>
-</blockquote>
-<h2 id="vue到js文件编译拷贝两步骤："><a href="#vue到js文件编译拷贝两步骤：" class="headerlink" title="vue到js文件编译拷贝两步骤："></a>vue到js文件编译拷贝两步骤：</h2><p>weex compile PromotionHome.vue PromotionHome.js<br>cp PromotionHome.js /Library/WebServer/Documents/jsTest</p>
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="1-1-SpringBoot简介"><a href="#1-1-SpringBoot简介" class="headerlink" title="1.1 SpringBoot简介"></a>1.1 SpringBoot简介</h3><p>① 为所有Spring 开发提供一个更快更广泛的人门体验。</p>
+<p>② 零配置。无冗余代码生成和XML 强制配置，遵循“约定大于配置” 。</p>
+<p>③ 集成了大量常用的第三方库的配置， Spring Boot 应用为这些第三方库提供了几乎可以零配置的开箱即用的能力。</p>
+<p>④）提供一系列大型项目常用的非功能性特征，如嵌入式服务器、安全性、度量、运行状况检查、外部化配置等。</p>
+<h3 id="1-2-Spring-Boot-不是Spring-的替代者"><a href="#1-2-Spring-Boot-不是Spring-的替代者" class="headerlink" title="1.2 Spring Boot 不是Spring 的替代者"></a>1.2 Spring Boot 不是Spring 的替代者</h3><p>        Spring 框架是通过IOC 机制来管理Bean 的。Spring Boot 依赖Spring 框架来管理对象的依赖。</p>
+<p>        Spring Boot 并不是Spring 的精简版本，而是为使用Spring 做好各种产品级准备。</p>
+<p>        简单的说，平常我们开发一个项目就好比组装一台电脑主机，需要我们自己购买各式各样的配件，最后把它们组装在一起。而Spring Boot 就好比是厂商帮我们组装好的品牌机电脑，各种常用的配件都帮我们封装好了，并且提供了许多的接口，只要我们想增加某个配件，或者修改某个配件的版本，只要跟他讲一下名称，都不需要我们自己去购买，他就会把配件送上门并且帮你装好，用springboot就是这么轻松！</p>
+<h3 id="1-3-Spring-Boot-2-新特性"><a href="#1-3-Spring-Boot-2-新特性" class="headerlink" title="1.3 Spring Boot 2 新特性"></a>1.3 Spring Boot 2 新特性</h3><p>    目前Spring Boot 已经开发到了2.0.2版本 ，而我们之后的项目案例也是基于springboot2来开发的。</p>
+<p>    Spring Boot 2 基于最新的Java 8 和Spring Framework 5 ，这意味着Spring Boot 2 拥有构建现代应用的能力。</p>
+<p>    ( 1 ）基于Java 8 的反射增强， Spring Framework 5.0 中的方法参数可以更加高效地进行访问。<br>    ( 2 ）接口提供基于Java 8 的默认方法构建的选择性声明。<br>    ( 3 ）支持候选组件索引作为类路径扫描的替代方案。<br>    ( 4 ）当然，最为重要的是， 此次Spring Framework 5.0 推出了新的响应式堆钱WEB 框架。  </p>
+<p>相应地， Spring Boot 2 会集成最新的技术枝，包括Spring Data 、Spring Security 、Spring Integration 、Spring  AMQP, Spring Session 、Spring Batch 等都做了更新，其他的第三方依赖也会尝试使用最新的版本。</p>
+<p>毫无疑问，Spring Boot  是一种趋势，同时我们在使用spring boot 的同时也在使用着其它新的技术框架。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014296316/article/details/79382186">Intellij IDEA 创建Spring-Boot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zyhlwzy/article/details/78730587">使用Intellij IDEA创建SpringBoot项目</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xwd718/article/details/80640357">基于SpringBoot开发一套完整的项目</a></p>
 
       
     </div>
@@ -687,7 +695,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20%E5%8E%9F%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -701,7 +709,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/vue%20&%20weex/weex%20%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">weex 工作原理</a>
+            <a href="/2018/06/11/java/Java%20Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%8E%A8%E8%8D%90%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">Java Web应用程序的推荐目录结构</a>
         </h2>
 
         <div class="post-meta">
@@ -726,7 +734,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
             </span>
 
@@ -741,20 +749,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="weex-工作原理"><a href="#weex-工作原理" class="headerlink" title="weex 工作原理"></a>weex 工作原理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">transformer 会把 template, style, script 都转换成一段段 json 或者 js，</span><br><span class="line">这样客户端只接收并运行js，不必同时解析html/css这些语法，并且这些js还会继续进行</span><br><span class="line">数据监听和绑定，然后生成最终的virtual dom 再发送给 native端进行渲染。</span><br></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/yongbolv/images/master/weexframework.png"></p>
-<h2 id="weex-主要就是做了三件事"><a href="#weex-主要就是做了三件事" class="headerlink" title="weex 主要就是做了三件事"></a>weex 主要就是做了三件事</h2><ol>
-<li>在服务端用 Transformer 工具把 Vue 代码转换成 Js Bundle。</li>
-<li>在客户端运行Js Framework 的 JavaScript 引擎，解释执行Js Bundle生成Virtual DOM。</li>
-<li>在客户端设计一套 JS Bridge，能使IOS端（或者Android端）的Object-C语言（或Java语言）与Javascript语言相互调用，把Virtual Dom转换为DOM，渲染到页面。H5端直接和Js Framework 通讯，不需要Js Bridge。<br>如下为Virtual DOM 渲染为Dom的过程：<br><img src="https://raw.githubusercontent.com/yongbolv/images/master/virtualdom.png"></li>
-</ol>
-<h2 id="相关概念："><a href="#相关概念：" class="headerlink" title="相关概念："></a>相关概念：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ECMAScript：定义了JavaScript语言的标准</span><br><span class="line">JavaScriptCore：应用在在wekit内核内的js引擎，浏览器有Safari。</span><br><span class="line">V8: 应用在chromium内的js引擎，浏览器有Chrome。</span><br><span class="line">JS引擎的作用都是解释和执行JavaScript代码。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>有关JavaScript引擎解析的内容请查看  <a target="_blank" rel="noopener" href="http://www.uml.org.cn/codeNorms/201306063.asp">JavaScriptCore解析</a></p>
-<p>有关JavaScriptCore和V8的内容请查看：<a target="_blank" rel="noopener" href="http://blog.csdn.net/milado_nju/article/details/22101681">JavaScript引擎</a></p>
-<h2 id="怎么开始搭建个weex项目"><a href="#怎么开始搭建个weex项目" class="headerlink" title="怎么开始搭建个weex项目"></a>怎么开始搭建个weex项目</h2><p>相对比较简单看官方吧。<br>weex相关工具</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node.js</span><br><span class="line">weex-toolkit</span><br><span class="line">Weex Playground App</span><br></pre></td></tr></table></figure>
+          <h2 id="Java-Web应用程序的推荐目录结构"><a href="#Java-Web应用程序的推荐目录结构" class="headerlink" title="Java Web应用程序的推荐目录结构"></a>Java Web应用程序的推荐目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   │   └── mygroup</span><br><span class="line">    │   │       ├── controller</span><br><span class="line">    │   │       │   ├── HomeController.java</span><br><span class="line">    │   │       │   └── PersonController.java</span><br><span class="line">    │   │       ├── dao</span><br><span class="line">    │   │       │   └── PersonDao.java</span><br><span class="line">    │   │       └── model</span><br><span class="line">    │   │           └── Person.java</span><br><span class="line">    │   ├── resources</span><br><span class="line">    │   │   ├── db.properties</span><br><span class="line">    │   │   ├── log4j.xml</span><br><span class="line">    │   │   └── META-INF</span><br><span class="line">    │   │       └── persistence.xml</span><br><span class="line">    │   └── webapp</span><br><span class="line">    │       ├── index.html</span><br><span class="line">    │       ├── META-INF</span><br><span class="line">    │       │   ├── context.xml</span><br><span class="line">    │       │   └── MANIFEST.MF</span><br><span class="line">    │       ├── resources</span><br><span class="line">    │       │   └── css</span><br><span class="line">    │       │       └── screen.css</span><br><span class="line">    │       └── WEB-INF</span><br><span class="line">    │           ├── spring</span><br><span class="line">    │           │   ├── app</span><br><span class="line">    │           │   │   ├── controllers.xml</span><br><span class="line">    │           │   │   └── servlet-context.xml</span><br><span class="line">    │           │   ├── db.xml</span><br><span class="line">    │           │   └── root-context.xml</span><br><span class="line">    │           ├── views</span><br><span class="line">    │           │   ├── edit.jsp</span><br><span class="line">    │           │   ├── home.jsp</span><br><span class="line">    │           │   └── list.jsp</span><br><span class="line">    │           └── web.xml</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        │   └── mygroup</span><br><span class="line">        │       ├── controller</span><br><span class="line">        │       │   ├── DataInitializer.java</span><br><span class="line">        │       │   ├── HomeControllerTest.java</span><br><span class="line">        │       │   └── PersonControllerTest.java</span><br><span class="line">        │       └── dao</span><br><span class="line">        │           └── PersonDaoTest.java</span><br><span class="line">        └── resources</span><br><span class="line">            ├── db.properties</span><br><span class="line">            ├── log4j.xml</span><br><span class="line">            ├── test-context.xml</span><br><span class="line">            └── test-db.xml</span><br></pre></td></tr></table></figure>
 
-<h2 id="相关论坛"><a href="#相关论坛" class="headerlink" title="相关论坛"></a>相关论坛</h2><p><a target="_blank" rel="noopener" href="https://github.com/weexteam/article/issues">weex 文章</a><br><a target="_blank" rel="noopener" href="https://github.com/weexteam/article/issues/50">weex 调试</a><br><a target="_blank" rel="noopener" href="http://alibaba.github.io/weex/doc/">weex 文档：</a><br><a target="_blank" rel="noopener" href="http://www.kmhaoshuai.com/#!/articles/use-vuex-in-weex">weex中使用数据流工具Vuex实践</a><br><a target="_blank" rel="noopener" href="http://lvyongbo.net/2016/09/27/weex%E6%8A%80%E6%9C%AF%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%C2%A0https://gitter.im/weexteam/cn?utm_source=share-link&utm_medium=link&utm_campaign=share-link">weex交流室</a></p>
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yudy/archive/2012/06/26/2563638.html">Java Web应用程序的推荐目录结构</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/scown/p/5561677.html">Java Web 项目目录规范</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28018283/article/details/79398661">用IntelliJ idea 创建 springMVC 的Maven 项目</a></p>
 
       
     </div>
@@ -774,7 +772,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/vue%20&%20weex/weex%20%E5%9D%91%E7%82%B9/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java-spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -788,7 +786,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/vue%20&%20weex/weex%20%E5%9D%91%E7%82%B9/" class="post-title-link" itemprop="url">weex 开发坑点</a>
+            <a href="/2018/06/11/java/java-spring/" class="post-title-link" itemprop="url">java-spring</a>
         </h2>
 
         <div class="post-meta">
@@ -813,7 +811,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/weex/" itemprop="url" rel="index"><span itemprop="name">weex</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
             </span>
 
@@ -828,10 +826,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">0、div 执行v-for循环的时候 要设置动态宽 自动撑满在iOS上有问题</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-for</span>=<span class="string">&quot;(itemProduct,index) in productList&quot;</span> <span class="attr">:style</span>=<span class="string">&quot;&#123;height:sliderHeight,width:brandItemBgWidth&#125;&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">style</span>=<span class="string">&quot;align-items: center;justify-content: center;&quot;</span>&gt;</span></span><br><span class="line">1、<span class="tag">&lt;<span class="name">text</span>&gt;</span>aaa<span class="tag">&lt;/<span class="name">text</span>&gt;</span>  该标签一定要写在一行否则native展示不对</span><br><span class="line">2、作为子组件里面的数据源一定要 这样写</span><br><span class="line">data: function () &#123; &#125;   必须加上function 不能做省略</span><br><span class="line">3、引入组件或者工具类</span><br><span class="line">  import PromotionWishLampItemView from &#x27;./PromotionWishLampItemView.vue’</span><br><span class="line"> import Util from &#x27;./PromotionUtil.js&#x27;</span><br><span class="line">4、引入的子组件要注册</span><br><span class="line">export default &#123;</span><br><span class="line">    components: &#123;</span><br><span class="line">        PromotionWishLampItemView</span><br><span class="line">    &#125;,&#125;</span><br><span class="line">5、控件属性进行双向绑定用v-bind 缩写是冒号 :</span><br><span class="line">6、例如生命周期函数created、mounted和methods是并列的函数体，methods存放自定义函数</span><br><span class="line">7、 foreach不支持直接break</span><br><span class="line">//                                _wishLamps.forEach(function (item, index) &#123;</span><br><span class="line">//////                                    foreach不支持直接break</span><br><span class="line">//                                &#125;);</span><br><span class="line">8、给某个对象添加属性并赋值的方式</span><br><span class="line">    if (typeof item.itemStyle == &#x27;undefined&#x27;) &#123;</span><br><span class="line">        console.log(&#x27;注册中 =====&#x27;);</span><br><span class="line">        //全局注册</span><br><span class="line">        Vue.set(item, &quot;itemStyle&quot;, &quot;1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">9、数组剪切前四个（n个）的方案</span><br><span class="line">    _proList.slice(0, 4);</span><br><span class="line">10、数组添加对象的方式</span><br><span class="line">     _this.productList.push(wishLampDict);</span><br><span class="line">11、css style双向绑定要用花括号</span><br><span class="line">    :style=&quot;&#123;height:brandItemCurveHeight,width:brandItemWidth&#125;”</span><br><span class="line">12、json转化成能打印的字符串</span><br><span class="line">var str = JSON.stringify(result);</span><br><span class="line">console.log(&#x27;qryExclusiveDiscount-backData:&#x27; + str);</span><br><span class="line">13、通过某个比例scale计算字体大小 如果不是整形在android上显示有问题 </span><br><span class="line">this.contentFontSize = Math.round(26 * scale);</span><br><span class="line">14、通过某个比例scale计算字体大小 如果不是整形在android上显示有问题   通过向上取整显示个别有问题</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">通过向下取整 Math.floor </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="spring框架"><a href="#spring框架" class="headerlink" title="spring框架"></a>spring框架</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Spring是一个开放源代码的设计层面框架，他解决的是业务逻辑层和其他各层的松耦合问题，</span><br><span class="line">因此它将面向接口的编程思想贯穿整个系统应用。</span><br><span class="line">Spring是于2003 年兴起的一个轻量级的Java 开发框架，由Rod Johnson创建。</span><br><span class="line">简单来说，Spring是一个分层的JavaSE/EE full-stack(一站式) 轻量级开源框架。</span><br></pre></td></tr></table></figure>
 
-
-
+<h2 id="下载和安装Spring请按如下步骤进行。"><a href="#下载和安装Spring请按如下步骤进行。" class="headerlink" title="下载和安装Spring请按如下步骤进行。"></a>下载和安装Spring请按如下步骤进行。</h2><p>（1）登录站点，下载Spring的最新稳定版本。最新版本为spring-framework-5.0.建议下载spring-framework-spring-framework-4.0.0.M2-dist这个压缩包不仅包含Spring的开发包，而且包含Spring编译和运行所依赖的第三方类库。<br>解压缩下载到的压缩包，解压缩后的文件夹应用如下几个文件夹。<br>dist：该文件夹下放Spring的jar包，通常只需要Spring.jar文件即可。该文件夹下还有一些类似spring－Xxx.jar的压缩包， 这些压缩包是spring.jar压缩包的子模块压缩包。除非确定整个J2EE应用只需要使用Spring的某一方面时，才考虑使用这种分模块压缩包。通常建议使用Spring.jar<br>docs：该文件夹下包含spring的相关文档、开发指南及API参考文档。<br>lib：该文件夹下包含spring编译和运行所依赖的第三方类库，该路径下的类库并不是  spring必需的，但如果需要使用第三方类库的支持，这里的类库就是必需要的。<br>samples：该文件夹下包含Spring的几个简单例子，可作为Spring入门学习的案例。<br>src：该文件夹下包含Spring的全部源文件，如果开发过程中有地方无法把握，可以参考该源文件，了解底层实现。<br>spring<br>spring<br>test：该文件夹下包含Spring的测试示例。<br>tiger：该路径下存放关于JDK的相关内容<br>解压缩后的文件夹下，还包含一些关于Spring的License和项目相关文件<br>（2）将spring.jar复制到项目的CLASSPATH路径下，对于Web应用，将spring.jar文件复制到WEB-INF/lib路径下，该应用即可以利用Spring框架了。<br>（3）通常Spring的框架还依赖于其他一些jar文件，因此还须将lib下对应的包复制到WEB-INF/lib路径下，具体要复制哪些jar文件，取决于应用所需要使用的项目。通常需要复制cglib，dom4j，jakarta-commons，log4j等文件夹下的jar文件。<br>（4）为了编译java文件，可以找到Spring的基础类，将Spring.jar文件的路径添加到环境变量CLASSPATH中。当然，也可以使用ANT工具，但无须添加环境变量。如果使用Eclipse或者NetBeans等IDE时，也不需要设置环境变量。  </p>
+<h2 id="Spring-MVC"><a href="#Spring-MVC" class="headerlink" title="Spring MVC"></a>Spring MVC</h2><p>传统的web架构的view 表现层使用struts作为表现层。但是如果试用下spring自带的MVC，会发现spring 在一般场合完全可以取代struts。从某些角度来说，spring的mvc设计的更加合理，有兴趣的话不妨尝试下单个的spring的MVC。</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/wkspring/">w3Cschool-spring学习</a></p>
+<h2 id="Spring-Boot-是什么？"><a href="#Spring-Boot-是什么？" class="headerlink" title="Spring Boot 是什么？"></a>Spring Boot 是什么？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Spring Boot 的目的是提供一组工具，以便快速构建容易配置的 Spring 应用程序。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
       
@@ -852,7 +852,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -866,7 +866,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E5%9C%A8DEBUG%E8%BF%98%E6%98%AFRELEASE%E6%A8%A1%E5%BC%8F%E4%B8%8B/" class="post-title-link" itemprop="url">如何判断代码运行在DEBUG还是RELEASE模式下？</a>
+            <a href="/2018/06/11/java/java%E5%9F%BA%E7%A1%80%E7%9A%84%E5%89%AF%E6%9C%AC/" class="post-title-link" itemprop="url">java 基础</a>
         </h2>
 
         <div class="post-meta">
@@ -891,7 +891,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
             </span>
 
@@ -906,19 +906,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-</blockquote>
-<p>首先确定下项目的 Build Settings 是否已经设置过宏定义 DEBUG，如何看呢？<br>点击 Build Settings ，然后在搜索框里输入‘macros’</p>
-<p><img src="/images/debug.png"></p>
-<blockquote>
-<p>如果已经设置过，在 Preprocessor Macros 的 Debug 后面会有 DEBUG=1，如果没有，就手动设置下。<br>接下来就可以这样做了</p>
-</blockquote>
- <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">//do sth.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="http://stackoverflow.com/a/9063682">http://stackoverflow.com/a/9063682</a></p>
-<p>一般Apple已经为我们设置好了 DEBUG 的宏定义，所以，我们只要让 NSLog 在 DEBUG 模式下失效就好了，这样能让我们的程序运行起来更加稳定，同时我们也可以继续使用正规的 NSLog。</p>
-</blockquote>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//put this in prefix.pch</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> DEBUG</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> NSLog</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLog(args, ...)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2>
       
     </div>
 
@@ -937,7 +925,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/java/springboot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -951,7 +939,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/Category%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%A6%86%E7%9B%96%E5%8E%9F%E6%9D%A5%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F/" class="post-title-link" itemprop="url">Category中的方法为什么会覆盖原来类中的方法？</a>
+            <a href="/2018/06/11/java/springboot/" class="post-title-link" itemprop="url">springboot</a>
         </h2>
 
         <div class="post-meta">
@@ -976,7 +964,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
                 </span>
             </span>
 
@@ -991,16 +979,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="深入了解Category"><a href="#深入了解Category" class="headerlink" title="深入了解Category"></a>深入了解<code>Category</code></h3><p>我们都知道<code>OC</code>代码执行时会先转成<code>C\C++</code>代码，<code>OC</code>对象转成对应的结构体；<br><code>Category</code>对应的结构体我们可以通过将分类的<code>.m文件转成c++</code>文件查看：<br><code>xcrun -sdk iphoneos clang -arch arm64 -rewrite-objc xxxxx.m</code><br>即可生成对应的<code>.cpp</code>文件；<br>在<code>.cpp</code>文件中搜索<code>Category_t</code>可以看到<code>Category</code>对应的结构体：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct _category_t &#123;</span><br><span class="line">const char *name;</span><br><span class="line">struct _class_t *cls;</span><br><span class="line">const struct _method_list_t *instance_methods;</span><br><span class="line">const struct _method_list_t *class_methods;</span><br><span class="line">const struct _protocol_list_t *protocols;</span><br><span class="line">const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>通过观察结构体我们可以发现分类对应的结构体中有存储实例方法的列表、存储类方法的列表、存储协议的和属性的列表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过源码分析可知：系统是在运行时将分类中对应的实例方法、类方法等插入到了原来类或元类的方法列表中，且是在列表的前 </span><br><span class="line">边！所以，方法调用时通过isa去对应的类或元类的列表中查找对应的方法时先查到的是分类中的方法！查到后就直接调用不在继</span><br><span class="line">续查找。这即是’覆盖’的本质！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FJ41197rF?p=36">SpringBoot核心技术篇</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1、大量的XML让开发者厌恶,因此Spring提供了许多注解来完成各种功能。</span><br><span class="line">2、大量的注解让开发者厌恶 ,因此Spring提供了组合注解来完成各种功能。</span><br></pre></td></tr></table></figure>
 
-<h3 id="存在多个分类，调用谁？"><a href="#存在多个分类，调用谁？" class="headerlink" title="存在多个分类，调用谁？"></a>存在多个分类，调用谁？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">当有多个分类时，会调用哪个分类中的方法呢？</span><br><span class="line"></span><br><span class="line">这个是与编译顺序有关，最后编译的分类中对应的信息会在整合在类或元类对应列表的最前边。所以是调用最后编译的分类中的</span><br><span class="line">方法！可以查看Build Phases -&gt;Complie Source 中的编译顺序！</span><br></pre></td></tr></table></figure>
-
-
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dd57c39a5e4c">Category中的方法为什么会覆盖原来类中的方法？</a></p>
-
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>Docker是一个开源的应用容器引擎。</p>
+<h2 id="Spring-Boot与数据访问"><a href="#Spring-Boot与数据访问" class="headerlink" title="Spring Boot与数据访问"></a>Spring Boot与数据访问</h2>
       
     </div>
 
