@@ -3549,4 +3549,21 @@ myChart.setOption(getopt('H5加载耗时概览(来源烛龙平台)', {}, data))
         <tag>swift</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Macbook修改MAC地址</title>
+    <url>/2021/12/08/other/Macbook%E4%BF%AE%E6%94%B9MAC%E5%9C%B0%E5%9D%80/</url>
+    <content><![CDATA[<h4 id="一、打开“终端“，复制粘贴下面的命令，到终端里然后回车，会生成一个全新的MAC网卡地址"><a href="#一、打开“终端“，复制粘贴下面的命令，到终端里然后回车，会生成一个全新的MAC网卡地址" class="headerlink" title="一、打开“终端“，复制粘贴下面的命令，到终端里然后回车，会生成一个全新的MAC网卡地址"></a>一、打开“终端“，复制粘贴下面的命令，到终端里然后回车，会生成一个全新的MAC网卡地址</h4><p><code>openssl rand -hex 6 | sed &#39;s/\(..\)/\1:/g; s/.$//&#39;</code></p>
+<h4 id="二、复制粘贴下面的命令，到终端里然后回车，这时会要求输入开机密码，会断开无线网卡连接"><a href="#二、复制粘贴下面的命令，到终端里然后回车，这时会要求输入开机密码，会断开无线网卡连接" class="headerlink" title="二、复制粘贴下面的命令，到终端里然后回车，这时会要求输入开机密码，会断开无线网卡连接"></a>二、复制粘贴下面的命令，到终端里然后回车，这时会要求输入开机密码，会断开无线网卡连接</h4><p><code>sudo /System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -z</code></p>
+<h4 id="三、修改MAC地址：复制粘贴下面的命令，修改成你需要的MAC地址，粘贴到终端里然后回车"><a href="#三、修改MAC地址：复制粘贴下面的命令，修改成你需要的MAC地址，粘贴到终端里然后回车" class="headerlink" title="三、修改MAC地址：复制粘贴下面的命令，修改成你需要的MAC地址，粘贴到终端里然后回车"></a>三、修改MAC地址：复制粘贴下面的命令，修改成你需要的MAC地址，粘贴到终端里然后回车</h4><p><code>sudo ifconfig en0 ether xx:xx:xx:xx:xx:xx</code></p>
+<h4 id="四、复制粘贴下面的命令，粘贴到终端里然后回车，重连网卡你就得到了一个自己想要的MAC地址"><a href="#四、复制粘贴下面的命令，粘贴到终端里然后回车，重连网卡你就得到了一个自己想要的MAC地址" class="headerlink" title="四、复制粘贴下面的命令，粘贴到终端里然后回车，重连网卡你就得到了一个自己想要的MAC地址"></a>四、复制粘贴下面的命令，粘贴到终端里然后回车，重连网卡你就得到了一个自己想要的MAC地址</h4><p><code>networksetup -detectnewhardware</code></p>
+<h4 id="五、查看MAC地址"><a href="#五、查看MAC地址" class="headerlink" title="五、查看MAC地址"></a>五、查看MAC地址</h4><p><code> ifconfig en0 | grep ether</code></p>
+<p>链接：<a href="https://www.jianshu.com/p/da48a3180048">https://www.jianshu.com/p/da48a3180048</a></p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Macbook修改MAC地址</tag>
+      </tags>
+  </entry>
 </search>
