@@ -2809,7 +2809,8 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <p>在 React Native 中，Objective-C 和 JavaScript 的交互都是通过传递 ModuleId、MethodId 和 Arguments 进行的。Objective-C 和 JavaScript 两端都保存了一份配置表，里面标记了所有 Objective-C 暴露给 JavaScript 的模块和方法。这样，无论是哪一方调用另一方的方法，实际上传递的数据只有 ModuleId、MethodId 和 Arguments 这三个元素，它们分别表示类、方法和方法参数，当 Objective-C 接收到这三个值后，就可以通过 runtime 唯一确定要调用的是哪个函数，然后调用这个函数。Objective-C 和 JavaScript 的交互总是由Objective-C发起的。Object-C与js的交互是通过各端的Bridge和ModuleConfig来进行的，实际过程可分为两个阶段：<strong>初始化阶段</strong>和<strong>方法调用阶段</strong>。</p>
 <p><strong>初始化 React Native</strong></p>
 <p>在RN（ios）项目中都会有 AppDelegate.m 这个文件，文件有如下代码：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/6039087-04c818b174ee5617.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/638"></p>
+<!--![](https://upload-images.jianshu.io/upload_images/6039087-04c818b174ee5617.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/638)-->
+<p><img src="/images/rn04.jpg"></p>
 <p>用户能看到的一切内容都来源于这个 RootView，所有的初始化工作也都在这个方法内完成。在这个方法内部，在创建 RootView 之前，React Native 实际上先创建了一个 Bridge 对象。它是 Objective-C 与 JavaScript 交互的桥梁，后续的方法交互完全依赖于它，而整个初始化过程的最终目的其实也就是创建这个桥梁对象。</p>
 <p>初始化方法的核心是 setUp 方法，而 setUp 方法的主要任务则是创建 BatchedBridge。BatchedBridge 的作用是批量读取 JavaScript 对 Objective-C 的方法调用，同时它内部持有一个 JavaScriptExecutor，顾名思义，这个对象用来执行 JavaScript 代码。创建 BatchedBridge 的关键是 start 方法，它可以分为五个步骤：</p>
 <p>1.读取 JavaScript 源码</p>
@@ -2825,7 +2826,8 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <p>让 JavaScript 获取所有模块的名字，作为一个全局变量存储</p>
 <p>5.执行 JavaScript 源码</p>
 <p>运行代码时，第三步中所添加的 Block（nativeRequireModuleConfig ） 就会被执行，从而向 JavaScript 端写入配置信息。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/6039087-a94e84c6c182f147.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700"></p>
+<!--![](https://upload-images.jianshu.io/upload_images/6039087-a94e84c6c182f147.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700)-->
+<p><img src="/images/rn05.png"></p>
 <p>初始化工程</p>
 <p><strong>方法调用</strong></p>
 <p>1.OC调用 JS代码</p>
