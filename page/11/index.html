@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="为了明天而努力">
@@ -169,10 +169,7 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -186,86 +183,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">队列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>队列是一种特殊的线性表，特殊之处在于它只允许在表的前端（front）进行删除操作，而在表的后端（rear）进行插入操作，和栈一样，队列是一种操作受限制的线性表。进行插入操作的端称为队尾，进行删除操作的端称为队头。</p>
-<p><img src="https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=35768ebb0ff3d7ca18fb37249376d56c/cdbf6c81800a19d8116a4d8030fa828ba71e46ce.jpg"></p>
-<p>队列的数据元素又称为队列元素。在队列中插入一个队列元素称为入队，从队列中删除一个队列元素称为出队。因为队列只允许在一端插入，在另一端删除，所以只有最早进入队列的元素才能最先从队列中删除，故队列又称为先进先出（FIFO—first in first out）线性表。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/python/python%20%E5%86%99%E5%85%A5json%E6%96%87%E4%BB%B6%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -334,12 +255,14 @@
 <h2 id="os模块popen方法"><a href="#os模块popen方法" class="headerlink" title="os模块popen方法"></a>os模块popen方法</h2><blockquote>
 <p>可以直接使用终端的命令 例如：# 打开目录 open_path = ‘open ‘ + output_dir_name<br>    os.popen(open_path)<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yangykaifa/p/7127776.html">python调用shell命令</a>    </p>
 </blockquote>
-<pre><code class="py">popen方法可以得到shell命令的返回值。os.popen(cmd)后，
-须要再调用read()或者readlines()这两个命令。输出结果。
-
- os.popen(&quot;ls&quot;)  
-</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/19/python/python%20%E5%86%99%E5%85%A5json%E6%96%87%E4%BB%B6%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -361,7 +284,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/python/python%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -419,15 +342,14 @@
 
 <h1 id="标识符的命名"><a href="#标识符的命名" class="headerlink" title="标识符的命名"></a>标识符的命名</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">变量是标识符的例子。 标识符 是用来标识 某样东西 的名字。在命名标识符的时候，你要遵循这些规则：</span><br><span class="line"></span><br><span class="line">标识符的第一个字符必须是字母表中的字母（大写或小写）或者一个下划线（‘ _ ’）。</span><br><span class="line"></span><br><span class="line">标识符名称的其他部分可以由字母（大写或小写）、下划线（‘ _ ’）或数字（0-9）组成。</span><br><span class="line"></span><br><span class="line">标识符名称是对大小写敏感的。例如，myname和myName不是一个标识符。注意前者中的小写n和后者中的大写N。</span><br><span class="line"></span><br><span class="line">有效 标识符名称的例子有i、__my_name、name_23和a1b2_c3。</span><br><span class="line"></span><br><span class="line">无效 标识符名称的例子有2things、this is spaced out和my-name。</span><br></pre></td></tr></table></figure>
 <h1 id="关于模块主方法的使用"><a href="#关于模块主方法的使用" class="headerlink" title="关于模块主方法的使用"></a>关于模块主方法的使用</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">模块的__name__</span><br><span class="line"></span><br><span class="line">每个模块都有一个名称，在模块中可以通过语句来找出模块的名称。这在一个场合特别有用——就如前面所提到的，当一个模块被第一次输入的时候，这个模块的主块将被运行。假如我们只想在程序本身被使用的时候运行主块，而在它被别的模块输入的时候不运行主块，我们该怎么做呢？这可以通过模块的__name__属性完成。</span><br><span class="line"></span><br><span class="line">使用模块的__name__</span><br><span class="line"></span><br><span class="line">例8.2 使用模块的__name__</span><br></pre></td></tr></table></figure>
-
-<h1 id="usr-bin-python-Filename-using-name-py"><a href="#usr-bin-python-Filename-using-name-py" class="headerlink" title="!/usr/bin/python Filename: using_name.py"></a>!/usr/bin/python Filename: using_name.py</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    print &#x27;This program is being run by itself&#x27;</span><br><span class="line">else:</span><br><span class="line">    print &#x27;I am being imported from another module&#x27;</span><br></pre></td></tr></table></figure>
-<h1 id="python中切片的学习"><a href="#python中切片的学习" class="headerlink" title="python中切片的学习"></a>python中切片的学习</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">切片操作符是序列名后跟一个方括号，方括号中有一对可选的数字，并用冒号分割。注意这与你使用的索引操作符十分相似。记住数是可选的，而冒号是必须的。</span><br><span class="line"></span><br><span class="line">切片操作符中的第一个数（冒号之前）表示切片开始的位置，第二个数（冒号之后）表示切片到哪里结束。如果不指定第一个数，Python就从序列首开始。如果没有指定第二个数，则Python会停止在序列尾。注意，返回的序列从开始位置 开始 ，刚好在 结束 位置之前结束。即开始位置是包含在序列切片中的，而结束位置被排斥在切片外。</span><br></pre></td></tr></table></figure>
-<h1 id="正则表达式的学习"><a href="#正则表达式的学习" class="headerlink" title="正则表达式的学习"></a>正则表达式的学习</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">正则表达式的学习 http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html</span><br><span class="line">  ①一般字符：</span><br><span class="line">   . 匹配任意除换行符“\n”外的字符 例如：a.c -&gt; abc,acc,adc...等与之匹配</span><br><span class="line">   \ 转义字符，使后一个字符改变原来的意思 例如：a\.c,a\\c 与之匹配的则是a.c,a\c</span><br><span class="line">   [...] 字符集（字符类） 对应的位置可以是字符集中任意字符，字符集中得字符可以逐个列出，也可以给出范围，如</span><br><span class="line">          [abc]或[a-c],第一个字符如果是^ 则表示取反，如[^abc]表示不是abc的其他字符，所有的特殊字符在字符集中都</span><br><span class="line">          失去其原有的特殊含义。</span><br><span class="line">  ②预定义字符集 -&gt; 在字符集表示方式</span><br><span class="line">    \d  -&gt; 表示数字：[0-9]</span><br><span class="line">    \D  -&gt; 表示非数字：[^\d]</span><br><span class="line">    \s  -&gt; 表示空白字符：[&lt;空格&gt;\t\r\n\f\v]</span><br><span class="line">    \S  -&gt; 表示非空白符：[^\s]</span><br><span class="line">    \w  -&gt; 表示单词字符: [A-Za-z0-9_]</span><br><span class="line">    \W  -&gt; 表示非单词字符：[^\w]</span><br><span class="line">  ③数量词（用在字符或（...）之后）</span><br><span class="line">     * -&gt; 表示：匹配前一个字符0或无限次 例如：abc* 表示ab、abcccccc等</span><br><span class="line">     + -&gt; 表示：匹配前一个字符一次或无限次 例如 abc+ 表示abc、abcccccc等</span><br><span class="line">     ？ -&gt; 表示：匹配前一个字符0次或一次。例如：abc？ 表示ab、abc</span><br><span class="line">     &#123;m&#125; -&gt; 表示：匹配前一个字符m次。 例如：ab&#123;2&#125;c 表示abbc</span><br><span class="line">     &#123;m,n&#125; -&gt; 表示：匹配前一个字符m至n次。m和n可以省略：若省略m则匹配0至n次，反之则匹配m至无限次。例如：ab&#123;1,2&#125; 表示abb、ab</span><br><span class="line">  ④边界匹配（不消耗待匹配字符串中得字符）</span><br><span class="line">     ^ -&gt; 表示：匹配字符串开头。在多行模式中匹配每一行的开头 例如：^abc 表示abc</span><br><span class="line">     $ -&gt; 表示：匹配字符串末尾。在多行模式中匹配每一行的末尾 例如：abc$ 表示abc</span><br><span class="line">     \A -&gt; 表示：仅匹配字符串开头。例如：\Aabc 表示abc</span><br><span class="line">     \Z -&gt; 表示：仅匹配字符串末尾。例如：\Zabc 表示abc</span><br><span class="line">     \b -&gt; 表示：匹配\w和\W之间。例如：a\b!bc 表示a!bc</span><br><span class="line">     \B -&gt; 表示：[^\b]。例如：a\Bbc 表示abc</span><br><span class="line">  ⑤逻辑、分组</span><br><span class="line">     | -&gt; 表示左右表达式任意匹配一个。它总是先尝试匹配左边的表达式，一旦成功匹配则跳过匹配右边的表达式。如果|没有别包括在（）中，则它的范围是整个正则表达式 例如：abc|def</span><br><span class="line">     (...) -&gt; 被括起来的表达式将作为分组，从表达式的左边开始每遇到一个分组的左括号‘（’，编号+1. 另外，分组表达式作为一个整体，可以后接数量词。表达式|仅在该组中有效：（abc）&#123;2&#125; abcabc</span><br><span class="line">     (?P&lt;name&gt;...) -&gt; 分组，除了原有的编号外在指定一个额外的别名。 例如：(?P&lt;id&gt;abc)&#123;2&#125;   abcabc</span><br><span class="line">     \&lt;number&gt; -&gt; 表示 引用编号为&lt;number&gt;的分组匹配到得字符串。例如：(\d)abc\1 则可表：2abc2、4abc4</span><br><span class="line">     (?P=name) -&gt; 表示 引用别名为&lt;name&gt;的分组匹配到得字符串。(?P&lt;id&gt;\d)abc(?P=id) 则可表：2abc2、4abc4</span><br><span class="line">  ⑥特殊构造（不作为分组）</span><br><span class="line">     (?:...) -&gt; 表（...）的不分组版本，用于使用‘|’或后接数量词。 例如：(?:abc)&#123;2&#125;  abcabc</span><br><span class="line">     (?:iLmsux) -&gt; 表 iLmsux的每一个字符代表一个匹配模式，只能用在正则表达式的开头，可选多个。 例如：(?iabc)  Abc</span><br><span class="line">     (?#...) -&gt; 表 #后的内容将作为注释被忽略。 例如：abc(?#comment)123  abc123</span><br><span class="line">     (?=...) -&gt; 表 之后的字符串内容需要匹配表达式才能成功匹配。不消耗字符串内容 例如：a(?=\d) 后面是数字的a</span><br><span class="line">     (?!...) -&gt; 表 之后的字符串内容需要不匹配表达式才能成功匹配。不消耗字符串内容 例如：a(?!\d) 后面不是数字的a</span><br><span class="line">     (?&lt;=...) -&gt; 表 之前的字符串内容需要匹配表达式才能成功匹配。不消耗字符串内容 例如：(&lt;=\d)a 前面是数字的a</span><br><span class="line">     (?&lt;!...) -&gt; 表 之前的字符串内容需要不匹配表达式才能成功匹配。不消耗字符串内容 例如：(&lt;=\d)a 前面不是数字的a</span><br></pre></td></tr></table></figure>
-
-<h1 id="grep的使用"><a href="#grep的使用" class="headerlink" title="grep的使用"></a>grep的使用</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">grep的使用：</span><br><span class="line">  1、使用正则表达式的一个多用途文本搜索工具.</span><br><span class="line">  2,grep的选项</span><br><span class="line">  -c 只输出匹配行的计数</span><br><span class="line">  -i 不区分大小写（用于单字符）</span><br><span class="line">  -n 显示匹配的行号</span><br><span class="line">  -v 不显示不包含匹配文本的所以有行</span><br><span class="line">  -s 不显示错误信息</span><br><span class="line">  -E 使用扩展正则表达式</span><br><span class="line">  更多的选项请查看：man grep</span><br><span class="line"></span><br><span class="line">  3,常用grep实例</span><br><span class="line"></span><br><span class="line">  (1)多个文件查询</span><br><span class="line">      grep &quot;sort&quot; *.doc       #见文件名的匹配</span><br><span class="line"></span><br><span class="line">  (2)行匹配:输出匹配行的计数</span><br><span class="line">      grep -c &quot;48&quot; data.doc   #输出文档中含有48字符的行数</span><br><span class="line"></span><br><span class="line">  (3)显示匹配行和行数</span><br><span class="line">      grep -n &quot;48&quot; data.doc       #显示所有匹配48的行和行号</span><br><span class="line"></span><br><span class="line">  (4)显示非匹配的行</span><br><span class="line">      grep -vn &quot;48&quot; data.doc      #输出所有不包含48的行</span><br><span class="line"></span><br><span class="line">  (4)显示非匹配的行</span><br><span class="line">      grep -vn &quot;48&quot; data.doc      #输出所有不包含48的行</span><br><span class="line"></span><br><span class="line">  (5)大小写敏感</span><br><span class="line">      grep -i &quot;ab&quot; data.doc       #输出所有含有ab或Ab的字符串的行</span><br><span class="line"></span><br><span class="line">  4, 正则表达式的应用</span><br><span class="line"></span><br><span class="line">  (1)正则表达式的应用 (注意：最好把正则表达式用单引号括起来)</span><br><span class="line">      grep &#x27;[239].&#x27; data.doc      #输出所有含有以2,3或9开头的，并且是两个数字的行</span><br><span class="line"></span><br><span class="line">  (2)不匹配测试</span><br><span class="line">      grep &#x27;^[^48]&#x27; data.doc      #不匹配行首是48的行</span><br><span class="line"></span><br><span class="line">  (3)使用扩展模式匹配</span><br><span class="line">      grep -E &#x27;219|216&#x27; data.doc</span><br><span class="line"></span><br><span class="line">  (4) ...</span><br><span class="line">      这需要在实践中不断应用和总结，熟练掌握正则表达式。</span><br><span class="line"></span><br><span class="line">  5, 使用类名</span><br><span class="line">  可以使用国际模式匹配的类名：</span><br><span class="line">  [[:upper:]]   [A-Z]</span><br><span class="line">  [[:lower:]]   [a-z]</span><br><span class="line">  [[:digit:]]   [0-9]</span><br><span class="line">  [[:alnum:]]   [0-9a-zA-Z]</span><br><span class="line">  [[:space:]]   空格或tab</span><br><span class="line">  [[:alpha:]]   [a-zA-Z]</span><br><span class="line"></span><br><span class="line">  (1)使用</span><br><span class="line">      grep &#x27;5[[:upper:]][[:upper:]]&#x27; data.doc     #查询以5开头以两个大写字母结尾的行</span><br></pre></td></tr></table></figure>
-<h1 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">vim的使用：</span><br><span class="line">      vim在保存之前不会对文件做实际的修改，只是加载到缓冲区中，对文件的编辑其实是对缓冲区的编辑，直到:w时才会存入物理文件。</span><br><span class="line">       ( 按 i 进入 insert 状态 即插入模式 ,按 Esc 退出插入模式</span><br><span class="line">               在非插入模式下按 dd 删除光标当前行,按 x 删除当前字,</span><br><span class="line">               按 j,n,l移动光标 )</span><br><span class="line"></span><br><span class="line">     :e file     把file加载到新的缓冲区中</span><br><span class="line">     :bn     跳转到下一个缓冲区</span><br><span class="line">     :bd     删除缓冲区(关闭文件)</span><br><span class="line">     :sp fn     分割窗口，并将fn加载到新的窗口中</span><br><span class="line"></span><br><span class="line">   退出编辑器</span><br><span class="line">     :w     将缓冲区写入文件，即保存修改</span><br><span class="line">     :wq     保存修改并退出</span><br><span class="line"></span><br><span class="line">     :x     保存修改并退出</span><br><span class="line"></span><br><span class="line">     :q     退出，如果对缓冲区进行过修改，则会提示</span><br><span class="line"></span><br><span class="line">     :q!     强制退出，放弃修改</span><br><span class="line"></span><br><span class="line">移动的使用：mv [选项] 源文件或目录 目标目录</span><br><span class="line">拷贝的使用： cp [选项] 源文件或目录 目标文件或目录</span><br><span class="line">删除的使用： rm</span><br><span class="line">           rm -r vv</span><br><span class="line">         但是这样会询问你是否真的要删除vv目录  输入y 确认删除</span><br><span class="line">         为了不让系统询问，可以强制删除 rm之后加上f就行了</span><br><span class="line">         rm -rf vv</span><br><span class="line">         这样就强制删除目录vv  如果目录下还有其他文佳 也一同删除了</span><br><span class="line"></span><br><span class="line">cat的使用：（concatenate）</span><br><span class="line">    cat主要有三大功能：</span><br><span class="line">     1.一次显示整个文件。$ cat filename</span><br><span class="line">     2.从键盘创建一个文件。$ cat &gt; filename</span><br><span class="line">        只能创建新文件,不能编辑已有文件.</span><br><span class="line">         1、键入cat &gt; filename.txt 后回车</span><br><span class="line">         2、录入文本内容；</span><br><span class="line">         3、键入回车；</span><br><span class="line">         4、在键盘上按下Ctrl+D (或者键入Control－D)。</span><br><span class="line">         5、 文本被存盘，shell提示符重新出现</span><br><span class="line"></span><br><span class="line">     3.将几个文件合并为一个文件： $cat file1 file2 &gt; file</span><br><span class="line">     参数：</span><br><span class="line">     -n 或 --number 由 1 开始对所有输出的行数编号</span><br><span class="line">     -b 或 --number-nonblank 和 -n 相似，只不过对于空白行不编号</span><br><span class="line">     -s 或 --squeeze-blank 当遇到有连续两行以上的空白行，就代换为一行的空白行</span><br><span class="line">     -v 或 --show-nonprinting</span><br><span class="line">     例：</span><br><span class="line">     把 textfile1 的档案内容加上行号后输入 textfile2 这个档案里</span><br><span class="line">     cat -n textfile1 &gt; textfile2</span><br><span class="line"></span><br><span class="line">     把 textfile1 和 textfile2 的档案内容加上行号（空白行不加）之后将内容附加到 textfile3 里。</span><br><span class="line">     cat -b textfile1 textfile2 &gt;&gt; textfile3</span><br><span class="line"></span><br><span class="line">     cat /dev/null &gt; /etc/test.txt  把test.txt文件扔进垃圾箱</span><br><span class="line"></span><br><span class="line"> mkdir的使用:</span><br><span class="line">     linux mkdir 命令用来创建指定的名称的目录，要求创建目录的用户在当前目录中具有写权限，并且指定的目录名不能是当前目录中已有的目录。</span><br><span class="line">     1．命令格式：</span><br><span class="line">     mkdir [选项] 目录...</span><br><span class="line">     2．命令功能：</span><br><span class="line">     通过 mkdir 命令可以实现在指定位置创建以 DirName(指定的文件名)命名的文件夹或目录。要创建文件夹或目录的用户必须对所创建的文件夹的父文件夹具有写权限。</span><br><span class="line">     并且，所创建的文件夹(目录)不能与其父目录(即父文件夹)中的文件名重名，即同一个目录下不能有同名的(区分大小写)。</span><br><span class="line">     3．命令参数：</span><br><span class="line">       -m, --mode=模式，设定权限&lt;模式&gt; (类似 chmod)，而不是 rwxrwxrwx 减 umask</span><br><span class="line">       -p, --parents  可以是一个路径名称。此时若路径中的某些目录尚不存在,加上此选项后,系统将自动建立好那些尚不存在的目录,即一次可以建立多个目录;</span><br><span class="line">       -v, --verbose  每次创建新目录都显示信息</span><br><span class="line">           --help   显示此帮助信息并退出</span><br><span class="line">           --version  输出版本信息并退出</span><br><span class="line"></span><br><span class="line"> rmdir的使用:</span><br><span class="line">     rmdir是一个与mkdir相对应的命令。mkdir是建立目录，而rmdir是删除命令。rm命令可以同时删除文件或目录</span><br><span class="line">     rmdir命令介绍</span><br><span class="line">     1.名称：rmdir</span><br><span class="line">     2.适用对象：具有当前目录操作权限的所有使用者</span><br><span class="line">     3.命令格式：rmdir [-p -v] [dirName]</span><br><span class="line">     4.作用：删除空目录</span><br><span class="line">     5.参数详解：</span><br><span class="line">     -p 当子目录被删除后如果父目录也变成空目录的话，就连带父目录一起删除。</span><br><span class="line">     -v 上次讲过，这里不再叙述，具体参见</span><br><span class="line"></span><br><span class="line"> chmod的使用:</span><br><span class="line"></span><br><span class="line">     指令名称 : chmod</span><br><span class="line">     使用权限 : 所有使用者</span><br><span class="line">     使用方式 : chmod [-cfvR] [--help] [--version] mode file...</span><br><span class="line">     说明 : Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他。利用 chmod 可以藉以控制档案如何被他人所调用。</span><br><span class="line">     参数 :</span><br><span class="line">     mode : 权限设定字串，格式如下 : [ugoa...][[+-=][rwxX]...][,...]，其中</span><br><span class="line">     u 表示该档案的拥有者，g 表示与该档案的拥有者属于同一个群体(group)者，o 表示其他以外的人，a 表示这三者皆是。</span><br><span class="line">     + 表示增加权限、- 表示取消权限、= 表示唯一设定权限。</span><br><span class="line">     r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该档案是个子目录或者该档案已经被设定过为可执行。</span><br><span class="line">     -c : 若该档案权限确实已经更改，才显示其更改动作</span><br><span class="line">     -f : 若该档案权限无法被更改也不要显示错误讯息</span><br><span class="line">     -v : 显示权限变更的详细资料</span><br><span class="line">     -R : 对目前目录下的所有档案与子目录进行相同的权限变更(即以递回的方式逐个变更)</span><br><span class="line">     --help : 显示辅助说明</span><br><span class="line">     --version : 显示版本</span><br><span class="line"></span><br><span class="line">     例子： chmod 755 a.txt</span><br><span class="line"></span><br><span class="line">     (你必须是文件a.txt的拥有者才能运行此命令。或者以$sudo chmod 755 a.txt的方式，以超级用户的身份运行该命令。)</span><br><span class="line"></span><br><span class="line">     change mode 改变a.txt的读、写以及执行权限。还记得每个文件都有九位的读写执行权限(参看 Linux文件管理背景知识)，</span><br><span class="line">     分为三组，分别对应拥有者(owner)，拥有组(owner group)中的用户和所有其他用户(other)。在这里，我们也有三个数字，755，对应三个组。</span><br><span class="line">     7被分配给拥有者，5被分配给拥有组，最后一个5分配给其它用户。Linux规定: 4为有读取的权利，2为有写入的权利，</span><br><span class="line">     1为有执行的权利。我们看到的7实际上是4 + 2 + 1，表示拥有者有读、写、执行三项权利。</span><br><span class="line"></span><br><span class="line">  ln的使用:</span><br><span class="line">         ln是linux中又一个非常重要命令，它的功能是为某一个文件在另外一个位置建立一个同不的链接，这个命令最常用的参数是-s，具体用法是：ln –s 源文件 目标文件。</span><br><span class="line">         　　当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个需要的目录下都放一个必须相同的文件，我们只要在某个固定的目录，放上该文件，然后在 其它的目录下用ln命令链接（link）它就可以，不必重复的占用磁盘空间。例如：ln –s /bin/less /usr/local/bin/less</span><br><span class="line">         　　-s 是代号（symbolic）的意思。</span><br><span class="line">         　　这里有两点要注意：第一，ln命令会保持每一处链接文件的同步性，也就是说，不论你改动了哪一处，其它的文件都会发生相同的变化；第二，ln的链接又 软链接和硬链接两种，</span><br><span class="line">         软链接就是ln –s ** **，它只会在你选定的位置上生成一个文件的镜像，</span><br><span class="line">         不会占用磁盘空间，硬链接ln ** **，没有参数-s， 它会在你选定的位置上生成一个和源文件大小相同的文件，无论是软链接还是硬链接，文件都保持同步变化。</span><br><span class="line"></span><br><span class="line">  ping的使用：（control + c  停止ping）</span><br><span class="line">  惯用的关机指令：shutdown  ,shutdown -h now</span><br><span class="line"></span><br><span class="line">  重新开机，关机：reboot, halt, poweroff</span><br><span class="line">  clear的使用：清空终端信息</span><br><span class="line">  history的使用：查看输入的历史命令</span><br><span class="line"></span><br><span class="line">  touch的使用:</span><br><span class="line">   touch a.txt</span><br><span class="line"></span><br><span class="line">   如果a.txt不存在，生成一个新的空文档a.txt。如果a.txt存在，那么只更改该文档的时间信息。(这个命令实际上用得并不广泛，但可以帮我们创建一个空文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/19/python/python%E5%AD%A6%E4%B9%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -449,7 +371,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/python/python%E6%90%9C%E7%B4%A2%E5%B9%B6%E6%9B%BF%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -501,6 +423,14 @@
 
       
           <h2 id="搜索并替换"><a href="#搜索并替换" class="headerlink" title="搜索并替换"></a>搜索并替换</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> imghdr</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">suffix_list = [<span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;h&#x27;</span>]</span><br><span class="line">g_totalCount = <span class="number">0</span></span><br><span class="line">image_name = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">replace_in_path</span>(<span class="params">filepath</span>):</span></span><br><span class="line">    <span class="keyword">global</span> g_totalCount, image_name</span><br><span class="line">    <span class="comment"># print(&quot;Operation with : &quot; + filepath)</span></span><br><span class="line">    <span class="comment"># open_file = open(filepath, &#x27;r+&#x27;) #用此种打开读写方式无效</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filepath, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> r:</span><br><span class="line">        lines = r.readlines()</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filepath, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> w:</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> lines:</span><br><span class="line">            r_pattern = <span class="string">r&quot;\[\[Resources sharedResources\] getImageWithImageName:(.+?)\]&quot;</span></span><br><span class="line">            <span class="comment"># if re.search(r_pattern, l):</span></span><br><span class="line">            <span class="built_in">print</span> <span class="string">&#x27;*******find*******&#x27;</span></span><br><span class="line">            image_name_list = re.findall(r_pattern, l)</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(image_name_list):</span><br><span class="line">                image_name = image_name_list[<span class="number">0</span>]</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;image_name:%s&quot;</span> % image_name)</span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            replace_reg = re.<span class="built_in">compile</span>(r_pattern)</span><br><span class="line">            new_str = <span class="string">&quot;JDImg(%s)&quot;</span> % image_name</span><br><span class="line">            have_replace_string = replace_reg.sub(new_str, l)</span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            w.write(have_replace_string)</span><br><span class="line">    w.close()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_file_from_dir</span>(<span class="params"><span class="built_in">dir</span></span>):</span></span><br><span class="line">    <span class="keyword">global</span> g_totalCount</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(<span class="built_in">dir</span>):</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> files:</span><br><span class="line">            filepath = os.path.join(root, item)</span><br><span class="line">            <span class="comment"># print &#x27;filepath------%s&#x27; % filepath</span></span><br><span class="line">            extension = os.path.splitext(filepath)[<span class="number">1</span>][<span class="number">1</span>:]</span><br><span class="line">            <span class="keyword">if</span> extension <span class="keyword">in</span> suffix_list:</span><br><span class="line">                replace_in_path(filepath)</span><br><span class="line">                <span class="built_in">print</span> <span class="string">&#x27;找到了------后缀为：[h or m]&#x27;</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;###############结束##############&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;当前目录:%s&quot;</span> % os.getcwd()</span><br><span class="line">    <span class="comment"># 递归遍历目录下所有文件</span></span><br><span class="line">    get_file_from_dir(<span class="string">&#x27;/Users/wenyongjun/JD/JDiPad_git/JDiPad&#x27;</span>)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/19/python/python%E6%90%9C%E7%B4%A2%E5%B9%B6%E6%9B%BF%E6%8D%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -522,7 +452,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/python/python%E7%88%AC%E5%8F%96%E7%BD%91%E7%AB%99%E5%B0%8F%E8%AF%B4%E5%86%85%E5%AE%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -578,6 +508,14 @@
 <h2 id="导入方式"><a href="#导入方式" class="headerlink" title="导入方式"></a>导入方式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html">Requests快速上手</a><br><a target="_blank" rel="noopener" href="https://www.crummy.com/software/BeautifulSoup/bs3/documentation.zh.html">Beautiful Soup 中文文档</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/19/python/python%E7%88%AC%E5%8F%96%E7%BD%91%E7%AB%99%E5%B0%8F%E8%AF%B4%E5%86%85%E5%AE%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -599,7 +537,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/19/python/python%E7%88%AC%E8%99%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -691,7 +629,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/11/iOS/iOS%E7%BC%96%E7%A8%8B%E4%B9%A0%E6%83%AF%E4%B8%8E%E9%A3%8E%E6%A0%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -760,9 +698,14 @@
 </blockquote>
 <h3 id="一些有意思的写法"><a href="#一些有意思的写法" class="headerlink" title="一些有意思的写法"></a>一些有意思的写法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1、- (void)xxxMethod &#123;</span><br><span class="line">  if ([xxx boolValue]) &#123;</span><br><span class="line">    //todo：xxx</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">2、</span><br><span class="line">if (xxx == nil) &#123;&#125;</span><br><span class="line">if (xxx == NO) &#123;&#125;</span><br><span class="line">if (xxx == YES) &#123;&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3、局部变量、实例变量、方法名  保持全名命名 不缩减 （驼峰序列）</span><br><span class="line"></span><br><span class="line">4、（估计此处也同样会有质疑声）</span><br><span class="line">if (xxx)</span><br><span class="line">&#123;</span><br><span class="line">  //todo：something</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">  //todo：something</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">5 、instancetype 与 id 的使用 </span><br><span class="line"></span><br><span class="line">6、[NSNumber numberWithInt:xxx] -&gt; @xxx 等类似的形式 </span><br></pre></td></tr></table></figure>
 <h3 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">重构？</span><br><span class="line">何时重构：随时随地（事不过三）</span><br><span class="line">哪些情况下就要考虑重构？</span><br><span class="line">  重复代码、过长的函数、函数过多的参数列、过大的类、</span><br><span class="line"></span><br><span class="line">把一些开发技巧编程一种习惯，更能编写高效率、高质量的代码</span><br></pre></td></tr></table></figure>
-
-<h3 id="学习外部地址"><a href="#学习外部地址" class="headerlink" title="学习外部地址"></a>学习外部地址</h3><p><a target="_blank" rel="noopener" href="http://liuyanwei.jumppo.com/2016/02/29/iOS-objc-styleguide.html">刘彦玮博客总结</a><br> <a target="_blank" rel="noopener" href="https://github.com/oa414/objc-zen-book-cn/">objc禅翻译</a><br> <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-objc-styleguide/contents/">Google 开源项目风格指南 - objc</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/11/iOS/iOS%E7%BC%96%E7%A8%8B%E4%B9%A0%E6%83%AF%E4%B8%8E%E9%A3%8E%E6%A0%BC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -784,7 +727,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/11/iOS/%E4%BB%80%E4%B9%88%E6%98%AFCocoaPods/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -841,9 +784,15 @@
 <h3 id="CocoaPods的安装"><a href="#CocoaPods的安装" class="headerlink" title="CocoaPods的安装"></a>CocoaPods的安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	1、安装</span><br><span class="line">	CocoaPods是用Ruby实现的，要想使用它首先需要有Ruby的环境。</span><br><span class="line">	幸运的是OS X系统默认的已经可以运行Ruby了，因此我们只需要执行以下命令：</span><br><span class="line">	 $ sudo gem install cocoapods  </span><br><span class="line">	CocoaPods是以Ruby gem包的形式被安装的。在安装执行的过程中，</span><br><span class="line">	可能会问我们是不是更新rake，输入y即可。这是因为rake gem包会在安装的过程中检查更细，</span><br><span class="line">	如果有可用的新版本就会出现刚才的选项。</span><br><span class="line">	在安装进程结束的时候，执行命令：</span><br><span class="line">   	 $ pod setup  </span><br><span class="line"></span><br><span class="line">   	 2、安装过程中可能遇到的问题</span><br><span class="line">   	   执行完install命令半天没反应  ---被墙了</span><br><span class="line">   	   gem版本过老 ---- sudo gem update --system  </span><br><span class="line">   	   安装完成后，执行pod setup命令时报错：rvm use ruby-1.9.3-p448  </span><br><span class="line">     3、升级CocoaPods</span><br><span class="line">     	sudo gem install cocoapods  </span><br><span class="line">CocoaPods的使用：</span><br><span class="line">	1、创建Podfile  cd到项目目录 touch Podfile</span><br><span class="line">	2、编辑Podfile </span><br><span class="line">	3、开始安装 pod install</span><br></pre></td></tr></table></figure>
 
 <p>安装完成后就可以使用了</p>
-<h2 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h2><h3 id="使用cocoapods出现ld-symbol-s-not-found-for-architecture-x86-64问题"><a href="#使用cocoapods出现ld-symbol-s-not-found-for-architecture-x86-64问题" class="headerlink" title="使用cocoapods出现ld: symbol(s) not found for architecture x86_64问题"></a>使用cocoapods出现ld: symbol(s) not found for architecture x86_64问题</h3><p><a target="_blank" rel="noopener" href="https://cn.aliyun.com/jiaocheng/398823.html">解决方案</a></p>
-<h2 id="cocoapods版本兼容问题"><a href="#cocoapods版本兼容问题" class="headerlink" title="cocoapods版本兼容问题"></a>cocoapods版本兼容问题</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013749108/article/details/53239557">使用bundle管理多版本Cocoapods之间的协助开发</a></p>
-
+<h2 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h2><h3 id="使用cocoapods出现ld-symbol-s-not-found-for-architecture-x86-64问题"><a href="#使用cocoapods出现ld-symbol-s-not-found-for-architecture-x86-64问题" class="headerlink" title="使用cocoapods出现ld: symbol(s) not found for architecture x86_64问题"></a>使用cocoapods出现ld: symbol(s) not found for architecture x86_64问题</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/11/iOS/%E4%BB%80%E4%B9%88%E6%98%AFCocoaPods/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -865,7 +814,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/11/iOS/%E4%BD%BF%E7%94%A8bundle%E7%AE%A1%E7%90%86%E5%A4%9A%E7%89%88%E6%9C%ACCocoapods%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8D%8F%E5%8A%A9%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -926,19 +875,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br></pre></td></tr></table></figure>
 
 <p>创建gemfile文件</p>
-<p>cd 项目目录  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle init</span><br></pre></td></tr></table></figure>
-
-<p>这样, 与 <code>.xcodeproj</code> 同级的目录中就会多出一个 <code>Gemfile</code>文件。</p>
-<p>在Gemfile里添加如下代码，指定pod版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># frozen_string_literal: true</span><br><span class="line">source &quot;https://rubygems.org&quot;</span><br><span class="line"></span><br><span class="line"># gem &quot;rails&quot;</span><br><span class="line">gem &#x27;cocoapods&#x27;, &#x27;0.39.0&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>到这里已经安装完毕，使用起来也很简单<br>在之前执行的命令前面加上 <code>bundle exec</code>就好了，如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bundle exec pod install --verbose --no-repo-update</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">bundle exec pod update --verbose --no-repo-update</span><br></pre></td></tr></table></figure>
-
-<h3 id="本地cocoapods版本列举"><a href="#本地cocoapods版本列举" class="headerlink" title="本地cocoapods版本列举"></a>本地cocoapods版本列举</h3><p>可以通过 gem list –local | grep cocoapods 命令查看我们电脑上安装了哪些版本的 CocoaPods，并通过 pod –version 查看系统默认使用的那个版本。</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/411003ac28e4">多个版本的 CocoaPods 的切换</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/11/iOS/%E4%BD%BF%E7%94%A8bundle%E7%AE%A1%E7%90%86%E5%A4%9A%E7%89%88%E6%9C%ACCocoapods%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8D%8F%E5%8A%A9%E5%BC%80%E5%8F%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1014,6 +958,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="追梦机器人"
+      src="/images/nba_star.png">
   <p class="site-author-name" itemprop="name">追梦机器人</p>
   <div class="site-description" itemprop="description">为了明天而努力</div>
 </div>
@@ -1022,7 +968,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1044,6 +990,10 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>

@@ -2793,7 +2793,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
   <entry>
     <title>RN原理解析</title>
     <url>/2018/06/15/%E5%89%8D%E7%AB%AF/RN%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</url>
-    <content><![CDATA[<h3 id="react-amp-reactnative-图"><a href="#react-amp-reactnative-图" class="headerlink" title="react &amp; reactnative 图"></a>react &amp; reactnative 图</h3><p><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534829808989&di=15083e538967408b39c1a62b911d322d&imgtype=jpg&src=http://img2.imgtn.bdimg.com/it/u=349030452,2123440704&fm=214&gp=0.jpg" alt="img"></p>
+    <content><![CDATA[<h3 id="reactnative-整体架构图"><a href="#reactnative-整体架构图" class="headerlink" title="reactnative 整体架构图"></a>reactnative 整体架构图</h3><p><img src="/images/rn01.jpeg" alt="img"></p>
 <p><a href="https://github.com/guoxiaoxing/react-native/blob/master/doc/ReactNative%E6%BA%90%E7%A0%81%E7%AF%87/1ReactNative%E6%BA%90%E7%A0%81%E7%AF%87%EF%BC%9A%E6%BA%90%E7%A0%81%E5%88%9D%E8%AF%86.md">android 原理分解链接</a></p>
 <p><strong>iOS 平台为例，剖析一下 React Native 的原理</strong></p>
 <h3 id="基本原理概述"><a href="#基本原理概述" class="headerlink" title="基本原理概述"></a>基本原理概述</h3><ul>
@@ -2803,8 +2803,8 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <li> 苹果提供了一个叫做 JavaScript Core 的框架，这是一个 JavaScript 引擎。iOS7中加入了JavaScriptCore.framework框架。把 WebKit 的 JavaScript 引擎用 Objective-C 封装。该框架让Objective-C和JavaScript代码直接的交互变得更加的简单方便。（注：JSCore，即JavaScriptCore，JS解析的核心部分，IOS使用的是内置的JavaScriptCore，Androis上使用的是  <a href="https://webkit.org/%E5%AE%B6%E7%9A%84jsc.so%E3%80%82%EF%BC%89">https://webkit.org/家的jsc.so。）</a><br><a href="https://blog.csdn.net/guojiezhi/article/details/51839088">JavaScriptCore和Objective-C 交互</a></li>
 <li> JavaScript 是一种单线程的语言，它不具备自运行的能力，因此总是被动调用。很多介绍 React Native 的文章都会提到 “JavaScript 线程” 的概念，实际上，它表示的是 Objective-C 创建了一个单独的线程，这个线程只用于执行 JavaScript 代码，而且 JavaScript 代码只会在这个线程中执行。</li>
 </ul>
-<h3 id="Objective-C-与-JavaScript-交互"><a href="#Objective-C-与-JavaScript-交互" class="headerlink" title="Objective-C 与 JavaScript 交互"></a>Objective-C 与 JavaScript 交互</h3><p>obj-c 与 js调用关系图<br><img src="https://upload-images.jianshu.io/upload_images/6039087-13814ffff21ce4eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="obj-c 与 js调用关系图"></p>
-<p><img src="http://blog.cnbang.net/wp-content/uploads/2015/03/ReactNative2.png"></p>
+<h3 id="Objective-C-与-JavaScript-交互"><a href="#Objective-C-与-JavaScript-交互" class="headerlink" title="Objective-C 与 JavaScript 交互"></a>Objective-C 与 JavaScript 交互</h3><p>obj-c 与 js调用关系图<br><img src="/images/rn02.png" alt="obj-c 与 js调用关系图"></p>
+<p><img src="/images/rn03.png"></p>
 <p>交互流程</p>
 <p>在 React Native 中，Objective-C 和 JavaScript 的交互都是通过传递 ModuleId、MethodId 和 Arguments 进行的。Objective-C 和 JavaScript 两端都保存了一份配置表，里面标记了所有 Objective-C 暴露给 JavaScript 的模块和方法。这样，无论是哪一方调用另一方的方法，实际上传递的数据只有 ModuleId、MethodId 和 Arguments 这三个元素，它们分别表示类、方法和方法参数，当 Objective-C 接收到这三个值后，就可以通过 runtime 唯一确定要调用的是哪个函数，然后调用这个函数。Objective-C 和 JavaScript 的交互总是由Objective-C发起的。Object-C与js的交互是通过各端的Bridge和ModuleConfig来进行的，实际过程可分为两个阶段：<strong>初始化阶段</strong>和<strong>方法调用阶段</strong>。</p>
 <p><strong>初始化 React Native</strong></p>
@@ -2833,7 +2833,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <p>2.JS调用OC代码</p>
 <p>在调用 Objective-C 代码时，JavaScript 会解析出方法的 ModuleId、MethodId 和 Arguments 并放入到 MessageQueue 中，等待 Objective-C 主动拿走，或者超时后主动发送给 Objective-C。</p>
 <p>函数内部在每一次方调用中查找模块配置表找出要调用的方法，并通过 runtime 动态的调用。</p>
-<p><a href="https://www.jianshu.com/p/82a28c8b673b">React-Native简介与运行原理解析</a><br><a href="http://blog.cnbang.net/tech/2698/">React Native通信机制详解</a></p>
+<p><a href="http://blog.cnbang.net/tech/2698/">React Native通信机制详解</a></p>
 ]]></content>
       <categories>
         <category>ReactNative</category>
@@ -3195,107 +3195,6 @@ http://kofi1122.blog.51cto.com/2815761/521605
       <tags>
         <tag>echarts</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/12/06/%E5%89%8D%E7%AB%AF/%E5%9B%BE%E8%A1%A8/</url>
-    <content><![CDATA[
-<meta charset="utf-8">
-<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
-<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<div id="main" style="position: absolute; left: 0; top: 0;"></div>
-
-<script type="text/javascript">
-let myChart=echarts.init(main)
-; (onresize=_=>{
-  main.style.width=innerWidth+'px'
-  main.style.height=innerHeight+'px'
-  myChart.resize()
-})()
-
-const getopt=(title, inited, data)=>({
-  backgroundColor: '#fff',
-    title: {
-        text: title,
-        left: '33%',
-    },
-    tooltip: {
-        trigger: 'axis',
-    },
-    legend: Object.assign({
-        data: Object.keys(data[0]).filter(a=>a!=='日期'),
-        top: '12%',
-    }, inited? {}: {
-        selected: {heapTotal: false, external: false, rss: false}
-    }),
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        top: '22%',
-        containLabel: true
-    },
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: data.map(a=>a['日期'])
-    },
-    yAxis: {
-        type: 'value',
-        axisLabel:{formatter: '{value} 毫秒'}
-    },
-    series: Object.keys(data[0]).filter(a=>a!=='日期').map(k=>({
-      name: k,
-      type: 'line',
-      stack: k,
-      data: data.map(a=>a[k]),
-    })),
-})
-
-const data=[
-{
-  "日期": "11-16",
-  "Android": "758.03",
-  "iOS": "872.21"
-},
-{
-    "日期": "11-17",
-    "Android": "761.54",
-    "iOS": "878.91"
-},
-{
-    "日期": "11-18",
-    "Android": "763.22",
-    "iOS": "871.78"
-},
-{
-    "日期": "11-19",
-    "Android": "771.16",
-    "iOS": "888.15"
-},
-{
-    "日期": "11-20",
-    "Android": "741.59",
-    "iOS": "847.57"
-},
-{
-    "日期": "11-21",
-    "Android": "734.98",
-    "iOS": "832.24"
-},
-{
-    "日期": "11-22",
-    "Android": "749.53",
-    "iOS": "821.18"
-},
-]
-
-
-
-myChart.setOption(getopt('H5加载耗时概览(来源烛龙平台)', {}, data))
-
-</script>
-]]></content>
   </entry>
   <entry>
     <title>如何扩展 Create React App 的 Webpack 配置</title>

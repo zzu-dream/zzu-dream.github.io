@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="为了明天而努力">
@@ -169,10 +169,7 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -186,110 +183,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/%E5%89%8D%E7%AB%AF/ESLint%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/14/%E5%89%8D%E7%AB%AF/ESLint%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">ESLint安装使用流程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-14 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-14T16:17:22+08:00">2018-06-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>ESLint安装使用流程</p>
-<h1 id="京东通天塔项目安装使用流程"><a href="#京东通天塔项目安装使用流程" class="headerlink" title="京东通天塔项目安装使用流程"></a>京东通天塔项目安装使用流程</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 京东通天塔项目已经添加了相关的配置只需要做以下操作即可使用：</span><br><span class="line">1. npm run install_eslint_packages     安装相关依赖包</span><br><span class="line">2. IDE配置：</span><br><span class="line">  http://139.199.180.74/showdoc/Public/Uploads/2017-12-12/5a2f4a15bfbcd.jpeg</span><br><span class="line">3.输出使用 详见最底部 `ESLint输出报告方式`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="新项目安装使用流程"><a href="#新项目安装使用流程" class="headerlink" title="新项目安装使用流程"></a>新项目安装使用流程</h1><h2 id="ESLint流程梳理"><a href="#ESLint流程梳理" class="headerlink" title="ESLint流程梳理"></a>ESLint流程梳理</h2><h3 id="一、背景介绍"><a href="#一、背景介绍" class="headerlink" title="一、背景介绍"></a>一、背景介绍</h3><h5 id="ESLint是一个用来识别-ECMAScript-并且按照规则给出报告的代码检测工具，使用它可以避免低级错误和统一代码的风格。ESLint被设计为完全可配置的，主要有两种方式来配置ESLint："><a href="#ESLint是一个用来识别-ECMAScript-并且按照规则给出报告的代码检测工具，使用它可以避免低级错误和统一代码的风格。ESLint被设计为完全可配置的，主要有两种方式来配置ESLint：" class="headerlink" title="ESLint是一个用来识别 ECMAScript 并且按照规则给出报告的代码检测工具，使用它可以避免低级错误和统一代码的风格。ESLint被设计为完全可配置的，主要有两种方式来配置ESLint："></a>ESLint是一个用来识别 ECMAScript 并且按照规则给出报告的代码检测工具，使用它可以避免低级错误和统一代码的风格。ESLint被设计为完全可配置的，主要有两种方式来配置ESLint：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">在注释中配置：使用JavaScript注释直接把配置嵌入到JS文件中。</span><br><span class="line">配置文件：使用下面任一的文件来为全部的目录和它的子目录指定配置信息。</span><br><span class="line">javascript：使用.eslintrc.js文件并导出一个包含配置的对象。</span><br><span class="line">YAML：.eslintrc.yaml或者.eslintrc.yml</span><br><span class="line">JSON：.eslintrc.json，并且此文件允许使用JS形式的注释</span><br><span class="line">废弃的用法：.eslintrc，此文件可以是JSON或者YAML</span><br><span class="line">package.json：在package.json文件中创建eslintConfig属性，所有的配置包含在此属性中。</span><br><span class="line">这些文件的优先级则是按照以上出现的顺序</span><br><span class="line">（.eslintrc.js &gt; .eslintrc.yaml &gt; .eslintrc.yml &gt; .eslintrc.json &gt; .eslintrc &gt; package.json）。</span><br><span class="line"></span><br><span class="line">三种方法可以配置ESLint</span><br><span class="line">    &gt; 使用.eslintrc.*文件（ 支持JSON和YAML两种语法）</span><br><span class="line">    &gt; 在package.json中添加eslintConfig配置块</span><br><span class="line">    &gt; 使用JavaScript注释直接把配置嵌入到文件中</span><br><span class="line"></span><br><span class="line">可以被配置的信息主要分为3类：</span><br><span class="line"></span><br><span class="line">Environments：你的 javascript 脚步将要运行在什么环境（如：nodejs，browser，commonjs等）中。</span><br><span class="line">Globals：执行代码时脚步需要访问的额外全局变量。</span><br><span class="line">Rules：开启某些规则，也可以设置规则的等级。 </span><br></pre></td></tr></table></figure>
-
-
-<h3 id="二、作用"><a href="#二、作用" class="headerlink" title="二、作用"></a>二、作用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">EsLint提供以下几种校验：</span><br><span class="line"></span><br><span class="line">语法错误校验</span><br><span class="line">不重要或丢失的标点符号，如分号</span><br><span class="line">没法运行到的代码块（使用过WebStorm的童鞋应该了解）</span><br><span class="line">未被使用的参数提醒</span><br><span class="line">漏掉的结束符，如&#125;</span><br><span class="line">确保样式的统一规则，如sass或者less</span><br><span class="line">检查变量的命名</span><br></pre></td></tr></table></figure>
-
-<h3 id="三、安装"><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">安装</span><br><span class="line"></span><br><span class="line">全局安装</span><br><span class="line">npm i -g eslint</span><br><span class="line">局部安装（推荐）</span><br><span class="line">npm i -D eslint</span><br><span class="line">安装完毕后，接下来新建一个配置文件.eslintrc.js，</span><br><span class="line">或者使用如下的命令行来自动生成。</span><br><span class="line"></span><br><span class="line">eslint --init</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="四、配置"><a href="#四、配置" class="headerlink" title="四、配置"></a>四、配置</h3><h5 id="指定执行环境"><a href="#指定执行环境" class="headerlink" title="指定执行环境"></a>指定执行环境</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">JavaScript 代码可以运行在浏览器或 nodejs 等环境中，</span><br><span class="line">每个环境的全局变量都不尽相同（如 nodejs 中没有 DOM 相关的全局变量）。</span><br><span class="line">在配置文件中可以自由的指定执行环境。</span><br><span class="line"></span><br><span class="line">// .eslintrc.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  env: &#123;</span><br><span class="line">    browser: true,</span><br><span class="line">    node: true,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">https://eslint.org/docs/user-guide/configuring#specifying-environments</span><br></pre></td></tr></table></figure>
-<h5 id="指定全局变量"><a href="#指定全局变量" class="headerlink" title="指定全局变量"></a>指定全局变量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">可以在配置文件或注释中指定额外的全局变量，false表明变量只读：</span><br><span class="line"></span><br><span class="line">使用注释来配置：</span><br><span class="line">/* global var1, var2 */</span><br><span class="line">/* global var1:false, var2:false */</span><br><span class="line">使用配置文件来配置：</span><br><span class="line">// .eslintrc.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  globals: &#123;</span><br><span class="line">    var1: true,</span><br><span class="line">    var2: true,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="配置Rules"><a href="#配置Rules" class="headerlink" title="配置Rules"></a>配置Rules</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在配置文件中可以设置一些规则。</span><br><span class="line"></span><br><span class="line">这些规则的等级有三种：</span><br><span class="line"></span><br><span class="line">&quot;off&quot; 或者 0：关闭规则。</span><br><span class="line">&quot;warn&quot; 或者 1：打开规则，并且作为一个警告（不影响exit code）。</span><br><span class="line">&quot;error&quot; 或者 2：打开规则，并且作为一个错误（exit code将会是1）。</span><br><span class="line"></span><br><span class="line">默认校验的地址http://eslint.org/docs/rules/</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="五、使用方法"><a href="#五、使用方法" class="headerlink" title="五、使用方法"></a>五、使用方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">通过命令行工具来使用 eslint 。</span><br><span class="line">1、列出所有文件命令 eslint .</span><br><span class="line">2、列出具体某个文件</span><br><span class="line">eslint [options] file.js [file.js] [dir]</span><br></pre></td></tr></table></figure>
-<h3 id="六、自动修复"><a href="#六、自动修复" class="headerlink" title="六、自动修复"></a>六、自动修复</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eslint --fix [dir]</span><br></pre></td></tr></table></figure>
-
-<h3 id="七、相关插件使用"><a href="#七、相关插件使用" class="headerlink" title="七、相关插件使用"></a>七、相关插件使用</h3><h5 id="ESLint输出报告方式"><a href="#ESLint输出报告方式" class="headerlink" title="ESLint输出报告方式"></a>ESLint输出报告方式</h5><p>一、终端直接输出方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eslint .</span><br></pre></td></tr></table></figure>
-
-<p>二、md格式：(到eslint_report目录下查看md格式文件)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eslint run eslint_makdown </span><br></pre></td></tr></table></figure>
-
-<p>三、html格式：（到eslint_report目录下查看html格式文件）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eslint run eslint_html</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -342,6 +239,14 @@
       
           <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JJ583500596/article/details/75081462">Android Studio平台下无线调试</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/Android%20Studio%E5%B9%B3%E5%8F%B0%E4%B8%8B%E6%97%A0%E7%BA%BF%E8%B0%83%E8%AF%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -363,7 +268,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android-code-style/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -418,6 +323,14 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/AndroidFine">Android快速开发框架</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/tianshaojie/android-modularization">Android组件化设计思路</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android-code-style/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -439,7 +352,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -498,6 +411,14 @@
 * <? extends T>：上界通配符（Upper Bounds Wildcards）
 * <? super T>：    下界通配符（Lower Bounds Wildcards）
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android%E4%B9%8B%E6%B3%9B%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -519,7 +440,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -621,26 +542,14 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <p>solid：实心，就是填充的意思<br>android:color指定填充的颜色<br>gradient：渐变<br>android:startColor和android:endColor分别为起始和结束颜色，ndroid:angle是渐变角度，必须为45的整数倍。<br>另外渐变默认的模式为android:type=”linear”，即线性渐变，可以指定渐变为径向渐变，android:type=”radial”，径向渐变需要指定半径  android:gradientRadius=”50”。<br>stroke：描边<br>android:width=”2dp” 描边的宽度，android:color 描边的颜色。<br>我们还可以把描边弄成虚线的形式，设置方式为：<br>android:dashWidth=”5dp”<br>android:dashGap=”3dp”<br>其中android:dashWidth表示’-‘这样一个横线的宽度，android:dashGap表示之间隔开的距离。 </p>
 <h3 id="SharedPreferences的使用"><a href="#SharedPreferences的使用" class="headerlink" title="SharedPreferences的使用"></a>SharedPreferences的使用</h3><p>存：SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>        settings.edit().putString(“name”, editView.getText().toString()).commit();<br>取：  //获取一个 SharedPreferences 对象<br>        SharedPreferences settings = getSharedPreferences(“SharedInstance”, 0);<br>          //取出保存的NAME，取出改字段名的值，不存在则创建默认为空<br>            String name = settings.getString(“name”, “”); </p>
 <h3 id="corners：圆角"><a href="#corners：圆角" class="headerlink" title="corners：圆角"></a>corners：圆角</h3><p>android:radius为角的弧度，值越大角越圆。<br>我们还可以把四个角设定成不同的角度，方法为：</p>
-<pre><code class="java">
-&lt;corners 
-        android:topRightRadius=&quot;20dp&quot;    右上角
-        android:bottomLeftRadius=&quot;20dp&quot;    右下角
-        android:topLeftRadius=&quot;1dp&quot;    左上角
-        android:bottomRightRadius=&quot;0dp&quot;    左下角
- /&gt;
- 
-</code></pre>
-<p>这里有个地方需要注意，bottomLeftRadius是右下角，而不是左下角，这个有点郁闷，不过不影响使用，记得别搞错了就行。<br>还有网上看到有人说设置成0dp无效，不过我在测试中发现是可以的，我用的是2.2，可能修复了这个问题吧，如果无效的话那就只能设成1dp了。<br>padding：间隔<br>这个就不用多说了，XML布局文件中经常用到。<br>大体的就是这样，以下是一个使用的具体示例：用在Selector中作为Button的背景，分别定义了按钮的一般状态、获得焦点状态和按下时的状态，具体代码如下：<br>使用地方：</p>
-<pre><code class="java">
-&lt;Button
-    android:layout_width=&quot;wrap_content&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:text=&quot;TestShapeButton&quot;
-    android:background=&quot;@drawable/button_selector&quot;
-    /&gt;
-    
-</code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-14)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -662,7 +571,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -722,14 +631,14 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <h3 id="Bundle的使用"><a href="#Bundle的使用" class="headerlink" title="Bundle的使用"></a>Bundle的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</span><br><span class="line">        bundle.putString(<span class="string">&quot;city&quot;</span>, <span class="string">&quot;上海&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;狗子&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;12&quot;</span>);</span><br><span class="line">        bundle.putString(<span class="string">&quot;gender&quot;</span>, <span class="string">&quot;男&quot;</span>);</span><br><span class="line">        String name = bundle.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        Log.v(<span class="string">&quot;Bundle&quot;</span>,<span class="string">&quot;bundle.string=&quot;</span>+ bundle.toString()+<span class="string">&quot;名字：&quot;</span>+name);</span><br><span class="line"><span class="comment">//bundle.string=Bundle[&#123;gender=男, age=12, city=上海, name=狗子&#125;]名字：狗子</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="Android-RelativeLayout-属性"><a href="#Android-RelativeLayout-属性" class="headerlink" title="Android RelativeLayout 属性"></a>Android RelativeLayout 属性</h3><p>// 相对于给定ID控件<br>android:layout_above 将该控件的底部置于给定ID的控件之上;<br>android:layout_below 将该控件的底部置于给定ID的控件之下;<br>android:layout_toLeftOf    将该控件的右边缘与给定ID的控件左边缘对齐;<br>android:layout_toRightOf  将该控件的左边缘与给定ID的控件右边缘对齐;</p>
 <p>android:layout_alignBaseline  将该控件的baseline与给定ID的baseline对齐;<br>android:layout_alignTop        将该控件的顶部边缘与给定ID的顶部边缘对齐;<br>android:layout_alignBottom   将该控件的底部边缘与给定ID的底部边缘对齐;<br>android:layout_alignLeft        将该控件的左边缘与给定ID的左边缘对齐;<br>android:layout_alignRight      将该控件的右边缘与给定ID的右边缘对齐;<br>// 相对于父组件<br>android:layout_alignParentTop      如果为true,将该控件的顶部与其父控件的顶部对齐;<br>android:layout_alignParentBottom 如果为true,将该控件的底部与其父控件的底部对齐;<br>android:layout_alignParentLeft      如果为true,将该控件的左部与其父控件的左部对齐;<br>android:layout_alignParentRight    如果为true,将该控件的右部与其父控件的右部对齐;<br>// 居中<br>android:layout_centerHorizontal 如果为true,将该控件的置于水平居中;<br>android:layout_centerVertical     如果为true,将该控件的置于垂直居中;<br>android:layout_centerInParent   如果为true,将该控件的置于父控件的中央;<br>// 指定移动像素<br>android:layout_marginTop      上偏移的值;<br>android:layout_marginBottom 下偏移的值;<br>android:layout_marginLeft 　　左偏移的值;<br>android:layout_marginRight 　 右偏移的值;</p>
-<!--2014、11、18-->  
-
-<h3 id="下拉列表框-Spinner的使用"><a href="#下拉列表框-Spinner的使用" class="headerlink" title="下拉列表框 Spinner的使用"></a>下拉列表框 Spinner的使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">myTextView = (TextView) findViewById(R.id.TextView_city);</span><br><span class="line">        mySpinner = (Spinner) findViewById(R.id.Spinner_city);</span><br><span class="line">        adapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;(<span class="keyword">this</span>,</span><br><span class="line">                android.R.layout.simple_spinner_item, citys);</span><br><span class="line">        <span class="comment">// 为适配器设置下拉列表下拉时的菜单样式。</span></span><br><span class="line">        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</span><br><span class="line">        <span class="comment">// 将适配器添加到下拉列表上</span></span><br><span class="line">        mySpinner.setAdapter(adapter);</span><br><span class="line">        mySpinner.setOnItemSelectedListener(<span class="keyword">new</span> OnItemSelectedListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemSelected</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                myTextView.setText(<span class="string">&quot;您的选择是：&quot;</span> + adapter.getItem(position));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNothingSelected</span><span class="params">(AdapterView&lt;?&gt; parent)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                <span class="comment">// myTextView.setText(&quot;NONE&quot;);</span></span><br><span class="line">                <span class="comment">// parent.setVisibility(View.VISIBLE);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 类名.<span class="keyword">this</span> 的使用</span><br><span class="line"></span><br><span class="line">我们会用到一些内部类和匿名类。当在匿名类中用<span class="keyword">this</span>时，这个<span class="keyword">this</span>则指的是匿名类或内部类本身。这时如果我们要使用外部类的方法和变量的话，则应该加上外部类的类名。</span><br><span class="line"></span><br><span class="line">### GridView 使用方式</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">GridView gridView = (GridView) findViewById(R.id.gridview);</span><br><span class="line">        gridView.setAdapter(<span class="keyword">new</span> ImageAdapter(<span class="keyword">this</span>));</span><br><span class="line">        gridView.setOnItemClickListener(<span class="keyword">new</span> OnItemClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view,</span></span></span><br><span class="line"><span class="params"><span class="function">                    <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">                Toast.makeText(GridViewActivity.<span class="keyword">this</span>, mThumbIds[position], Toast.LENGTH_LONG).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">```  </span><br><span class="line">       </span><br><span class="line">### 代码法设置背景颜色</span><br><span class="line"></span><br><span class="line">ImageView设置背景颜色</span><br><span class="line">ImageView.setBackgroundColor(android.graphics.Color.parseColor(<span class="string">&quot;#ffffff&quot;</span>));</span><br><span class="line">ImageView.setBackgroundColor(Color.RED);</span><br><span class="line">ImageView.setBackgroundColor(Color.rgb(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">### Android广播机制</span><br><span class="line"></span><br><span class="line">BroadcastReceiver用于接收程序（包括用户开发的程序和系统内建的程序）所发出的Broadcast Intent，与应用程序启动Activity、Service相同的是，程序启动BroadcastReceiver也只需要两步。</span><br><span class="line"><span class="number">1</span>）创建需要启动的BroadcastReceiver的Intent。</span><br><span class="line"><span class="number">2</span>）调用Context的sendBroadcast()或sendOrderedBroadcast()方法来启动指定BroadcastReceiver。</span><br><span class="line">内部类的方式</span><br><span class="line"></span><br><span class="line">#### 注册</span><br><span class="line"></span><br><span class="line">``` java</span><br><span class="line">&#123;</span><br><span class="line">    myBroadCast = <span class="keyword">new</span> MyBroadCast();</span><br><span class="line">        IntentFilter filter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">        filter.addAction(ACTION_INTENT_TEST);</span><br><span class="line">        registerReceiver(myBroadCast, filter);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="内部类实现"><a href="#内部类实现" class="headerlink" title="内部类实现"></a>内部类实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBroadCast</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MyBroadCast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;myBroadCast&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO 处理接收到得广播</span></span><br><span class="line">            Log.v(<span class="string">&quot;BROADCAST_TAG&quot;</span>, <span class="string">&quot;onReceive===1111111&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(ThirdActivity.ACTION_INTENT_TEST);</span><br><span class="line">                   sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
-
-<h4 id="取消注册"><a href="#取消注册" class="headerlink" title="取消注册"></a>取消注册</h4><p> java<br>    @Override<br>    protected void onDestroy() {<br>        super.onDestroy();<br>        unregisterReceiver(myBroadCast);<br>    }</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0(2014-11-17)/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -751,7 +660,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -809,38 +718,14 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>command + shift + f 格式化代码 ，option + / 提示，option + 上下键 移动某行代码，option + command + 上下键，option + command + s  弹出菜单功能页，Ctrl+1 快速修复(最经典的快捷键,就不用多说了)</p>
 <h3 id="layout文件夹里新建xml命名"><a href="#layout文件夹里新建xml命名" class="headerlink" title="layout文件夹里新建xml命名"></a>layout文件夹里新建xml命名</h3><p>必须都是小写</p>
 <h3 id="完成A跳转到B操作：要在AndroidMainifest-xml的文件里面"><a href="#完成A跳转到B操作：要在AndroidMainifest-xml的文件里面" class="headerlink" title="完成A跳转到B操作：要在AndroidMainifest.xml的文件里面"></a>完成A跳转到B操作：要在AndroidMainifest.xml的文件里面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"> &lt;activity</span><br><span class="line">            android:name=<span class="string">&quot;com.example.sample1.新加入的类名字”</span></span><br><span class="line"><span class="string">            android:label=“页面的标题” &gt;</span></span><br><span class="line"><span class="string"> &lt;/activity&gt;</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">```     </span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">AndroidManifest.xml是Android应用程序中最重要的文件之一。它是Android程序的全局配置文件，是每个 android程序中必须的文件。它位于我们开发的应用程序的根目录下，描述了package中的全局数据，包括package中暴露的组件 （activities, services, 等等），以及他们各自的实现类，各种能被处理的数据和启动位置等重要信息。</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;!--2014、11、13--&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 布局Layout管理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[布局](http://www.cnblogs.com/mengdd/archive/2012/12/19/2825382.html)  </span></span><br><span class="line"><span class="string"> 　</span></span><br><span class="line"><span class="string"> 　　布局即是指Activity中组件的呈现方式，即组件大小、间距和对齐方式等。  </span></span><br><span class="line"><span class="string">　　Android提供了两种创建布局的方式：  </span></span><br><span class="line"><span class="string">　　　　1.在XML配置文件中声明（推荐）。  </span></span><br><span class="line"><span class="string">　　　　2.在程序中通过代码直接实例化布局及其组件。  </span></span><br><span class="line"><span class="string">在Android中常见的布局方式：  </span></span><br><span class="line"><span class="string">线性布局（LinearLayout）：按照垂直或者水平方向布局组件。  </span></span><br><span class="line"><span class="string">　　帧布局（FrameLayout）：组件从屏幕的左上角坐标布局组件。  </span></span><br><span class="line"><span class="string">　　表格布局（TableLayout）：按照行列方式布局组件。  </span></span><br><span class="line"><span class="string">　　相对布局（RelativeLayout）：相对其他组件的布局方式。  </span></span><br><span class="line"><span class="string">　　绝对布局（AbsoluteLayout）：按照绝对坐标来布局组件。（已废）。  </span></span><br><span class="line"><span class="string">2、一个ListView通常有两个职责。  </span></span><br><span class="line"><span class="string">（1）将数据填充到布局。  </span></span><br><span class="line"><span class="string">（2）处理用户的选择点击等操作。  </span></span><br><span class="line"><span class="string">第一点很好理解，ListView就是实现这个功能的。第二点也不难做到，在后面的学习中读者会发现，这非常简单。  </span></span><br><span class="line"><span class="string">一个ListView的创建需要3个元素。  </span></span><br><span class="line"><span class="string">（1）ListView中的每一列的View。  </span></span><br><span class="line"><span class="string">（2）填入View的数据或者图片等。  </span></span><br><span class="line"><span class="string">（3）连接数据与ListView的适配器。  </span></span><br><span class="line"><span class="string">3、关于List&lt;E&gt;的用法  </span></span><br><span class="line"><span class="string">List l=new List();  </span></span><br><span class="line"><span class="string"> 现在这样，如果你想放得是User类，就这样new:  </span></span><br><span class="line"><span class="string"> List &lt;User&gt; l=new List &lt;User&gt;();  </span></span><br><span class="line"><span class="string"> 这样编译器就可以帮你监督，如果你往里面放其他类对象，就会报错咯。  </span></span><br><span class="line"><span class="string"> 当然好处就是你拿出来就是User类对象，不用再强制转换了。比如过去：  </span></span><br><span class="line"><span class="string"> User u=(User)l.get(1);  </span></span><br><span class="line"><span class="string"> 现在就可以：  </span></span><br><span class="line"><span class="string"> User u=l.get(1);  </span></span><br><span class="line"><span class="string">4、ArrayList &amp;&amp; HashMap 的使用 </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">``` java</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> 	ArrayList&lt;HashMap&lt;String,String&gt;&gt; list=new ArrayList&lt;HashMap&lt;String,String&gt;&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map1= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map2= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">        HashMap&lt;String,String&gt; map3= new HashMap&lt;String,String&gt;();  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>user<span class="string">&quot;, &quot;</span>zhang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map1.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>user<span class="string">&quot;, &quot;</span>wang<span class="string">&quot;);  </span></span><br><span class="line"><span class="string">        map2.put(&quot;</span>id<span class="string">&quot;, &quot;</span><span class="number">192.168</span><span class="number">.0</span><span class="number">.1</span><span class="string">&quot;);  </span></span><br><span class="line"><span class="string">          </span></span><br><span class="line"><span class="string">        list.add(map1);  </span></span><br><span class="line"><span class="string">        list.add(map2);  </span></span><br><span class="line"><span class="string">        list.add(map3); </span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        Log.v(&quot;</span>ArrayList==HashMap===:<span class="string">&quot;, list.toString());</span></span><br><span class="line"><span class="string">        </span></span><br></pre></td></tr></table></figure>
-
-<h3 id="AlertDialog-的使用"><a href="#AlertDialog-的使用" class="headerlink" title="AlertDialog 的使用"></a>AlertDialog 的使用</h3><pre><code class="java">         
-         Builder alertDialog = new AlertDialog.Builder(this);
-         alertDialog.setTitle(&quot;标题&quot;);// 设置标题
-         alertDialog.setMessage(&quot;一个消息框&quot;);// 设置消息
-         alertDialog.setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() &#123;
-             
-             @Override
-             public void onClick(DialogInterface dialog, int which) &#123;
-                 // toast 的用法
-                 Toast.makeText(getApplicationContext(), &quot;你选择了确定&quot;,
-                         Toast.LENGTH_SHORT).show();
-             &#125;
-         &#125;);
-         alertDialog.show();
-         
-</code></pre>
-<h3 id="Button-的使用-通过具体的id-找到某个控件"><a href="#Button-的使用-通过具体的id-找到某个控件" class="headerlink" title="Button 的使用: 通过具体的id 找到某个控件"></a>Button 的使用: 通过具体的id 找到某个控件</h3><pre><code class="java">        // 给按钮加上点击事件
-        clickMeButton.setOnClickListener(new OnClickListener() &#123;
-            @Override
-            public void onClick(View v) &#123;
-                Log.v(&quot;click&quot;, &quot;=======clickButton=======&quot;);
-                // 跳转到SecondActivity页面
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SecondActivity.class);
-                startActivity(intent);
-            &#125;
-        &#125;);
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
         
-</code></pre>
-<h3 id="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如"><a href="#dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如" class="headerlink" title="dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:"></a>dp是虚拟像素，在不同的像素密度的设备上会自动适配，比如:</h3><p>在320x480分辨率，像素密度为160,1dp=1px<br>在480x800分辨率，像素密度为240,1dp=1.5px<br>计算公式:1dp*像素密度/160 = 实际像素数<br>px（像素）：屏幕上的点。<br>dp（与密度无关的像素）：一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，1dp = 1px。<br>尽量使用dp作为空间大小单位，sp作为和文字相关大小单位 </p>
-
       
     </div>
 
@@ -862,7 +747,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -926,13 +811,14 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test5</span> </span>&#123; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> b; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">3</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">Test5 t=<span class="keyword">new</span> Test5(); </span><br><span class="line">t.f(); </span><br><span class="line">t.b=<span class="number">1000</span>; </span><br><span class="line">System.out.println(t.b); </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">4</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"><span class="comment">// TODO 自动生成方法存根 </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">static</span>&#123; </span><br><span class="line">Test5.a=<span class="number">5</span>; </span><br><span class="line">System.out.println(a); </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>&#123; </span><br><span class="line">System.out.println(<span class="string">&quot;hhahhahah&quot;</span>); </span><br><span class="line">&#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 
 <p>运行结果：<br>3<br>hhahhahah<br>1000<br>4<br>5<br>　利用静态代码块可以对一些static变量进行赋值，最后再看一眼这些例子，都一个static的main方法，这样JVM在运行main方法的时候可以直接调用而不用创建实例。<br>4、static和final一块用表示什么<br>static final用来修饰成员变量和成员方法，可简单理解为“全局常量”！<br>对于变量，表示一旦给值就不可修改，并且通过类名可以访问。<br>对于方法，表示不可覆盖，并且可以通过类名直接访问。</p>
-<p>【自己补充的】<br>5、static还可以修饰内部类，普通类是不允许声明为静态的，只有内部类才可以。被static修饰的内部类可以直接作为一个普通类来使用，而不需实例化一个外部类<br>例如有个类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestInner</span></span>&#123;</span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticInnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么在main中实例化StaticInnerClass的代码是这样写<br>new TestInner.StaticInnerClass();<br>而实例化InnerClass则必须写成<br>TestInner testInner = new TestInner();<br>testInner.new InnerClass();<br>所以要注意了哦！<br>而且呢，在InnerClass里面已经无法再声明static innner class了，因为The member type inner cannot be declared static; static types can only be declared in static or top level types  </p>
-<!--11.28-->
-<p>抽象类 abstract class<br>     包含抽象方法的类，叫抽象类。而抽象的概念就是抽象出共同属性：成员变量和方法。所以抽象类可以有private等多种权限的成员变量和非abstract的成员方法。当然抽象方法是一定要有的。<br>    抽象类是用于单一继承的，不能实例化。而继承类一定要实现抽象方法，因为抽象方法在抽象类里是没有实现行为的，访问权限只能是public。而非抽象方法则可以赋予方法的默认行为，访问权限可以多种，但需要考虑非抽象方法是否需要被继承类访问。<br>接口 interface<br>     接口，用于多重继承，也不能实例化。只能包含static final的成员变量，不过在interface中一般不定义成员变量。而成员方法在接口里只能是抽象方法，访问权限只能是public。<br><a target="_blank" rel="noopener" href="http://android.blog.51cto.com/268543/385282/">http://android.blog.51cto.com/268543/385282/</a> </p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/android/android%E5%AD%A6%E4%B9%A02014-11-19/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -954,7 +840,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/dart%20&%20flutter/dart/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -1010,6 +896,14 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap dart-lang/dart</span><br><span class="line">brew install dart</span><br></pre></td></tr></table></figure>
 <p><strong>开发工具：</strong><br><code>vscode</code> 安装插件 <code>dart</code> 和 <code>code runner</code></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/dart%20&%20flutter/dart/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1031,7 +925,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E4%B9%8B%20ssh/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/nba_star.png">
       <meta itemprop="name" content="追梦机器人">
       <meta itemprop="description" content="为了明天而努力">
     </span>
@@ -1087,9 +981,101 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <p>紧接着输入 <code>ssh-keygen -t rsa</code> 或者<code>（ssh-keygen -t rsa -C “邮箱名&quot;）</code> ，什么意思呢？就是指定 rsa 算法生成密钥，接着连续三个回车键（不需要输入密码），然后就会生成两个文件 <code>id_rsa</code> 和 <code>id_rsa.pub</code> ，而 <code>id_rsa</code> 是密钥，<code>id_rsa.pub</code> 就是公钥。这两文件默认分别在如下目录里生成：<br><code>Linux/Mac</code> 系统 在<code> ~/.ssh</code> 下，win系统在 <code>/c/Documents and Settings/username/.ssh</code> 下，都是隐藏文件，相信你们有办法查看的。<br>接下来要做的是把 <code>id_rsa.pub </code>的内容添加到 GitHub 上，这样你本地的 <code>id_rsa</code> 密钥跟 GitHub 上的 <code>id_rsa.pub</code> 公钥进行配对，授权成功才可以提交代码。</p>
 <h3 id="GitHub-上添加-SSH-key"><a href="#GitHub-上添加-SSH-key" class="headerlink" title="GitHub 上添加 SSH key"></a>GitHub 上添加 SSH key</h3><p>第一步先在 GitHub 上的设置页面，点击最左侧 SSH and GPG keys ：</p>
 <h3 id="怎么查看-id-rsa-pub-文件的内容？"><a href="#怎么查看-id-rsa-pub-文件的内容？" class="headerlink" title="怎么查看 id_rsa.pub 文件的内容？"></a>怎么查看 id_rsa.pub 文件的内容？</h3><p>Linux/Mac 用户执行以下命令：<br>cd ~/.ssh<br>cat id_rsa.pub</p>
-<h3 id="测试是否ok"><a href="#测试是否ok" class="headerlink" title="测试是否ok"></a>测试是否ok</h3><p>SSH key 添加成功之后，输入 ssh -T <a href="mailto:&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;">&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#117;&#x62;&#46;&#x63;&#x6f;&#x6d;</a> 进行测试</p>
-<p><a target="_blank" rel="noopener" href="http://stormzhang.com/github/2016/06/04/learn-github-from-zero4/">ssh向GITHUB 提交代码</a></p>
+<h3 id="测试是否ok"><a href="#测试是否ok" class="headerlink" title="测试是否ok"></a>测试是否ok</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/git/git%20%E4%B9%8B%20ssh/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">git 如何删除缓存的远程分支列表.md</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单</a></p>
+<h2 id="列出远程分支"><a href="#列出远程分支" class="headerlink" title="列出远程分支"></a>列出远程分支</h2><p>使用git 部署代码，</p><pre> git branch -a </pre> 里面列出的很多远程的分支，其实都是已经被删除了的。<p></p>
+<h2 id="删除缓存的远程分支列表"><a href="#删除缓存的远程分支列表" class="headerlink" title="删除缓存的远程分支列表"></a>删除缓存的远程分支列表</h2><p>用此命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br><span class="line">or</span><br><span class="line">git fetch -p   </span><br></pre></td></tr></table></figure>
+<p>即可解决</p>
+<h2 id="列出提交个数"><a href="#列出提交个数" class="headerlink" title="列出提交个数"></a>列出提交个数</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/git/git%20%E5%A6%82%E4%BD%95%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E5%88%97%E8%A1%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1165,6 +1151,8 @@ http://kofi1122.blog.51cto.com/2815761/521605
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="追梦机器人"
+      src="/images/nba_star.png">
   <p class="site-author-name" itemprop="name">追梦机器人</p>
   <div class="site-description" itemprop="description">为了明天而努力</div>
 </div>
@@ -1173,7 +1161,7 @@ http://kofi1122.blog.51cto.com/2815761/521605
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1195,6 +1183,10 @@ http://kofi1122.blog.51cto.com/2815761/521605
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
