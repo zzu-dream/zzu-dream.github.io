@@ -183,7 +183,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/nba_star.png">
@@ -197,7 +197,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">深入理解iOS App的启动过程</a>
+            <a href="/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">NSRunloop工作原理和相关应用</a>
         </h2>
 
         <div class="post-meta">
@@ -214,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-10 15:16:36" itemprop="dateModified" datetime="2021-12-10T15:16:36+08:00">2021-12-10</time>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,1012 +237,287 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Hello_Hwc/article/details/78317863?locationNum=9&fps=1">深入理解iOS App的启动过程</a></p>
-<h2 id="准备知识-知道概念"><a href="#准备知识-知道概念" class="headerlink" title="准备知识 知道概念"></a>准备知识 知道概念</h2><h3 id="Mach-O"><a href="#Mach-O" class="headerlink" title="Mach-O"></a>Mach-O</h3><p>哪些名词指的是Mach-o ?</p>
+          <h3 id="NSRunloop与程序运行"><a href="#NSRunloop与程序运行" class="headerlink" title="NSRunloop与程序运行"></a>NSRunloop与程序运行</h3><p>　　　那么具体什么是NSRunLoop呢?其实NSRunLoop的本质是一个消息机制的处理模式。让我们首先来看一下程序的入口——main.m文件，一个ios程序启动后，只有短短的十行代码居然能保持整个应用程序一直运行而没有退出，是不是有点意思？程序之所以没有直接退出是因为UIApplicationMain这个函数内部默认启动了一个跟主线程相关的NSRunloop对象，而UIApplicationMain这个函数一直执行没有返回就保存程序一直运行的状态。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;UIKit/UIKit.h&gt;</span><br><span class="line"></span><br><span class="line">#import &quot;AppDelegate.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　文章之初我们暂且将NSRunloop理解为实现这样功能的一段代码 , 这可以帮助我们更好的理解NSRunloop处理事件的过程(实际上远比这复杂的多：）)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, char * argv[]) &#123;</span><br><span class="line"></span><br><span class="line">  BOOL runnning =YES;</span><br><span class="line">   do&#123;</span><br><span class="line">        ...</span><br><span class="line">       //处理各种操作 各种事件</span><br><span class="line">       ...</span><br><span class="line">      &#125;while(running);</span><br><span class="line">  </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面用官方提供的一幅非常经典的图片，来认识NSRunloop循环处理时间的流程。</p>
+<p><img src="http://www.cocoachina.com/cms/uploads/allimg/120703/4064_120703135151_1.png"><br>通过所有的“消息”都被添加到了<code>NSRunLoop</code>中去，而在这里这些消息并分为<code>input source</code>和<code>Timer source</code> 并在循环中检查是不是有事件需要发生，如果需要那么就调用相应的函数处理。由此形成了运行-&gt;检测-&gt;休眠 -&gt;运行 的循环状态。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ruihaha/p/5813819.html">NSRunloop工作原理和相关应用</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/05/18/runloop/">深入理解RunLoop</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/NSRunloop%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%92%8C%E7%9B%B8%E5%85%B3%E5%BA%94%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/UIView%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB%E5%AF%B9%E6%AF%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/UIView%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB%E5%AF%B9%E6%AF%94/" class="post-title-link" itemprop="url">UIView与核心动画对比</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h3><p><a target="_blank" rel="noopener" href="https://lianshumin.gitbooks.io/ocnotesii/content/03-UI%E8%BF%9B%E9%98%B6/11-%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB.html">核心动画</a></p>
+<p><a target="_blank" rel="noopener" href="https://lianshumin.gitbooks.io/ocnotesii/content/03-UI%E8%BF%9B%E9%98%B6/iOS%E5%8A%A8%E7%94%BB%E7%AF%87-1-UIView%E6%B8%90%E5%8F%98%E5%8A%A8%E7%94%BB.html">UIView渐变动画</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/ios/97760">iOS核心动画高级技巧</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/UIView%E4%B8%8E%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB%E5%AF%B9%E6%AF%94/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Xcode%E4%B8%AD%E5%92%8Csymbols%E6%9C%89%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%92%8Csymbols%E6%9C%89%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">Xcode中和symbols有关的几个设置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在iOS开发中 特别是有framework打包的时候  经常遇到包比较大的问题。下面就来开下Xcode中和symbols有关的几个设置。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/11710e7ab661">简书地址</a></p>
+<p>Generate Debug Symbols 修改为NO后 能减少包的大小 但是debug功能就不能使用了</p>
+<p>-<br><img src="https://img-blog.csdn.net/20150202124656301"><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jasontec/p/9601631.html">iOS可执行文件瘦身方法</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%92%8Csymbols%E6%9C%89%E5%85%B3%E7%9A%84%E5%87%A0%E4%B8%AA%E8%AE%BE%E7%BD%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/Xcode%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8E%89%E9%BB%98%E8%AE%A4%E7%9A%84Main.storyboard/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8E%89%E9%BB%98%E8%AE%A4%E7%9A%84Main.storyboard/" class="post-title-link" itemprop="url">Xcode中如何去掉默认的Main.storyboard</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>xcode 6取消了 Empty Application 模板来创建一个工程，创建出来的有工程多了Main.storyboard，默认加载Main.storyboard，但是有很多人还想用代码来实现UI的布局，去除Main.storyboard的有三步：</p>
+<p><strong>修改</strong>  </p>
 <ul>
-<li>Executable 可执行文件</li>
-<li>Dylib 动态库</li>
-<li>Bundle 无法被连接的动态库，只能通过dlopen()加载</li>
-<li>Image 指的是Executable，Dylib或者Bundle的一种，文中会多次使用Image这个名词。</li>
-<li>Framework 动态库和对应的头文件和资源文件的集合</li>
-</ul>
-<p>Apple出品的操作系统的可执行文件格式几乎都是mach-o，iOS当然也不例外。<br>mach-o可以大致的分为三部分：</p>
-<ul>
-<li>Header 头部，包含可以执行的CPU架构，比如x86,arm64</li>
-<li>Load commands 加载命令，包含文件的组织架构和在虚拟内存中的布局方式</li>
-<li>Data，数据，包含load commands中需要的各个段(segment)的数据，每一个Segment都得大小是Page的整数倍。</li>
-</ul>
-<p>那么Data部分又包含哪些segment呢？绝大多数mach-o包括以下三个段（支持用户自定义Segment，但是很少使用）</p>
-<ul>
-<li><code>__TEXT</code> 代码段，只读，包括函数，和只读的字符串，上图中类似<code>__TEXT</code>,__text的都是代码段</li>
-<li><code>__DATA </code>数据段，读写，包括可读写的全局变量等，上图类似中的<code>__DATA</code>,<code>__data</code>都是数据段</li>
-<li><code>__LINKEDIT</code> <code> __LINKEDIT</code>包含了方法和变量的元数据（位置，偏移量），以及代码签名等信息。</li>
-</ul>
-<h3 id="dyld"><a href="#dyld" class="headerlink" title="dyld"></a>dyld</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3iOS%20App%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/" class="post-title-link" itemprop="url">正则</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <table log-set-param="table_view" data-sort="sortDisabled" valign="top"><tbody><tr><td align="left" width="75">
-<div class="para"><strong>元字符</strong></div>
-</td>
-<td align="left" valign="top" width="658">
-<div class="para"><strong>描述</strong></div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&ldquo;\\n&rdquo;匹配\n。&ldquo;\n&rdquo;匹配换行符。序列&ldquo;\\&rdquo;匹配&ldquo;\&rdquo;而&ldquo;\(&rdquo;则匹配&ldquo;(&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">^</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之后的位置。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">$</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之前的位置。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">*</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式零次或多次(大于等于0次)。例如，zo*能匹配&ldquo;z&rdquo;，&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;。*等价于{0,}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">+</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式一次或多次(大于等于1次）。例如，&ldquo;zo+&rdquo;能匹配&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;，但不能匹配&ldquo;z&rdquo;。+等价于{1,}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">?</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式零次或一次。例如，&ldquo;do(es)?&rdquo;可以匹配&ldquo;do&rdquo;或&ldquo;does&rdquo;中的&ldquo;do&rdquo;。?等价于{0,1}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">n是一个非负整数。匹配确定的n次。例如，&ldquo;o{2}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但是能匹配&ldquo;food&rdquo;中的两个o。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n,}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">n是一个非负整数。至少匹配n次。例如，&ldquo;o{2,}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但能匹配&ldquo;foooood&rdquo;中的所有o。&ldquo;o{1,}&rdquo;等价于&ldquo;o+&rdquo;。&ldquo;o{0,}&rdquo;则等价于&ldquo;o*&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n,m}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，&ldquo;o{1,3}&rdquo;将匹配&ldquo;fooooood&rdquo;中的前三个o。&ldquo;o{0,1}&rdquo;等价于&ldquo;o?&rdquo;。请注意在逗号和两个数之间不能有空格。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">?</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串&ldquo;oooo&rdquo;，&ldquo;o+?&rdquo;将匹配单个&ldquo;o&rdquo;，而&ldquo;o+&rdquo;将匹配所有&ldquo;o&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">.点</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配除&ldquo;\r\n&rdquo;之外的任何单个字符。要匹配包括&ldquo;\r\n&rdquo;在内的任何字符，请使用像&ldquo;[\s\S]&rdquo;的模式。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0&hellip;$9属性。要匹配圆括号字符，请使用&ldquo;\(&rdquo;或&ldquo;\)&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?:pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符&ldquo;(|)&rdquo;来组合一个模式的各个部分是很有用。例如&ldquo;industr(?:y|ies)&rdquo;就是一个比&ldquo;industry|industries&rdquo;更简略的表达式。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?=pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，&ldquo;Windows(?=95|98|NT|2000)&rdquo;能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?!pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如&ldquo;Windows(?!95|98|NT|2000)&rdquo;能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?&lt;=pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">反向肯定预查，与正向肯定预查类似，只是方向相反。例如，&ldquo;(?&lt;=95|98|NT|2000)Windows&rdquo;能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?&lt;!pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">反向否定预查，与正向否定预查类似，只是方向相反。例如&ldquo;(?&lt;!95|98|NT|2000)Windows&rdquo;能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">x|y</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配x或y。例如，&ldquo;z|food&rdquo;能匹配&ldquo;z&rdquo;或&ldquo;food&rdquo;。&ldquo;(z|f)ood&rdquo;则匹配&ldquo;zood&rdquo;或&ldquo;food&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[xyz]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">字符集合。匹配所包含的任意一个字符。例如，&ldquo;[abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;a&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[^xyz]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">负值字符集合。匹配未包含的任意字符。例如，&ldquo;[^abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;plin&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[a-z]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">字符范围。匹配指定范围内的任意字符。例如，&ldquo;[a-z]&rdquo;可以匹配&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意小写字母字符。</div>
-<div class="para">注意:只有连字符在字符组内部时,并且出现在两个字符之间时,才能表示字符的范围; 如果出字符组的开头,则只能表示连字符本身.</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[^a-z]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">负值字符范围。匹配任何不在指定范围内的任意字符。例如，&ldquo;[^a-z]&rdquo;可以匹配任何不在&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\b</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配一个单词边界，也就是指单词和空格间的位置。例如，&ldquo;er\b&rdquo;可以匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\B</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配非单词边界。&ldquo;er\B&rdquo;能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\cx</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的&ldquo;c&rdquo;字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\d</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配一个数字字符。等价于[0-9]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\D</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个非数字字符。等价于[^0-9]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\f</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个换页符。等价于\x0c和\cL。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\n</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个换行符。等价于\x0a和\cJ。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\r</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个回车符。等价于\x0d和\cM。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\s</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\S</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\t</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个制表符。等价于\x09和\cI。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\v</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个垂直制表符。等价于\x0b和\cK。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\w</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配包括下划线的任何单词字符。等价于&ldquo;[A-Za-z0-9_]&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\W</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何非单词字符。等价于&ldquo;[^A-Za-z0-9_]&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\xn</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配n，其中n为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，&ldquo;\x41&rdquo;匹配&ldquo;A&rdquo;。&ldquo;\x041&rdquo;则等价于&ldquo;\x04&amp;1&rdquo;。正则表达式中可以使用ASCII编码。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\num</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配num，其中num是一个正整数。对所获取的匹配的引用。例如，&ldquo;(.)\1&rdquo;匹配两个连续的相同字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\n</div>
-</td>
-<td align="left" valign="center">
-<div class="para">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\nm</div>
-</td>
-<td align="left" valign="center">
-<div class="para">标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\nml</div>
-</td>
-<td align="left" valign="center">
-<div class="para">如果n为八进制数字（0-7），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\un</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配n，其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&amp;copy;）。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">\&lt; \&gt;</td>
-<td align="left" valign="center">匹配词（word）的开始（\&lt;）和结束（\&gt;）。例如正则表达式\&lt;the\&gt;能够匹配字符串"for the wise"中的"the"，但是不能匹配字符串"otherwise"中的"the"。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">\( \)</td>
-<td align="left" valign="center">将 \( 和 \) 之间的表达式定义为&ldquo;组&rdquo;（group），并且将匹配这个表达式的字符保存到一个临时区域（一个正则表达式中最多可以保存9个），它们可以用 \1 到\9 的符号来引用。</td>
-</tr>
-<tr>
-<td align="left" valign="center">|</td>
-<td align="left" valign="center">将两个匹配条件进行逻辑&ldquo;或&rdquo;（Or）运算。例如正则表达式(him|her) 匹配"it belongs to him"和"it belongs to her"，但是不能匹配"it belongs to them."。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">+</td>
-<td align="left" valign="center">匹配1或多个正好在它之前的那个字符。例如正则表达式9+匹配9、99、999等。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">?</td>
-<td align="left" valign="center">匹配0或1个正好在它之前的那个字符。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">{i} {i,j}</td>
-<td align="left" valign="center">匹配指定数目的字符，这些字符是在它之前的表达式定义的。例如正则表达式A[0-9]{3} 能够匹配字符"A"后面跟着正好3个数字字符的串，例如A123、A348等，但是不匹配A1234。而正则表达式[0-9]{4,6} 匹配连续的任意4个、5个或者6个数字</td>
-</tr>
-</tbody>
-</table>
-
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/" class="post-title-link" itemprop="url">UIBezierPath画边角弧度</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="UIBezierPath"><a href="#UIBezierPath" class="headerlink" title="UIBezierPath"></a>UIBezierPath</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIBezierPath</span> *maskPath = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:m_newsIV.bounds</span><br><span class="line">                                                     byRoundingCorners:<span class="built_in">UIRectCornerTopLeft</span> | <span class="built_in">UIRectCornerTopRight</span></span><br><span class="line">                                                           cornerRadii:<span class="built_in">CGSizeMake</span>(<span class="number">10.0</span>, <span class="number">10.0</span>)];</span><br><span class="line">      <span class="comment">// Create the shape layer and set its path</span></span><br><span class="line">      <span class="built_in">CAShapeLayer</span> *maskLayer = [<span class="built_in">CAShapeLayer</span> layer];</span><br><span class="line">      maskLayer.frame = m_newsIV.bounds;</span><br><span class="line">      maskLayer.path = maskPath.CGPath;</span><br><span class="line">      <span class="comment">// Set the newly created shape layer as the mask for the image view&#x27;s layer</span></span><br><span class="line">      m_newsIV.layer.mask = maskLayer;</span><br></pre></td></tr></table></figure>
-
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E7%94%BB%E8%BE%B9%E8%A7%92%E5%BC%A7%E5%BA%A6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E8%AF%A6%E8%A7%A3KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E8%AF%A6%E8%A7%A3KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">详解KVO底层实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="一、KVO-Key-Value-Observing"><a href="#一、KVO-Key-Value-Observing" class="headerlink" title="一、KVO (Key-Value Observing)"></a>一、KVO (Key-Value Observing)</h3><p>KVO 是 Objective-C 对观察者模式（Observer Pattern）的实现。也是 Cocoa Binding 的基础。当被观察对象的某个属性发生更改时，观察者对象会获得通知。</p>
-<p>有意思的是，你不需要给被观察的对象添加任何额外代码，就能使用 KVO 。这是怎么做到的？</p>
-<h3 id="二、-KVO内部实现原理"><a href="#二、-KVO内部实现原理" class="headerlink" title="二、 KVO内部实现原理"></a>二、 KVO内部实现原理</h3><p>KVO是基于runtime机制实现的<br>当某个类的属性对象第一次被观察时，系统就会在运行期动态地创建该类的一个派生类，在这个派生类中重写基类中任何被观察属性的setter 方法。派生类在被重写的setter方法内实现真正的通知机制<br>如果原类为Person，那么生成的派生类名为NSKVONotifying_Person<br>每个类对象中都有一个isa指针指向当前类，当一个类对象的第一次被观察，那么系统会偷偷将isa指针指向动态生成的派生类，从而在给被监控属性赋值时执行的是派生类的setter方法<br>键值观察通知依赖于NSObject 的两个方法: willChangeValueForKey: 和 didChangevlueForKey:；在一个被观察属性发生改变之前， willChangeValueForKey:一定会被调用，这就 会记录旧的值。而当改变发生后，didChangeValueForKey:会被调用，继而 observeValueForKey:ofObject:change:context: 也会被调用。<br>补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类</p>
-<h3 id="三、补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"><a href="#三、补充：-如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）" class="headerlink" title="三、补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）"></a>三、补充： 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？（看链接）</h3><p><a target="_blank" rel="noopener" href="https://tech.glowing.com/cn/implement-kvo/">如何自己动手实现 KVO</a></p>
-<h3 id="四、附注-KVC底层实现原理-如下"><a href="#四、附注-KVC底层实现原理-如下" class="headerlink" title="四、附注: KVC底层实现原理(如下)"></a>四、附注: KVC底层实现原理(如下)</h3><p>KVC运用了一个isa-swizzling技术. isa-swizzling就是类型混合指针机制, 将2个对象的isa指针互相调换, 就是俗称的黑魔法.<br>KVC主要通过isa-swizzling, 来实现其内部查找定位的. 默认的实现方法�由NSOject提供isa指针, 如其名称所指,(就是is a kind of的意思), 指向分发表对象的类. 该分发表实际上包含了指向实现类中的方法的指针, 和其它数据。</p>
-<p>具体主要分为三大步<br>第一步：寻找该属性有没有setsetter方法？有，就直接赋值<br>第二步：寻找有没有该属性带下划线的成员属性？有，就直接赋值<br>第三步：寻找有没有该属性的成员属性？有，就直接赋值<br>或者这么说<br>1、首先搜索setKey:方法.(key指成员变量名, 首字母大写)<br>2、上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES. 那么按 _key, _isKey，key, iskey的顺序搜索成员名.(NSKeyValueCodingCatogery中实现的类方法, 默认实现为返回YES)<br>3、如果没有找到成员变量, 调用setValue:forUnderfinedKey:<br>比如说如下的一行KVC的代码：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E8%AF%A6%E8%A7%A3KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/" class="post-title-link" itemprop="url">iOS面试题库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="简单的做下自我介绍"><a href="#简单的做下自我介绍" class="headerlink" title="简单的做下自我介绍"></a>简单的做下自我介绍</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关注点：考察下介绍和简历是否一致，现场的把控和语言表达能力。</span><br></pre></td></tr></table></figure>
-<h2 id="控制器的生命周期"><a href="#控制器的生命周期" class="headerlink" title="控制器的生命周期"></a>控制器的生命周期</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">1、 alloc                                   创建对象，分配空间</span><br><span class="line">2、init (initWithNibName) 初始化对象，初始化数据</span><br><span class="line">3、loadView                          从nib载入视图 ，通常这一步不需要去干涉。除非你没有使用xib文件创建视图</span><br><span class="line">4、viewDidLoad                   载入完成，可以进行自定义数据以及动态创建其他控件</span><br><span class="line">5、viewWillAppear              视图将出现在屏幕之前，马上这个视图就会被展现在屏幕上了</span><br><span class="line">6、viewDidAppear               视图已在屏幕上渲染完成</span><br><span class="line">7、dealloc 销毁 （通过该方法内还可以检测什么？ 答案：返回后看时候回调该函数 来判断是否有内存泄露）</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br><span class="line">要求：对生命周期要熟悉精通，中间可以根据情况自己把握 讨论具体某个函数</span><br></pre></td></tr></table></figure>
-<h2 id="如何使UILabel显示多行？"><a href="#如何使UILabel显示多行？" class="headerlink" title="如何使UILabel显示多行？"></a>如何使UILabel显示多行？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考答案：numberOfLines = 0</span><br></pre></td></tr></table></figure>
-<h2 id="frame和bounds有什么不同？"><a href="#frame和bounds有什么不同？" class="headerlink" title="frame和bounds有什么不同？"></a>frame和bounds有什么不同？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">参考答案：相对父 与 自身</span><br></pre></td></tr></table></figure>
-<h2 id="assign、retain、copy、strong、weak什么时候用？区别？"><a href="#assign、retain、copy、strong、weak什么时候用？区别？" class="headerlink" title="assign、retain、copy、strong、weak什么时候用？区别？"></a>assign、retain、copy、strong、weak什么时候用？区别？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">参考答案：</span><br><span class="line">assign 基本数据类型与代理使用</span><br><span class="line">retain 引用计数在用来的基础上加1</span><br><span class="line">copy 开辟个新的内存空间</span><br><span class="line">strong 相当于老版本的retain,而且可以不再需要做release操作了</span><br><span class="line">weak 相当于老版本的assign。但是只适应于对象</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Hexo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/other/Hexo/" class="post-title-link" itemprop="url">Hexo 博客框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="什么是-Hexo？"><a href="#什么是-Hexo？" class="headerlink" title="什么是 Hexo？"></a>什么是 Hexo？</h3><p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h3 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h3><p>安装 Hexo 完成后，请执行下列命令，Hexo 将会在指定文件夹中新建所需要的文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<p>新建完成后，指定文件夹的目录如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
-
-<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/other/Hexo/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Hexo%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/other/Hexo%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2/" class="post-title-link" itemprop="url">Hexo 博客框架添加搜索</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>用Hexo提供的<code>Local Search</code>,原理是通过<code>hexo-generator-search</code>插件在本地生成一个<code>search.xml</code>文件，搜索的时候从这个文件中根据关键字检索出相应的链接。</p>
-<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><h5 id="安装-hexo-generator-search"><a href="#安装-hexo-generator-search" class="headerlink" title="安装 hexo-generator-search"></a>安装 hexo-generator-search</h5><p>在站点的根目录下执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装-hexo-generator-searchdb"><a href="#安装-hexo-generator-searchdb" class="headerlink" title="安装 hexo-generator-searchdb"></a>安装 hexo-generator-searchdb</h5><p>在站点的根目录下执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-
-<p>启用搜索</p>
-<p>编辑 站点配置文件<code>_config.yml</code>，新增以下内容到任意位置：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/other/Hexo%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Mac%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/other/Mac%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">Mac端本地服务搭建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="方案名称"><a href="#方案名称" class="headerlink" title="方案名称"></a>方案名称</h3><p>Mac 系统 - 启用 Mac 本地 Web 服务器<br>关键字</p>
-<p>Mac 系统 \ Web 服务器</p>
-<h3 id="需求场景"><a href="#需求场景" class="headerlink" title="需求场景"></a>需求场景</h3><ol>
-<li><p>局域网搭建 Web 服务器测试环境<br>参考链接</p>
+<li><p>首先如图打开工程下面Supporting Files下面的Info.plist</p>
+<p>  <code>Main storyboard file base name</code>删除这一行</p>
 </li>
-<li><p>简书 - Mac OS X 启用 Web 服务器(推荐)<br>详细内容 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d006a34a343f">https://www.jianshu.com/p/d006a34a343f</a></p>
-</li>
-</ol>
-<h3 id="启动-Apache"><a href="#启动-Apache" class="headerlink" title="启动 Apache"></a>启动 Apache</h3><p>终端输入<br>$ sudo apachectl start<br>可启动 Apache，打开浏览器，输入 <a target="_blank" rel="noopener" href="http://localhost/">http://localhost/</a> 看到如下页面证明本地 Web 服务器启动成功</p>
-<p>可启动 Apache，默认站点的根目录为系统级根目录<br>/Library/WebServer/Documents<br>更多信息，可参考 简书 - Mac OS X 启用 Web 服务器(推荐)</p>
-<ul>
-<li>创建用户级根目录</li>
-<li>启动 PHP</li>
-<li>安装 MySQL</li>
-<li>开启 HTTPS</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://github.com/viktyz/iosnotebook/blob/master/Notes/Note_00222_20170601.md">https://github.com/viktyz/iosnotebook/blob/master/Notes/Note_00222_20170601.md</a></p>
+<ul>
+<li>其次找到工程的TAGETS/General/Deployment Info 删除Main。</li>
+</ul>
+<ul>
+<li>经过上面两步算是删除了工程对Main.storyboard的依赖，但是运行工程后会发现是黑屏</li>
+</ul>
+<p>在AppDelegate中的- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 中添加以下代码即可解决</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];</span><br><span class="line"> self.window.backgroundColor = [UIColor whiteColor];</span><br><span class="line">[self.window makeKeyAndVisible];</span><br></pre></td></tr></table></figure>
+
+<p><strong>报错</strong>  </p>
+<p>程序运行会提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Application windows are expected to have a root view controller at the end of application launch</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/06/11/other/Mac%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/#more" rel="contents">
+              <a class="btn" href="/2018/06/11/iOS/Xcode%E4%B8%AD%E5%A6%82%E4%BD%95%E5%8E%BB%E6%8E%89%E9%BB%98%E8%AE%A4%E7%9A%84Main.storyboard/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1266,7 +541,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/Markdown/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20GCD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/nba_star.png">
@@ -1280,7 +555,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/other/Markdown/" class="post-title-link" itemprop="url">Markdown 编辑器语法指南</a>
+            <a href="/2018/06/11/iOS/iOS%20GCD/" class="post-title-link" itemprop="url">iOS之GCD</a>
         </h2>
 
         <div class="post-meta">
@@ -1305,7 +580,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -1320,20 +595,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://segmentfault.com/markdown/">Markdown 编辑器语法指南</a></p>
-<p><a target="_blank" rel="noopener" href="http://macdown.uranusjr.com/">MacDown</a></p>
-<h2 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h2><p>如果你只想高亮语句中的某个函数名或关键字，可以使用 <code>function_name()</code> 实现<br>通常编辑器根据代码片段适配合适的高亮方法，但你也可以用 以下方式 包裹一段代码，并指定一种语言</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;hello world&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://www.aliyun.com/jiaocheng/topic_13551.html">阿里云GCD</a></p>
+<p><em>===============关于GCD的一些好用的函数===============</em></p>
+<h4 id="一次性代码-多用于单例"><a href="#一次性代码-多用于单例" class="headerlink" title="一次性代码(多用于单例)"></a>一次性代码(多用于单例)</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;  </span><br><span class="line"><span class="built_in">dispatch_once</span>(&amp;;onceToken, ^&#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@&quot;once&quot;</span>); </span><br><span class="line">&#125;); </span><br></pre></td></tr></table></figure>
 
-<blockquote>
-</blockquote>
-<p>支持的语言：1c, abnf, accesslog, actionscript, ada, apache, applescript, arduino, armasm, asciidoc, aspectj, autohotkey, autoit, avrasm, awk, axapta, bash, basic, bnf, brainfuck, cal, capnproto, ceylon, clean, clojure, clojure-repl, cmake, coffeescript, coq, cos, cpp, crmsh, crystal, cs, csp, css, d, dart, delphi, diff, django, dns, dockerfile, dos, dsconfig, dts, dust, ebnf, elixir, elm, erb, erlang, erlang-repl, excel, fix, flix, fortran, fsharp, gams, gauss, gcode, gherkin, glsl, go, golo, gradle, groovy, haml, handlebars, haskell, haxe, hsp, htmlbars, http, hy, inform7, ini, irpf90, java, javascript, json, julia, kotlin, lasso, ldif, leaf, less, lisp, livecodeserver, livescript, llvm, lsl, lua, makefile, markdown, mathematica, matlab, maxima, mel, mercury, mipsasm, mizar, mojolicious, monkey, moonscript, n1ql, nginx, nimrod, nix, nsis, objectivec, ocaml, openscad, oxygene, parser3, perl, pf, php, pony, powershell, processing, profile, prolog, protobuf, puppet, purebasic, python, q, qml, r, rib, roboconf, rsl, ruby, ruleslanguage, rust, scala, scheme, scilab, scss, smali, smalltalk, sml, sqf, sql, stan, stata, step21, stylus, subunit, swift, taggerscript, tap, tcl, tex, thrift, tp, twig, typescript, vala, vbnet, vbscript, vbscript-html, verilog, vhdl, vim, x86asm, xl, xml, xquery, yaml, zephir</p>
-<h2 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">b</span>&gt;</span></span> Markdown 在此处同样适用，如 <span class="emphasis">*加粗*</span> <span class="xml"><span class="tag">&lt;/<span class="name">b</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 列表文本前使用 [减号+空格]</span><br><span class="line"><span class="bullet">+</span> 列表文本前使用 [加号+空格]</span><br><span class="line"><span class="bullet">*</span> 列表文本前使用 [星号+空格]</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 引用文本前使用 [大于号+空格]</span></span><br><span class="line"><span class="quote">&gt; 折行可以不加，新起一行都要加上哦</span></span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; </span></span><br><span class="line"><span class="quote">&gt; &gt; 最外层引用</span></span><br><span class="line"><span class="quote">&gt; &gt; 多一个 &gt; 嵌套一层引用</span></span><br><span class="line"><span class="quote">&gt; &gt; &gt; 可以嵌套很多层</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![<span class="string">图片名称</span>](<span class="link">http://图片网址</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="延迟执行"><a href="#延迟执行" class="headerlink" title="延迟执行"></a>延迟执行</h4><ul>
+<li>perform</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以在运行时调用方法</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector</span><br><span class="line"><span class="comment">//可带一个参数</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)object</span><br><span class="line"><span class="comment">//可带两个参数</span></span><br><span class="line">- (<span class="keyword">id</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)object withObject:(<span class="keyword">id</span>)object</span><br><span class="line"><span class="comment">//可延时执行方法</span></span><br><span class="line">- (<span class="keyword">void</span>)performSelector:(SEL)selector withObject:(<span class="keyword">id</span>)argument afterDelay:(<span class="built_in">NSTimeInterval</span>)delay</span><br><span class="line"><span class="comment">//可放到另一个线程中执行</span></span><br><span class="line">- (<span class="keyword">void</span>)performSelector:(SEL)selector onThread:(<span class="built_in">NSThread</span> *)thread withObject:(<span class="keyword">id</span>)argument waitUntilDone:(<span class="built_in">BOOL</span>)wait</span><br><span class="line">- (<span class="keyword">void</span>)performSelectorOnMainThread:(SEL)selector withObject:(<span class="keyword">id</span>)argument waitUntilDone:(<span class="built_in">BOOL</span>)wait</span><br><span class="line"> </span><br><span class="line"><span class="comment">//延后执行方法的两种实现方式：</span></span><br><span class="line">[<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(doSomething) withObject:<span class="literal">nil</span> afterDelay:<span class="number">5.0</span>];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>GCD方式</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC));</span><br><span class="line">dispatch_after(time, dispatch_get_main_queue(), ^(void)&#123;</span><br><span class="line">    [self doSomething];</span><br><span class="line">&#125;);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">//把任务放在主线程执行的两种方式</span><br><span class="line">[self performSlectorOnMainThread:@selector(doSomething) withObject:nil waitUntilDone:NO];</span><br><span class="line"> </span><br><span class="line">dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    [self doSomething];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<h2 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h2>
+<p><strong>1、</strong>performSelector系列方法在内存管理方面容易有疏失。它无法确定将要执行的选择子具体是什么，因而ARC编译器也就无法插入适当的内存管理方法。<br><strong>2、</strong>performSelector系列方法所能处理的选择子太过局限了，选择子的返回值类型及发送给方法的参数个数都受到限制。<br><strong>3、</strong>如果想把任务放在另一个线程上执行，那么最好不要用performSelector系列方法，而是应该把任务封装到块里，然后调用GCD的相关方法来实现。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/06/11/other/Markdown/#more" rel="contents">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20GCD/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1357,7 +635,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/other/OmniGraffle%20%E4%BA%94%E6%AD%A5%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20Block/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/nba_star.png">
@@ -1371,7 +649,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2018/06/11/other/OmniGraffle%20%E4%BA%94%E6%AD%A5%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE/" class="post-title-link" itemprop="url">OmniGraffle 五步绘制流程图</a>
+            <a href="/2018/06/11/iOS/iOS%20Block/" class="post-title-link" itemprop="url">iOS之block</a>
         </h2>
 
         <div class="post-meta">
@@ -1396,7 +674,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
                 </span>
             </span>
 
@@ -1411,12 +689,378 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cca7ce55aee1">OmniGraffle 五步绘制流程图</a></p>
-<p><a target="_blank" rel="noopener" href="https://sspai.com/post/41950">OmniGraffle 基础入门（一）：从工具栏开始</a></p>
+          <h4 id="1-block的定义：void-a"><a href="#1-block的定义：void-a" class="headerlink" title="1.block的定义：void(^a)()=^(){};"></a>1.block的定义：void(^a)()=^(){};</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">=前面：</span><br><span class="line">    <span class="keyword">void</span>:返回值类型；</span><br><span class="line">    ()():语法结构，第一个括号里面是block名字,第二个括号里面是参数列表，和c或java中参数列表写法一样；例如：<span class="keyword">int</span> i,<span class="keyword">char</span> c...</span><br><span class="line">    ^:脱字符，block标识</span><br><span class="line">    a:block名称，就像函数名，对象实例化名称，说白了就是一个名字；</span><br><span class="line">=号后面：</span><br><span class="line">    ^是block标识；</span><br><span class="line">    ()参数列表，当没有参数时，可以省略，但是“=”前面的()参数列表不能省略；</span><br><span class="line">    &#123;&#125;要执行的代码放在这里面，最后加“;”</span><br></pre></td></tr></table></figure>
+
 
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2018/06/11/other/OmniGraffle%20%E4%BA%94%E6%AD%A5%E7%BB%98%E5%88%B6%E6%B5%81%E7%A8%8B%E5%9B%BE/#more" rel="contents">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20Block/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20JavaScriptCore%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20JavaScriptCore%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">iOS JavaScriptCore使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="iOS-JavaScriptCore使用"><a href="#iOS-JavaScriptCore使用" class="headerlink" title="iOS JavaScriptCore使用"></a>iOS JavaScriptCore使用</h3><p>JavaScriptCore是iOS7引入的新功能，JavaScriptCore可以理解为一个浏览器的运行内核，使用JavaScriptCore可以使用native代码（这里主要指objectiveC和swift）与js代码进行相互的调用，本文主要从几个方面进行了解。</p>
+<ul>
+<li>native调用js代码</li>
+<li>js调用native代码</li>
+<li>异常处理</li>
+<li>JavaScriptCore和webView的结合使用</li>
+</ul>
+<p>要使用JavaScriptCore，首先我们需要引入它的头文件 <code>#import &lt;JavaScriptCore/JavaScriptCore.h&gt;</code><br>这个头里面引入了几个重要的对象</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSContext.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSValue.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSManagedValue.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSVirtualMachine.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;JSExport.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JSContext是JavaScript的运行上下文，他主要作用是执行js代码和注册native方法接口</li>
+<li>JSValue是JSContext执行后的返回结果，他可以是任何js类型（比如基本数据类型和函数类型，对象类型等），并且都有对象的方法转换为native对象。</li>
+<li>JSManagedValue是JSValue的封装，用它可以解决js和原声代码之间循环引用的问题</li>
+<li>JSVirtualMachine 管理JS运行时和管理js暴露的native对象的内存</li>
+<li>JSExport是一个协议，通过实现它可以完成把一个native对象暴漏给js</li>
+</ul>
+<h3 id="native调用js代码"><a href="#native调用js代码" class="headerlink" title="native调用js代码"></a>native调用js代码</h3><p>先看下面常见的三种情况，之间执行js代码、执行文件或网络中的js代码、注册js方法再利用JSValue调用</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接执行js代码</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateScript &#123;</span><br><span class="line">    <span class="comment">//定义一个js并执行函数</span></span><br><span class="line">    JSValue *exeFunction1 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;function hi()&#123; return &#x27;hi&#x27; &#125;; hi()&quot;</span>];</span><br><span class="line">    <span class="comment">//执行一个闭包js</span></span><br><span class="line">    JSValue *exeFunction2 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;(function()&#123; return &#x27;hi&#x27; &#125;)()&quot;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行一段js文件中的代码</span></span><br><span class="line"><span class="comment">//更多的应用场景使用网络或者本地文件加载一段js代码，充分利用其灵活性</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateScriptFromJSFile &#123;</span><br><span class="line">    <span class="built_in">NSString</span> * path = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@&quot;core&quot;</span> ofType:<span class="string">@&quot;js&quot;</span>];</span><br><span class="line">    <span class="built_in">NSString</span> * html = [<span class="built_in">NSString</span> stringWithContentsOfFile:path encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</span><br><span class="line">    JSValue *constructor = [<span class="keyword">self</span>.jsContext evaluateScript:html];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注册js方法，然后在利用JSValue调用</span></span><br><span class="line">- (<span class="keyword">void</span>)regiestJSFunction &#123;</span><br><span class="line">    <span class="comment">//注册一个函数</span></span><br><span class="line">    [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;var hello = function()&#123; return &#x27;hello&#x27; &#125;&quot;</span>];</span><br><span class="line">    <span class="comment">//调用</span></span><br><span class="line">    JSValue *value1 = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot;hello()&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//注册一个匿名函数</span></span><br><span class="line">    JSValue *jsFunction = [<span class="keyword">self</span>.jsContext evaluateScript:<span class="string">@&quot; (function()&#123; return &#x27;hello objc&#x27; &#125;)&quot;</span>];</span><br><span class="line">    <span class="comment">//调用</span></span><br><span class="line">    JSValue *value2 = [jsFunction callWithArguments:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有几个重要的地方需要说明。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20JavaScriptCore%E4%BD%BF%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/" class="post-title-link" itemprop="url">iOS linkmap统计ipa包</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>iOS APP编译后，除了一些<strong>资源文件</strong>，剩下的就是一个<strong>可执行文件</strong>，有时候项目大了，<strong>引入的库多了，可执行文件很大</strong>，想知道这个可执行文件的构成是怎样，里面的内容都是些什么，哪些库占用空间较高，可以用以下方法勘察：  </p>
+<p>**1.**XCode开启编译选项<code>Write Link Map File</code><br><code>XCode -&gt; Project -&gt; Build Settings -&gt;</code> 搜<code>map -&gt; 把Write Link Map File</code>选项设为<code>yes</code>，并指定好<code>linkMap</code>的存储位置</p>
+<p>**2.**编译后，到编译目录里找到该txt文件，文件名和路径就是上述的<code>Path to Link Map File</code><br>位于<code>~/Library/Developer/Xcode/DerivedData/XXX-eumsvrzbvgfofvbfsoqokmjprvuh/Build/Intermediates/XXX.build/Debug-iphoneos/XXX.build/</code><br>这个<code>LinkMap</code>里展示了整个可执行文件的全貌，列出了编译后的每一个.o目标文件的信息（包括静态链接库.a里的），以及每一个目标文件的代码段，数据段存储详情。</p>
+<h3 id="在LinkMap里首先列出来的是目标文件列表："><a href="#在LinkMap里首先列出来的是目标文件列表：" class="headerlink" title="在LinkMap里首先列出来的是目标文件列表："></a>在LinkMap里首先列出来的是目标文件列表：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Object files:</span><br><span class="line">[ 0] linker synthesized</span><br><span class="line">[ 1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o</span><br><span class="line">[ 2] /Users/bang/Library/Developer/Xcode/DerivedData/yishu-eyzgphknrrzpevagadjtwpzzeqag/Build/Intermediates/yishu.build/Debug-iphonesimulator/yishu.build/Objects-normal/i386/TKPFileInfo.o</span><br><span class="line">...</span><br><span class="line">[280] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANJob.o)</span><br><span class="line">[281] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANWorker.o)</span><br><span class="line">[282] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(MobClick.o)</span><br><span class="line">[283] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANLaunch.o)</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>前面中括号里的是这个文件的编号，后面会用到，像项目里引用到静态链接库libMobClickLibrary.a里的目标文件都会在这里列出来。</p>
+<h3 id="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）"><a href="#接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）" class="headerlink" title="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）"></a>接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Sections:</span><br><span class="line"># Address   Size     Segment   Section</span><br><span class="line">0x00002740 0x00273890 __TEXT __text</span><br><span class="line">0x00275FD0 0x00000ADA __TEXT __symbol_stub</span><br><span class="line">0x00276AAC 0x00001222 __TEXT __stub_helper</span><br><span class="line">0x00277CCE 0x00019D9E __TEXT __objc_methname</span><br><span class="line">0x00291A70 0x00012847 __TEXT __cstring</span><br><span class="line">0x002A42B7 0x00001FC1 __TEXT __objc_classname</span><br><span class="line">0x002A6278 0x000046A7 __TEXT __objc_methtype</span><br><span class="line">0x002AA920 0x000061CE __TEXT __ustring</span><br><span class="line">0x002B0AF0 0x00000764 __TEXT __const</span><br><span class="line">0x002B1254 0x000028B8 __TEXT __gcc_except_tab</span><br><span class="line">0x002B3B0C 0x00004EBC __TEXT __unwind_info</span><br><span class="line">0x002B89C8 0x0003662C __TEXT __eh_frame</span><br><span class="line">0x002EF000 0x00000014 __DATA __program_vars</span><br><span class="line">0x002EF014 0x00000284 __DATA __nl_symbol_ptr</span><br><span class="line">0x002EF298 0x0000073C __DATA __la_symbol_ptr</span><br><span class="line">0x002EF9E0 0x000030A4 __DATA __const</span><br><span class="line">0x002F2A84 0x00000590 __DATA __objc_classlist</span><br><span class="line">0x002F3014 0x0000000C __DATA __objc_nlclslist</span><br><span class="line">0x002F3020 0x0000006C __DATA __objc_catlist</span><br><span class="line">0x002F308C 0x000000D8 __DATA __objc_protolist</span><br><span class="line">0x002F3164 0x00000008 __DATA __objc_imageinfo</span><br><span class="line">0x002F3170 0x0002BC80 __DATA __objc_const</span><br><span class="line">0x0031EDF0 0x00003A30 __DATA __objc_selrefs</span><br><span class="line">0x00322820 0x00000014 __DATA __objc_protorefs</span><br><span class="line">0x00322834 0x000006B8 __DATA __objc_classrefs</span><br><span class="line">0x00322EEC 0x00000394 __DATA __objc_superrefs</span><br><span class="line">0x00323280 0x000037C8 __DATA __objc_data</span><br><span class="line">0x00326A48 0x000096D0 __DATA __cfstring</span><br><span class="line">0x00330118 0x00001424 __DATA __objc_ivar</span><br><span class="line">0x00331540 0x00006080 __DATA __data</span><br><span class="line">0x003375C0 0x0000001C __DATA __common</span><br><span class="line">0x003375E0 0x000018E8 __DATA __bss</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>首列是数据在文件的偏移位置，第二列是这一段占用大小，第三列是段类型，代码段和数据段，第四列是段名称。<br>每一行的数据都紧跟在上一行后面，如第二行<code>__symbol_stub</code>的地址<code>0x00275FD0</code>就是第一行<code>__text</code>的地址<code>0x00002740</code>加上大小<code>0x00273890</code>，整个可执行文件大致数据分布就是这样。<br>这里可以清楚看到各种类型的数据在最终可执行文件里占的比例，例如<code>__text</code>表示编译后的程序执行语句，<code>__data</code>表示已初始化的全局变量和局部静态变量，<code>__bss</code>表示未初始化的全局变量和局部静态变量，<code>__cstring</code>表示代码里的字符串常量，等等。</p>
+<h3 id="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"><a href="#接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间" class="headerlink" title="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"></a>接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">OS 中的 armv7,armv7s,arm64,i386,x86_64 都是什么</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在做静态库的时候以及引用静态库的时候经常会遇到一些关于真机模拟器不通用的情况，会报错找不到相应库导致编译失败，</p>
+<p>这里简单记录一下各种设备支持的架构。</p>
+<h4 id="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"><a href="#iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器" class="headerlink" title="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"></a>iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器</h4><h5 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h5><p>模拟器32位处理器测试需要i386架构，（iphone5,iphone5s以下的模拟器）</p>
+<p>模拟器64位处理器测试需要x86_64架构，(iphone6以上的模拟器)</p>
+<h5 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h5><p>真机32位处理器需要armv7,或者armv7s架构，（iphone4真机/armv7,      ipnone5,iphone5s真机/armv7s）</p>
+<p>真机64位处理器需要arm64架构。(iphone6,iphone6p以上的真机)</p>
+<p>project -&gt; target -&gt; building setting -&gt; Arhitectures 设置</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">iOS 加载http的方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在iOS 9的时候,默认非HTTS的网络是被禁止的,我们可以在info.plist文件中添加NSAppTransportSecurity字典,将NSAllowsArbitraryLoads设置为YES来禁用ATS</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bee253cb4825">简书地址</a></p>
+<p>解决方案一：</p>
+<p>开启 NSAllowsArbitraryLoads 为 YES，然后提交时进行说明</p>
+<p>解决方案二：</p>
+<p>设置 NSExceptionDomains 属性来访问指定域名，然后提交时进行说明</p>
+<p>解决方案三：</p>
+<p>只针对网页浏览和视频播放的行为且为iOS 10及以上，设置NSAllowsArbitraryLoadsInWebContent为Yes。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1507,20 +1151,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
