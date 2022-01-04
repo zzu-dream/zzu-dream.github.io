@@ -3506,6 +3506,10 @@ http://kofi1122.blog.51cto.com/2815761/521605
 <li>动态资源：这种资源不同用户不同时刻访问通常是不一样的，比如ftl，jsp等等。</li>
 </ul>
 <p>用户使用某个域名来访问静态资源时(这个域名在阿里CDN服务中叫做“加速域名”)，比如这个域名为“image.baidu.com”，它对应一个CNAME，叫做“cdn.ali.com”，那么普通DNS服务器(区别CDN专用DNS服务器)在解析“image.baidu.com”时，会先解析成“cdn.ali.com”，普通DNS服务器发现该域名对应的也是一个DNS服务器，那么会将域名解析工作转交给该DNS服务器，该DNS服务器就是CDN专用DNS服务器。CDN专用DNS服务器对“cdn.ali.com”进行解析，然后依据服务器上记录的所有CDN服务器地址信息，选出一个离用户最近的一个CDN服务器地址，并返回给用户，用户即可访问离自己最近的一台CDN服务器了。<br><img src="/images/cdn-server.jpeg" alt="have-cname"></p>
+<h4 id="关于cname"><a href="#关于cname" class="headerlink" title="关于cname"></a>关于cname</h4><blockquote>
+<p>假如你是DD公司老板，你公司中的一台IP为1.1.1.1的服务器，注册了域名为<a href="http://www.dd.com,要对外提供客户访问.随着公司越做越大,访问量也越来越多,服务器顶不住了,你去找cdn提供商购买cdn加速服务,这个时候他们要求你的域名做个cname指向他们给你的一个域名叫www.dd.cdn.com/">www.dd.com，要对外提供客户访问。随着公司越做越大，访问量也越来越多，服务器顶不住了，你去找CDN提供商购买CDN加速服务，这个时候他们要求你的域名做个CNAME指向他们给你的一个域名叫www.dd.cdn.com</a></p>
+</blockquote>
+<p><img src="/images/cname.png" alt="cname"><br>原文链接：<a href="https://blog.csdn.net/DD_orz/article/details/100034049">https://blog.csdn.net/DD_orz/article/details/100034049</a></p>
 ]]></content>
       <categories>
         <category>内容分发网络</category>
