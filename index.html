@@ -362,93 +362,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/08/other/%E5%85%B3%E4%BA%8E%E9%99%90%E6%B5%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/08/other/%E5%85%B3%E4%BA%8E%E9%99%90%E6%B5%81/" class="post-title-link" itemprop="url">关于限流、熔断和降级</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-08 23:17:00" itemprop="dateCreated datePublished" datetime="2021-12-08T23:17:00+08:00">2021-12-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-10 22:09:41" itemprop="dateModified" datetime="2022-01-10T22:09:41+08:00">2022-01-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%99%90%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">限流</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="限流概念"><a href="#限流概念" class="headerlink" title="限流概念"></a>限流概念</h3><p>限流，是指在使用缓存和降级无效的场景。比如当达到阈值后限制接口调用频率，访问次数，库存个数等，在出现服务不可用之前，提前把服务降级。只服务好一部分用户。  </p>
-<p><strong><em>网关限流</em></strong>  ：网关可以做很多的事情，比如，限流，当我们的系统被频繁的请求的时候，就有可能 将系统压垮，所以 为了解决这个问题，需要在每一个微服务中做限流操作，但是如果有了网关，那么就可以在网关系统做限流，因为所有的请求都需要先通过网关系统才能路由到微服务中。<br><img src="/images/%E7%BD%91%E5%85%B3%E9%99%90%E6%B5%81.webp" alt="wangguanxiuliu"></p>
-<p> <strong>漏桶算法</strong><br>漏桶算法思路很简单，水（请求）先进入到漏桶里，漏桶以一定的速度出水，当水流入速度过大会超过桶可接纳的容量时直接溢出，可以看出漏桶算法能强行限制数据的传输速率。<br><img src="/images/%E6%BC%8F%E6%A1%B6%E7%AE%97%E6%B3%95.jpeg" alt="漏桶算法"><br><strong>削峰</strong>：有大量流量进入时，会发生溢出，从而限流保护服务可用。<br><strong>缓冲</strong>：不至于直接请求到服务器，缓冲压力，消费速度固定，因为计算性能固定。</p>
-<p><strong>令牌桶算法</strong><br><img src="/images/%E4%BB%A4%E7%89%8C%E6%A1%B6.webp" alt="令牌桶算法"></p>
-<h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h3><p>相信大家对断路器并不陌生，它就相当于一个开关，打开后可以阻止流量通过。比如保险丝，当电流过大时，就会熔断，从而避免元器件损坏。</p>
-<p>服务熔断是指调用方访问服务时通过断路器做代理进行访问，断路器会持续观察服务返回的成功、失败的状态，当失败超过设置的阈值时断路器打开，请求就不能真正地访问到服务了。<br><img src="/images/%E7%86%94%E6%96%AD%E6%97%B6%E5%BA%8F%E5%9B%BE.png" alt="熔断时序图"></p>
-<h3 id="降级概念"><a href="#降级概念" class="headerlink" title="降级概念"></a>降级概念</h3><p>降级，是在系统某些服务组件不可用的时候、流量暴增、资源耗尽等情况下，暂时屏蔽掉出问题的服务，继续提供降级服务，给用户尽可能的友好提示，返回兜底数据，不会影响整体业务流程，待问题解决再重新上线服务。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/12/08/other/%E5%85%B3%E4%BA%8E%E9%99%90%E6%B5%81/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/07/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1009,10 +922,90 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/12/06/%E5%89%8D%E7%AB%AF/CSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/06/%E5%89%8D%E7%AB%AF/CSS/" class="post-title-link" itemprop="url">CSS基础必学列表</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-06 23:43:53" itemprop="dateCreated datePublished" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="CSS基础必学列表"><a href="#CSS基础必学列表" class="headerlink" title="CSS基础必学列表"></a>CSS基础必学列表</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">CSS width宽度</span><br><span class="line">CSS height高度</span><br><span class="line">CSS border边框</span><br><span class="line">CSS background背景</span><br><span class="line">CSS sprites背景拼合</span><br><span class="line">CSS float浮动</span><br><span class="line">CSS margin外边距</span><br><span class="line">CSS padding内边距</span><br><span class="line">CSS color字体颜色</span><br><span class="line">CSS font-size字体大小</span><br><span class="line">CSS font-family字体</span><br><span class="line">CSS font-weight字体加粗</span><br><span class="line">CSS display显示与隐藏</span><br><span class="line">CSS overflow隐藏与滚动条</span><br><span class="line">CSS position定位</span><br><span class="line">CSS text-align内容水平位置</span><br><span class="line">CSS text-indent缩进</span><br><span class="line">CSS text-decoration下划线</span><br><span class="line">CSS clear清除浮动</span><br><span class="line">CSS cursor鼠标手势光标</span><br><span class="line">CSS font文本</span><br><span class="line">CSS font-style文本斜体</span><br><span class="line">CSS font-variant缩小大写字母</span><br><span class="line">CSS id CSS class</span><br><span class="line">left right top bottom</span><br><span class="line">css letter-spacing字间距</span><br><span class="line">CSS line-height行高</span><br><span class="line">css min-width最小宽度</span><br><span class="line">css max-width最大宽度</span><br><span class="line">CSS min-height最小高度</span><br><span class="line">css max-height最大高度</span><br><span class="line">CSS text-transform英文大小写</span><br><span class="line">css text-overflow省略号</span><br><span class="line">CSS white-space不换行</span><br><span class="line">css z-index重叠顺序</span><br><span class="line">CSS 前花括号星号*</span><br><span class="line">CSS 缩写</span><br><span class="line">div与span区别及用法</span><br><span class="line">CSS是什么</span><br><span class="line">DIV+CSS是什么</span><br><span class="line">CSS 注释</span><br><span class="line">CSS 指针</span><br><span class="line">CSS 文本排版</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li><code>DIV CSS left right top bottom</code>定位<br>这四个CSS属性样式用于定位对象盒子，必须定义<code>position</code>属性值为<code>absolute</code>或者<code>relative</code>此取值方可生效。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://www.divcss5.com/rumen/r119.shtml">DIVCSS5</a>  </p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/06/%E5%89%8D%E7%AB%AF/CSS/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1080,20 +1073,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

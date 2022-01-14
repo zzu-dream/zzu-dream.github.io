@@ -183,6 +183,182 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/" class="post-title-link" itemprop="url">iOS linkmap统计ipa包</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>iOS APP编译后，除了一些<strong>资源文件</strong>，剩下的就是一个<strong>可执行文件</strong>，有时候项目大了，<strong>引入的库多了，可执行文件很大</strong>，想知道这个可执行文件的构成是怎样，里面的内容都是些什么，哪些库占用空间较高，可以用以下方法勘察：  </p>
+<p>**1.**XCode开启编译选项<code>Write Link Map File</code><br><code>XCode -&gt; Project -&gt; Build Settings -&gt;</code> 搜<code>map -&gt; 把Write Link Map File</code>选项设为<code>yes</code>，并指定好<code>linkMap</code>的存储位置</p>
+<p>**2.**编译后，到编译目录里找到该txt文件，文件名和路径就是上述的<code>Path to Link Map File</code><br>位于<code>~/Library/Developer/Xcode/DerivedData/XXX-eumsvrzbvgfofvbfsoqokmjprvuh/Build/Intermediates/XXX.build/Debug-iphoneos/XXX.build/</code><br>这个<code>LinkMap</code>里展示了整个可执行文件的全貌，列出了编译后的每一个.o目标文件的信息（包括静态链接库.a里的），以及每一个目标文件的代码段，数据段存储详情。</p>
+<h3 id="在LinkMap里首先列出来的是目标文件列表："><a href="#在LinkMap里首先列出来的是目标文件列表：" class="headerlink" title="在LinkMap里首先列出来的是目标文件列表："></a>在LinkMap里首先列出来的是目标文件列表：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Object files:</span><br><span class="line">[ 0] linker synthesized</span><br><span class="line">[ 1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o</span><br><span class="line">[ 2] /Users/bang/Library/Developer/Xcode/DerivedData/yishu-eyzgphknrrzpevagadjtwpzzeqag/Build/Intermediates/yishu.build/Debug-iphonesimulator/yishu.build/Objects-normal/i386/TKPFileInfo.o</span><br><span class="line">...</span><br><span class="line">[280] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANJob.o)</span><br><span class="line">[281] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANWorker.o)</span><br><span class="line">[282] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(MobClick.o)</span><br><span class="line">[283] /Users/bang/Downloads/yishu/yishu/Classes/lib/UMeng/MobClick/libMobClickLibrary.a(UMANLaunch.o)</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>前面中括号里的是这个文件的编号，后面会用到，像项目里引用到静态链接库libMobClickLibrary.a里的目标文件都会在这里列出来。</p>
+<h3 id="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）"><a href="#接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（-TEXT，保存程序代码段编译后的机器码）和数据段（-DATA，保存变量值）" class="headerlink" title="接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）"></a>接着是一个段表，描述各个段在最后编译成的可执行文件中的偏移位置及大小，包括了代码段（__TEXT，保存程序代码段编译后的机器码）和数据段（__DATA，保存变量值）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Sections:</span><br><span class="line"># Address   Size     Segment   Section</span><br><span class="line">0x00002740 0x00273890 __TEXT __text</span><br><span class="line">0x00275FD0 0x00000ADA __TEXT __symbol_stub</span><br><span class="line">0x00276AAC 0x00001222 __TEXT __stub_helper</span><br><span class="line">0x00277CCE 0x00019D9E __TEXT __objc_methname</span><br><span class="line">0x00291A70 0x00012847 __TEXT __cstring</span><br><span class="line">0x002A42B7 0x00001FC1 __TEXT __objc_classname</span><br><span class="line">0x002A6278 0x000046A7 __TEXT __objc_methtype</span><br><span class="line">0x002AA920 0x000061CE __TEXT __ustring</span><br><span class="line">0x002B0AF0 0x00000764 __TEXT __const</span><br><span class="line">0x002B1254 0x000028B8 __TEXT __gcc_except_tab</span><br><span class="line">0x002B3B0C 0x00004EBC __TEXT __unwind_info</span><br><span class="line">0x002B89C8 0x0003662C __TEXT __eh_frame</span><br><span class="line">0x002EF000 0x00000014 __DATA __program_vars</span><br><span class="line">0x002EF014 0x00000284 __DATA __nl_symbol_ptr</span><br><span class="line">0x002EF298 0x0000073C __DATA __la_symbol_ptr</span><br><span class="line">0x002EF9E0 0x000030A4 __DATA __const</span><br><span class="line">0x002F2A84 0x00000590 __DATA __objc_classlist</span><br><span class="line">0x002F3014 0x0000000C __DATA __objc_nlclslist</span><br><span class="line">0x002F3020 0x0000006C __DATA __objc_catlist</span><br><span class="line">0x002F308C 0x000000D8 __DATA __objc_protolist</span><br><span class="line">0x002F3164 0x00000008 __DATA __objc_imageinfo</span><br><span class="line">0x002F3170 0x0002BC80 __DATA __objc_const</span><br><span class="line">0x0031EDF0 0x00003A30 __DATA __objc_selrefs</span><br><span class="line">0x00322820 0x00000014 __DATA __objc_protorefs</span><br><span class="line">0x00322834 0x000006B8 __DATA __objc_classrefs</span><br><span class="line">0x00322EEC 0x00000394 __DATA __objc_superrefs</span><br><span class="line">0x00323280 0x000037C8 __DATA __objc_data</span><br><span class="line">0x00326A48 0x000096D0 __DATA __cfstring</span><br><span class="line">0x00330118 0x00001424 __DATA __objc_ivar</span><br><span class="line">0x00331540 0x00006080 __DATA __data</span><br><span class="line">0x003375C0 0x0000001C __DATA __common</span><br><span class="line">0x003375E0 0x000018E8 __DATA __bss</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>首列是数据在文件的偏移位置，第二列是这一段占用大小，第三列是段类型，代码段和数据段，第四列是段名称。<br>每一行的数据都紧跟在上一行后面，如第二行<code>__symbol_stub</code>的地址<code>0x00275FD0</code>就是第一行<code>__text</code>的地址<code>0x00002740</code>加上大小<code>0x00273890</code>，整个可执行文件大致数据分布就是这样。<br>这里可以清楚看到各种类型的数据在最终可执行文件里占的比例，例如<code>__text</code>表示编译后的程序执行语句，<code>__data</code>表示已初始化的全局变量和局部静态变量，<code>__bss</code>表示未初始化的全局变量和局部静态变量，<code>__cstring</code>表示代码里的字符串常量，等等。</p>
+<h3 id="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"><a href="#接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间" class="headerlink" title="接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间"></a>接着就是按上表顺序，列出具体的按每个文件列出每个对应字段的位置和占用空间</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20linkmap%E7%BB%9F%E8%AE%A1ipa%E5%8C%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/nba_star.png">
+      <meta itemprop="name" content="追梦机器人">
+      <meta itemprop="description" content="为了明天而努力">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追梦机器人的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">OS 中的 armv7,armv7s,arm64,i386,x86_64 都是什么</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在做静态库的时候以及引用静态库的时候经常会遇到一些关于真机模拟器不通用的情况，会报错找不到相应库导致编译失败，</p>
+<p>这里简单记录一下各种设备支持的架构。</p>
+<h4 id="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"><a href="#iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器" class="headerlink" title="iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器"></a>iOS测试分为模拟器测试和真机测试，处理器分为32位处理器，和64位处理器</h4><h5 id="模拟器"><a href="#模拟器" class="headerlink" title="模拟器"></a>模拟器</h5><p>模拟器32位处理器测试需要i386架构，（iphone5,iphone5s以下的模拟器）</p>
+<p>模拟器64位处理器测试需要x86_64架构，(iphone6以上的模拟器)</p>
+<h5 id="真机"><a href="#真机" class="headerlink" title="真机"></a>真机</h5><p>真机32位处理器需要armv7,或者armv7s架构，（iphone4真机/armv7,      ipnone5,iphone5s真机/armv7s）</p>
+<p>真机64位处理器需要arm64架构。(iphone6,iphone6p以上的真机)</p>
+<p>project -&gt; target -&gt; building setting -&gt; Arhitectures 设置</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/11/iOS/iOS%20%E4%B8%AD%E7%9A%84%20armv7,armv7s,arm64,i386,x86_64%20%E9%83%BD%E6%98%AF%E4%BB%80%E4%B9%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/iOS%20%E5%8A%A0%E8%BD%BDhttp%E7%9A%84%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -984,550 +1160,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/" class="post-title-link" itemprop="url">iOS总结的点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="UIImage中-imageNamed-和-imageWithContentsOfFile的区别"><a href="#UIImage中-imageNamed-和-imageWithContentsOfFile的区别" class="headerlink" title="UIImage中 imageNamed 和 imageWithContentsOfFile的区别"></a>UIImage中 imageNamed 和 imageWithContentsOfFile的区别</h3><p><code>[UIImage imageNamed:]</code>只适合与UI界面中小的贴图的读取，而一些比较大的资源文件应该尽量避免使用这个接口。<br>直接读取文件路径<code>[UIImage imageWithContentsOfFile]</code>来解决图片的读取问题<br>这两种方式的主要区别在于：<br><code>imageName</code>的方式会在使用的时候系统会cache，程序员是无法处理cache的，这是由系统自动处理的，对于重复加载的图像，速度会提升很多，这样反而用户体验好。所以如果某张图片需要在应用中使用多次，或者重复引用，使用<code>imageName</code>的方式会更好<br><code>imageWithContentsOfFile</code>的方式，在使用完成之后系统会释放，不会缓存下来，所以也就没有这样的问题。一般也不会把所有的图片都会缓存。有些图片在应用中只使用一两次的，就可以用这样的方式，比如新手引导界面的图片等等，就适合这样的方式。没有明显的界限。</p>
-<h3 id="CALayer-和-UIView的区别"><a href="#CALayer-和-UIView的区别" class="headerlink" title="CALayer 和 UIView的区别"></a>CALayer 和 UIView的区别</h3><p><code>CALayer</code>属于<code>Core Animation</code>部分的内容，比较重要而不太好理解。以下是园子中看到的一篇文章的摘录：</p>
-<ol>
-<li><code>UIView</code>是<code>iOS</code>系统中界面元素的基础，所有的界面元素都是继承自它。它本身完全是由   <code>CoreAnimation</code>来实现的。它真正的绘图部分，是由一个<code>CALayer</code>类来管理。<code>UIView</code>本身更像是一个<code>CALayer</code>的管理器，访问它的跟绘图和跟坐标有关的属性，例如<code>frame，bounds</code>等，实际上内部都是在访问它所包含的<code>CALayer</code>的相关属性。</li>
-<li><code>UIView</code>有个重要属性<code>layer</code>，可以返回它的主<code>CALayer</code>实例。</li>
-</ol>
-<h3 id="如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"><a href="#如何定义一个不规则的button-（还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）" class="headerlink" title="如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）"></a>如何定义一个不规则的button （还包含一个问题若干个button叠加在一起，苹果如何知道点击的是哪个button，实现原理？）</h3><p>  在<code>iOS</code>中通常使用<code>hit-testing</code>去找到那个被触摸的视图。这个视图叫<code>hit-test view</code>，当<code>iOS</code>找到<code>hit-test view</code>后就把<code>touch event</code>交个那个视图来处理。</p>
-<h3 id="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"><a href="#用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性" class="headerlink" title="用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性"></a>用GCD的方式去实现有n个线程去访问一个属性，只有一个线程去修改属性</h3><h3 id="NSRunloop的使用"><a href="#NSRunloop的使用" class="headerlink" title="NSRunloop的使用"></a>NSRunloop的使用</h3><p> 那么具体什么是<code>NSRunLoop</code>呢？其实<code>NSRunLoop</code>的本质是一个消息机制的处理模式。<br> <code>NSRunLoop</code>是一种更加高明的消息处理模式<br> <a target="_blank" rel="noopener" href="http://blog.csdn.net/cwq9944/article/details/8555104">http://blog.csdn.net/cwq9944/article/details/8555104</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E6%80%BB%E7%BB%93%E7%9A%84%E7%82%B9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/iOS/%E6%AD%A3%E5%88%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/nba_star.png">
-      <meta itemprop="name" content="追梦机器人">
-      <meta itemprop="description" content="为了明天而努力">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追梦机器人的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/" class="post-title-link" itemprop="url">正则</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-06-11 16:17:22" itemprop="dateCreated datePublished" datetime="2018-06-11T16:17:22+08:00">2018-06-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-06 23:43:53" itemprop="dateModified" datetime="2021-12-06T23:43:53+08:00">2021-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <table log-set-param="table_view" data-sort="sortDisabled" valign="top"><tbody><tr><td align="left" width="75">
-<div class="para"><strong>元字符</strong></div>
-</td>
-<td align="left" valign="top" width="658">
-<div class="para"><strong>描述</strong></div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">将下一个字符标记为一个特殊字符、或一个原义字符、或一个向后引用、或一个八进制转义符。例如，&ldquo;\\n&rdquo;匹配\n。&ldquo;\n&rdquo;匹配换行符。序列&ldquo;\\&rdquo;匹配&ldquo;\&rdquo;而&ldquo;\(&rdquo;则匹配&ldquo;(&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">^</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之后的位置。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">$</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配&ldquo;\n&rdquo;或&ldquo;\r&rdquo;之前的位置。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">*</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式零次或多次(大于等于0次)。例如，zo*能匹配&ldquo;z&rdquo;，&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;。*等价于{0,}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">+</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式一次或多次(大于等于1次）。例如，&ldquo;zo+&rdquo;能匹配&ldquo;zo&rdquo;以及&ldquo;zoo&rdquo;，但不能匹配&ldquo;z&rdquo;。+等价于{1,}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">?</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配前面的子表达式零次或一次。例如，&ldquo;do(es)?&rdquo;可以匹配&ldquo;do&rdquo;或&ldquo;does&rdquo;中的&ldquo;do&rdquo;。?等价于{0,1}。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">n是一个非负整数。匹配确定的n次。例如，&ldquo;o{2}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但是能匹配&ldquo;food&rdquo;中的两个o。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n,}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">n是一个非负整数。至少匹配n次。例如，&ldquo;o{2,}&rdquo;不能匹配&ldquo;Bob&rdquo;中的&ldquo;o&rdquo;，但能匹配&ldquo;foooood&rdquo;中的所有o。&ldquo;o{1,}&rdquo;等价于&ldquo;o+&rdquo;。&ldquo;o{0,}&rdquo;则等价于&ldquo;o*&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">{n,m}</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">m和n均为非负整数，其中n&lt;=m。最少匹配n次且最多匹配m次。例如，&ldquo;o{1,3}&rdquo;将匹配&ldquo;fooooood&rdquo;中的前三个o。&ldquo;o{0,1}&rdquo;等价于&ldquo;o?&rdquo;。请注意在逗号和两个数之间不能有空格。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">?</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">当该字符紧跟在任何一个其他限制符（*,+,?，{n}，{n,}，{n,m}）后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串&ldquo;oooo&rdquo;，&ldquo;o+?&rdquo;将匹配单个&ldquo;o&rdquo;，而&ldquo;o+&rdquo;将匹配所有&ldquo;o&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">.点</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配除&ldquo;\r\n&rdquo;之外的任何单个字符。要匹配包括&ldquo;\r\n&rdquo;在内的任何字符，请使用像&ldquo;[\s\S]&rdquo;的模式。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配pattern并获取这一匹配。所获取的匹配可以从产生的Matches集合得到，在VBScript中使用SubMatches集合，在JScript中则使用$0&hellip;$9属性。要匹配圆括号字符，请使用&ldquo;\(&rdquo;或&ldquo;\)&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?:pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配pattern但不获取匹配结果，也就是说这是一个非获取匹配，不进行存储供以后使用。这在使用或字符&ldquo;(|)&rdquo;来组合一个模式的各个部分是很有用。例如&ldquo;industr(?:y|ies)&rdquo;就是一个比&ldquo;industry|industries&rdquo;更简略的表达式。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?=pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">正向肯定预查，在任何匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如，&ldquo;Windows(?=95|98|NT|2000)&rdquo;能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;。预查不消耗字符，也就是说，在一个匹配发生后，在最后一次匹配之后立即开始下一次匹配的搜索，而不是从包含预查的字符之后开始。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?!pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">正向否定预查，在任何不匹配pattern的字符串开始处匹配查找字符串。这是一个非获取匹配，也就是说，该匹配不需要获取供以后使用。例如&ldquo;Windows(?!95|98|NT|2000)&rdquo;能匹配&ldquo;Windows3.1&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;Windows2000&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?&lt;=pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">反向肯定预查，与正向肯定预查类似，只是方向相反。例如，&ldquo;(?&lt;=95|98|NT|2000)Windows&rdquo;能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">(?&lt;!pattern)</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">反向否定预查，与正向否定预查类似，只是方向相反。例如&ldquo;(?&lt;!95|98|NT|2000)Windows&rdquo;能匹配&ldquo;3.1Windows&rdquo;中的&ldquo;Windows&rdquo;，但不能匹配&ldquo;2000Windows&rdquo;中的&ldquo;Windows&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">x|y</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配x或y。例如，&ldquo;z|food&rdquo;能匹配&ldquo;z&rdquo;或&ldquo;food&rdquo;。&ldquo;(z|f)ood&rdquo;则匹配&ldquo;zood&rdquo;或&ldquo;food&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[xyz]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">字符集合。匹配所包含的任意一个字符。例如，&ldquo;[abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;a&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[^xyz]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">负值字符集合。匹配未包含的任意字符。例如，&ldquo;[^abc]&rdquo;可以匹配&ldquo;plain&rdquo;中的&ldquo;plin&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[a-z]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">字符范围。匹配指定范围内的任意字符。例如，&ldquo;[a-z]&rdquo;可以匹配&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意小写字母字符。</div>
-<div class="para">注意:只有连字符在字符组内部时,并且出现在两个字符之间时,才能表示字符的范围; 如果出字符组的开头,则只能表示连字符本身.</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">[^a-z]</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">负值字符范围。匹配任何不在指定范围内的任意字符。例如，&ldquo;[^a-z]&rdquo;可以匹配任何不在&ldquo;a&rdquo;到&ldquo;z&rdquo;范围内的任意字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\b</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配一个单词边界，也就是指单词和空格间的位置。例如，&ldquo;er\b&rdquo;可以匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\B</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配非单词边界。&ldquo;er\B&rdquo;能匹配&ldquo;verb&rdquo;中的&ldquo;er&rdquo;，但不能匹配&ldquo;never&rdquo;中的&ldquo;er&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\cx</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配由x指明的控制字符。例如，\cM匹配一个Control-M或回车符。x的值必须为A-Z或a-z之一。否则，将c视为一个原义的&ldquo;c&rdquo;字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center" width="75">
-<div class="para">\d</div>
-</td>
-<td align="left" valign="center" width="658">
-<div class="para">匹配一个数字字符。等价于[0-9]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\D</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个非数字字符。等价于[^0-9]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\f</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个换页符。等价于\x0c和\cL。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\n</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个换行符。等价于\x0a和\cJ。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\r</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个回车符。等价于\x0d和\cM。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\s</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何空白字符，包括空格、制表符、换页符等等。等价于[ \f\n\r\t\v]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\S</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何非空白字符。等价于[^ \f\n\r\t\v]。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\t</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个制表符。等价于\x09和\cI。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\v</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配一个垂直制表符。等价于\x0b和\cK。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\w</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配包括下划线的任何单词字符。等价于&ldquo;[A-Za-z0-9_]&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\W</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配任何非单词字符。等价于&ldquo;[^A-Za-z0-9_]&rdquo;。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\xn</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配n，其中n为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如，&ldquo;\x41&rdquo;匹配&ldquo;A&rdquo;。&ldquo;\x041&rdquo;则等价于&ldquo;\x04&amp;1&rdquo;。正则表达式中可以使用ASCII编码。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\num</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配num，其中num是一个正整数。对所获取的匹配的引用。例如，&ldquo;(.)\1&rdquo;匹配两个连续的相同字符。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\n</div>
-</td>
-<td align="left" valign="center">
-<div class="para">标识一个八进制转义值或一个向后引用。如果\n之前至少n个获取的子表达式，则n为向后引用。否则，如果n为八进制数字（0-7），则n为一个八进制转义值。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\nm</div>
-</td>
-<td align="left" valign="center">
-<div class="para">标识一个八进制转义值或一个向后引用。如果\nm之前至少有nm个获得子表达式，则nm为向后引用。如果\nm之前至少有n个获取，则n为一个后跟文字m的向后引用。如果前面的条件都不满足，若n和m均为八进制数字（0-7），则\nm将匹配八进制转义值nm。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\nml</div>
-</td>
-<td align="left" valign="center">
-<div class="para">如果n为八进制数字（0-7），且m和l均为八进制数字（0-7），则匹配八进制转义值nml。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">
-<div class="para">\un</div>
-</td>
-<td align="left" valign="center">
-<div class="para">匹配n，其中n是一个用四个十六进制数字表示的Unicode字符。例如，\u00A9匹配版权符号（&amp;copy;）。</div>
-</td>
-</tr>
-<tr>
-<td align="left" valign="center">\&lt; \&gt;</td>
-<td align="left" valign="center">匹配词（word）的开始（\&lt;）和结束（\&gt;）。例如正则表达式\&lt;the\&gt;能够匹配字符串"for the wise"中的"the"，但是不能匹配字符串"otherwise"中的"the"。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">\( \)</td>
-<td align="left" valign="center">将 \( 和 \) 之间的表达式定义为&ldquo;组&rdquo;（group），并且将匹配这个表达式的字符保存到一个临时区域（一个正则表达式中最多可以保存9个），它们可以用 \1 到\9 的符号来引用。</td>
-</tr>
-<tr>
-<td align="left" valign="center">|</td>
-<td align="left" valign="center">将两个匹配条件进行逻辑&ldquo;或&rdquo;（Or）运算。例如正则表达式(him|her) 匹配"it belongs to him"和"it belongs to her"，但是不能匹配"it belongs to them."。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">+</td>
-<td align="left" valign="center">匹配1或多个正好在它之前的那个字符。例如正则表达式9+匹配9、99、999等。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">?</td>
-<td align="left" valign="center">匹配0或1个正好在它之前的那个字符。注意：这个元字符不是所有的软件都支持的。</td>
-</tr>
-<tr>
-<td align="left" valign="center">{i} {i,j}</td>
-<td align="left" valign="center">匹配指定数目的字符，这些字符是在它之前的表达式定义的。例如正则表达式A[0-9]{3} 能够匹配字符"A"后面跟着正好3个数字字符的串，例如A123、A348等，但是不匹配A1234。而正则表达式[0-9]{4,6} 匹配连续的任意4个、5个或者6个数字</td>
-</tr>
-</tbody>
-</table>
-
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/11/iOS/%E6%AD%A3%E5%88%99/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1595,20 +1231,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
